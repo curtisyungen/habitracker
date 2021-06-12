@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import "./habit.css";
 
-class Habit extends Component {
-    render() {
-        return (
-            <div className="habit">
+const Habit = () => {
+    return (
+        <div className="habit">
 
-            </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Habit;

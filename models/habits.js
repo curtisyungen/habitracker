@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         description: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         habit_type: {
             type: DataTypes.STRING,
@@ -34,7 +34,11 @@ module.exports = function (sequelize, DataTypes) {
         },
         target: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
+        },
+        target_type: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         status: {
             type: DataTypes.STRING,

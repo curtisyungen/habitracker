@@ -19,6 +19,7 @@ const Navbar = () => {
                     {isAuthenticated ? (
                         <>
                             <a className="nav-item nav-link" href="/">Home</a>
+                            <a className="nav-item nav-link" href="/addHabit">Add Habit</a>
                             <div className="nav-item nav-link" onClick={() => logout()}>Logout</div>
                         </>
                     ) : (

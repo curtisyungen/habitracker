@@ -1,6 +1,19 @@
-export const SITE_TITLE = "HabiTracker";
+export const SITE_TITLE = "HABITRACKER";
 
 export const HABIT = {
+    CATEGORY: {
+        FITNESS: "Fitness",
+        HEALTH: "Health",
+        RECREATION: "Recreation",
+    },
+    STATUS: {
+        ACTIVE: "Active",
+        INACTIVE: "Inactive",
+    },
+    TARGET_TYPE: {
+        QUANTITY: "Quantity",
+        TIME: "Time",
+    },
     TYPE: {
         CHECK_OFF: "Check off",
         ENTER_VALUE: "Enter value",

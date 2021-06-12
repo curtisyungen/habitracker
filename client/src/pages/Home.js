@@ -2,6 +2,8 @@ import React from 'react';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
+import { HabitList } from "../components";
+
 import "./Home.css";
 import "../styles/main.css";
 
@@ -11,7 +13,7 @@ const Home = () => {
         <div className="page page-home">
             {isAuthenticated ? (
                 <>
-                    <div>Authenticated</div>
+                    <HabitList />
                 </>
             ) : (
                 <div>Not logged in.</div>

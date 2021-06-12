@@ -1,8 +1,9 @@
 import React from "react";
-import { Home, LoginRedirect } from "./pages";
+import { AddHabit, Home, LoginRedirect } from "./pages";
 
 const routes = {
     "/": () => <Home />,
+    "/addHabit": () => <AddHabit />,
     "/loginRedirect": () => <LoginRedirect />,
 };
 
