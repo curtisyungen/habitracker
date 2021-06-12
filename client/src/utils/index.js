@@ -1,3 +1,4 @@
 import userAPI from "./userAPI";
+import habitAPI from "./habitAPI";
 
-export { userAPI };
+export { userAPI, habitAPI };
