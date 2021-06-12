@@ -1,0 +1,18 @@
+.container {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px solid #c2c2c2;
+  padding: 10px;
+}
+
+.page {
+  background: #f2f2f2;
+  height: 100%;
+  margin-top: 55px;
+  min-height: 100vh;
+  min-width: 100vw;
+  opacity: 1;
+  padding: 25px 100px;
+  position: relative;
+  width: 100%;
+}

@@ -1,0 +1,38 @@
+{
+  "name": "runmaster",
+  "version": "1.0.0",
+  "description": "Running website",
+  "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.0",
+    "dot-prop": "^5.2.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.3",
+    "hookrouter": "^1.2.5",
+    "if-env": "^1.0.4",
+    "log4js": "^6.3.0",
+    "moment": "^2.24.0",
+    "multiparty": "^4.2.1",
+    "mysql2": "^1.7.0",
+    "path": "^0.12.7",
+    "react-scripts": "4.0.3",
+    "sequelize": "^5.21.5",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
