@@ -24,6 +24,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true,
         },
+        category: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         timeline: {
             type: DataTypes.STRING,
             allowNull: false,
