@@ -29,12 +29,12 @@ class HabitController {
                 email: req.body.email,
             }
         }).then(user => {
-            db.Habits.create({
+            return db.Habits.create({
                 userId: user.dataValues.userId,
                 ...req.body.habit,
             });
-        }).then(() => {
-            res.json("Habit created.");
+        }).then(result => {
+            res.json(result);
         }).catch(e => {
             console.log(e);
         });
@@ -46,13 +46,14 @@ class HabitController {
                 email: req.body.email,
             }
         }).then(user => {
-            db.Habits.update(req.body.habit, {
+            return db.Habits.update(req.body.habit, {
                 where: {
+                    id: req.body.habit.id,
                     userId: user.dataValues.userId,
-                }
+                },
             });
-        }).then(() => {
-            res.json("Habit updated.");
+        }).then(result => {
+            res.json(result);
         }).catch(e => {
             console.log(e);
         });
