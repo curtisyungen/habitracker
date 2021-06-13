@@ -1,8 +1,14 @@
 .habit {
     border: 1px solid darkgray;
+    cursor: pointer;
     display: grid;
     margin-bottom: 1px;
+    transition: 0.35s;
     width: 100%;
+}
+
+.habit:hover {
+    background: #f2f2f2;
 }
 
 .habit-cell {

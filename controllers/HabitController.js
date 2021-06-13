@@ -41,9 +41,17 @@ class HabitController {
     }
 
     updateHabit(req, res) {
-        db.Habits.update(
-            req.body.habit,
-        ).then(() => {
+        db.Users.findOne({
+            where: {
+                email: req.body.email,
+            }
+        }).then(user => {
+            db.Habits.update(req.body.habit, {
+                where: {
+                    userId: user.dataValues.userId,
+                }
+            });
+        }).then(() => {
             res.json("Habit updated.");
         }).catch(e => {
             console.log(e);

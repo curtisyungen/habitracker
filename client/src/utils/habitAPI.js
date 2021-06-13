@@ -9,8 +9,8 @@ export default {
         return axios.post("/api/habits/createHabit", { email, habit });
     },
 
-    updateHabit: function (habit) {
-        return axios.put("/api/habits/updateHabit", { habit });
+    updateHabit: function (email, habit) {
+        return axios.put("/api/habits/updateHabit", { email, habit });
     },
 
     deleteHabit: function (email, habitId) {

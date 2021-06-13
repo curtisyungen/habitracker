@@ -32,10 +32,6 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        frequency_data: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         timeline: {
             type: DataTypes.STRING,
             allowNull: false,

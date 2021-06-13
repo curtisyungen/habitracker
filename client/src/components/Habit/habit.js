@@ -4,11 +4,15 @@ import "./habit.css";
 
 const visibleFields = ["title", "description", "category"];
 
-const Habit = ({ habit }) => {
+const Habit = ({ habit, onClick }) => {
     return (
-        <div className="habit" style={{ gridTemplateColumns: `repeat(${visibleFields.length}, 1fr)` }}>
+        <div
+            className="habit"
+            style={{ gridTemplateColumns: `repeat(${visibleFields.length}, 1fr)` }}
+            onClick={onClick}
+        >
             {visibleFields.map(f => (
-                <div className="habit-cell">{habit[f]}</div>
+                <div key={f} className="habit-cell">{habit[f]}</div>
             ))}
         </div>
     )

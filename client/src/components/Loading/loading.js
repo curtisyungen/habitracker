@@ -1,5 +1,4 @@
 import React from 'react';
-
 import "./loading.css";
 import "../../styles/main.css";
 
