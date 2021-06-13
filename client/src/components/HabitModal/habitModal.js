@@ -24,7 +24,7 @@ const DEFAULT_STATE = {
     status: HABIT.STATUS.ACTIVE,
 }
 
-const HabitModal = ({ open, close, habit }) => {
+const HabitModal = ({ open, close, habit, callback }) => {
     const { user } = useAuth0();
     const [data, setData] = useState(DEFAULT_STATE);
     const [inEditMode, setEditMode] = useState(!!habit);
@@ -55,7 +55,7 @@ const HabitModal = ({ open, close, habit }) => {
                     user.email,
                     packHabitData(data),
                 ).then(() => {
-                    alert("Habit updated.");
+                    callback();
                     close();
                 });
             } else {
@@ -63,7 +63,7 @@ const HabitModal = ({ open, close, habit }) => {
                     user.email,
                     packHabitData(data),
                 ).then(() => {
-                    alert("Habit submitted.");
+                    callback();
                     close();
                 });
             }
