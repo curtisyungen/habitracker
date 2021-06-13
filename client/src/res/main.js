@@ -6,6 +6,10 @@ export const HABIT = {
         HEALTH: "Health",
         RECREATION: "Recreation",
     },
+    FREQUENCY: {
+        DAILY: "Daily",
+        SPECIFIC_DAYS: "Specific days",
+    },
     STATUS: {
         ACTIVE: "Active",
         INACTIVE: "Inactive",

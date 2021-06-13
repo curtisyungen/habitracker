@@ -14,7 +14,7 @@ class HabitController {
             }).then(habits => {
                 let result = [];
                 for (var i = 0; i < habits.length; i++) {
-                    result.push({ name: habits.dataValues.name, ...habits[i].dataValues });
+                    result.push({ name: user.dataValues.name, ...habits[i].dataValues });
                 }
                 res.json(result);
             });

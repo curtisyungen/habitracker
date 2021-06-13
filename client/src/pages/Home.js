@@ -13,7 +13,13 @@ const Home = () => {
         <div className="page page-home">
             {isAuthenticated ? (
                 <>
-                    <HabitList />
+                    <div>Profile</div>
+
+                    <div>
+                        <p>Today</p>
+                        <HabitList />
+                    </div>
+
                 </>
             ) : (
                 <div>Not logged in.</div>

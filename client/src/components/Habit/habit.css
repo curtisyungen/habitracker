@@ -1,3 +1,13 @@
 .habit {
-    
+    border: 1px solid darkgray;
+    display: grid;
+    margin-bottom: 1px;
+    width: 100%;
+}
+
+.habit-cell {
+    overflow: hidden;
+    padding: 5px;
+    text-align: center;
+    white-space: nowrap;
 }

@@ -22,6 +22,7 @@ const DEFAULT_STATE = {
     start_date: moment().format("YYYY-MM-DD"),
     end_date: null,
     category: HABIT.CATEGORY.FITNESS,
+    frequency: HABIT.FREQUENCY.DAILY,
     timeline: {},
     target: null,
     target_type: null,
@@ -125,6 +126,21 @@ const AddHabit = () => {
                 >
                     {Object.keys(HABIT.CATEGORY).map(t => (
                         <option key={t} value={t}>{HABIT.CATEGORY[t]}</option>
+                    ))}
+                </select>
+            </div>
+            {/* FREQUENCY */}
+            <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                    <div className="input-group-text">Frequency</div>
+                </div>
+                <select
+                    className="form-control"
+                    onChange={e => updateData("frequency", e.target.value)}
+                    defaultValue={data.frequency}
+                >
+                    {Object.keys(HABIT.FREQUENCY).map(t => (
+                        <option key={t} value={t}>{HABIT.FREQUENCY[t]}</option>
                     ))}
                 </select>
             </div>

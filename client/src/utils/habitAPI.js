@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export default {
-    getAllHabitsForUser: function (userId) {
-        return axios.get("/api/habits/getAllHabitsForUser", { params: { userId } });
+    getAllHabitsForUser: function (email) {
+        return axios.get("/api/habits/getAllHabitsForUser", { params: { email } });
     },
 
     createHabit: function (email, habit) {
