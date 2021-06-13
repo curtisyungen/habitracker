@@ -17,10 +17,14 @@ const HabitList = () => {
     const [habitToEdit, setHabitToEdit] = useState(null);
 
     useEffect(() => {
+        getHabits();
+    }, []);
+
+    const getHabits = () => {
         habitAPI.getAllHabitsForUser(user.email).then(res => {
             setHabits(res.data);
         });
-    }, []);
+    }
 
     return (
         <>
@@ -39,6 +43,7 @@ const HabitList = () => {
                     open={true}
                     close={() => { setHabitToEdit(null); setMode(MODE.NONE); }}
                     habit={habitToEdit}
+                    callback={() => { getHabits(); }}
                 />
             ) : (
                 <></>
