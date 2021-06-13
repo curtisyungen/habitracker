@@ -14,6 +14,7 @@ export function validateHabitData(data) {
 export function prepHabitDataForSubmit(data) {
     return {
         ...data,
+        frequency_data: JSON.stringify(data.frequency_data),
         timeline: JSON.stringify({}),
     }
 }
