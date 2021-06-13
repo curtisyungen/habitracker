@@ -25,12 +25,14 @@ export const HABIT = {
     }
 }
 
-export const STATUS = {
-    ACTIVE: "active",
-    INACTIVE: "inactive",
+export const USER = {
+    STATUS: {
+        ACTIVE: "Active",
+        INACTIVE: "Inactive",
+    }
 }
 
 export const DEFAULT = {
     SETTINGS: {},
-    STATUS: STATUS.ACTIVE,
+    STATUS: USER.STATUS.ACTIVE,
 }
