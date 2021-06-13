@@ -1,6 +1,4 @@
-import { HABIT } from "./main";
-
-const requiredFields = ["title", "habit_type", "start_date", "category", "frequency", "timeline", "status"];
+const requiredFields = ["title", "habit_type", "start_date", "category", "frequency", "frequency_data", "timeline", "status"];
 
 export function validateHabitData(data) {
     for (var i = 0; i < requiredFields.length; i++) {

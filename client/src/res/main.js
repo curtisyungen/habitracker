@@ -9,6 +9,7 @@ export const HABIT = {
     FREQUENCY: {
         DAILY: "Daily",
         SPECIFIC_DAYS: "Specific days",
+        TIMES_PER_WEEK: "X times per week",
     },
     STATUS: {
         ACTIVE: "Active",

@@ -11,6 +11,7 @@ import { prepHabitDataForSubmit, validateHabitData } from "../res/habitHelper";
 import { habitAPI } from "../utils";
 
 import moment from "moment";
+import c from "classnames";
 
 import "./AddHabit.css";
 import "../styles/main.css";
@@ -23,6 +24,7 @@ const DEFAULT_STATE = {
     end_date: null,
     category: HABIT.CATEGORY.FITNESS,
     frequency: HABIT.FREQUENCY.DAILY,
+    frequency_data: [0, 1, 2, 3, 4, 5, 6],
     timeline: {},
     target: null,
     target_type: null,
@@ -140,10 +142,41 @@ const AddHabit = () => {
                     defaultValue={data.frequency}
                 >
                     {Object.keys(HABIT.FREQUENCY).map(t => (
-                        <option key={t} value={t}>{HABIT.FREQUENCY[t]}</option>
+                        <option key={t} value={HABIT.FREQUENCY[t]}>{HABIT.FREQUENCY[t]}</option>
                     ))}
                 </select>
             </div>
+            {/* FREQUENCY DATA */}
+            {data.frequency === HABIT.FREQUENCY.SPECIFIC_DAYS ? (
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <div className="input-group-text">Days</div>
+                    </div>
+                    {[0, 1, 2, 3, 4, 5, 6].map(d => (
+                        <div
+                            className={c("input-clickable-highlight", { isSelected: data.frequency_data.indexOf(d) > -1 })}
+                            onClick={() => updateData("frequency_data", d)}
+                        >
+                            {moment().day(d).format("dddd")}
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                data.frequency === HABIT.FREQUENCY.TIMES_PER_WEEK ? (
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">Times per week</div>
+                        </div>
+                        <input
+                            type="text"
+                            className="form-control"
+                            onChange={e => updateData("frequency_data", e.target.value)}
+                            defaultValue={data.frequency_data}
+                            placeholder="3"
+                        />
+                    </div>
+                ) : (<></>)
+            )}
             {/* TARGET */}
             {data.habit_type && data.habit_type === HABIT.TYPE.ENTER_VALUE ? (
                 <div className="input-group mb-3">
