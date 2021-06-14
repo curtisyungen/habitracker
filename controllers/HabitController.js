@@ -1,5 +1,9 @@
 const db = require("../models/index.js");
 
+var log4js = require("log4js");
+var logger = log4js.getLogger();
+logger.level = "debug";
+
 class HabitController {
     getAllHabitsForUser(req, res) {
         db.Users.findOne({

@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import { habitAPI } from '../../utils';
-import { getHabitsDueOnDate } from "../../utils/habitUtils";
+import { filterHabits, MODE, FILTER, VIEW } from "../../utils/habitUtils";
 import { Habit, HabitModal } from "../../components";
 import moment from "moment";
 import "./habitList.css";
-
-const MODE = {
-    ADD: 0,
-    EDIT: 1,
-    NONE: 2,
-}
 
 const HabitList = () => {
     const { user } = useAuth0();
@@ -19,6 +13,7 @@ const HabitList = () => {
     const [mode, setMode] = useState(MODE.NONE);
     const [habitToEdit, setHabitToEdit] = useState(null);
     const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
+    const [filter, setFilter] = useState(FILTER.DUE);
 
     useEffect(() => {
         getHabits();
@@ -27,13 +22,18 @@ const HabitList = () => {
     const getHabits = () => {
         habitAPI.getAllHabitsForUser(user.email).then(res => {
             setHabits(res.data);
-            setDisplayedHabits(getHabitsDueOnDate(res.data, date));
+            setDisplayedHabits(filterHabits(res.data, filter, date));
         });
     }
 
     const scrollDate = (dir) => {
         setDate(moment(date).add(dir, "days").format("YYYY-MM-DD"));
-        setDisplayedHabits(getHabitsDueOnDate(habits, date));
+        setDisplayedHabits(filterHabits(habits, date));
+    }
+
+    const changeFilter = (filter) => {
+        setDisplayedHabits(filterHabits(habits, filter, date));
+        setFilter(filter);
     }
 
     return (
@@ -61,6 +61,7 @@ const HabitList = () => {
             </div>
             <div className="habitList">
                 <button className="btn btn-success btn-sm" onClick={() => { setMode(MODE.ADD) }}>Add</button>
+                <button className="btn btn-outline-dark btn-sm" onClick={() => changeFilter(FILTER.ALL)}>Show All</button>
 
                 {displayedHabits.map(h => (
                     <Habit

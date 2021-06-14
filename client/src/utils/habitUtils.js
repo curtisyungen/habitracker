@@ -1,6 +1,25 @@
 import { HABIT } from "../res/main";
 import moment from "moment";
 
+export const MODE = {
+    ADD: 0,
+    EDIT: 1,
+    NONE: 2,
+}
+
+export const VIEW = {
+    DAY: 0,
+    WEEK: 1,
+    MONTH: 2,
+}
+
+export const FILTER = {
+    DUE: 0,
+    INCOMPLETE: 1,
+    COMPLETE: 2,
+    ALL: 3,
+}
+
 export function validateHabitData(data) {
     for (var key of Object.keys(HABIT.FIELDS)) {
         if (HABIT.FIELDS[key].required && !data[HABIT.FIELDS[key].name]) {
@@ -61,7 +80,13 @@ export const momentizeDate = (date) => {
     }
 }
 
-export const getHabitsDueOnDate = (habits, date) => {
+export const filterHabits = (habits, filter, date) => {
     if (!habits) return [];
-    return habits.filter(h => JSON.parse(h.frequency).indexOf(momentizeDate(date).isoWeekday) > -1);;
+
+    switch (filter) {
+        case FILTER.DUE: return habits.filter(h => JSON.parse(h.frequency).indexOf(momentizeDate(date).isoWeekday) > -1);
+        case FILTER.ALL:
+        default:
+            return habits;
+    }
 }
