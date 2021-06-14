@@ -2,7 +2,6 @@
     border: 1px solid darkgray;
     border-radius: 4px;
     cursor: pointer;
-    display: grid;
     margin-bottom: 1px;
     transition: 0.35s;
     width: 100%;
@@ -17,4 +16,8 @@
     padding: 5px;
     text-align: center;
     white-space: nowrap;
+}
+
+.isCompleted { 
+    background: lightgreen;
 }

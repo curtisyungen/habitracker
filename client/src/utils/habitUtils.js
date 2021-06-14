@@ -30,10 +30,7 @@ export function unpackHabitData(data) {
 
 export function updateHabitTimeline(habit, date) {
     const timeline = habit.timeline;
-
-    const year = moment(date).format("YYYY");
-    const month = moment(date).format("M");
-    const day = moment(date).format("D");
+    const { year, month, day } = momentizeDate(date);
 
     if (!timeline[year]) {
         timeline[year] = {};
@@ -53,4 +50,20 @@ export function updateHabitTimeline(habit, date) {
 function sortAscending(a, b) {
     if (a === b) return 0;
     return a > b ? 1 : -1;
+}
+
+export const momentizeDate = (date) => {
+    return {
+        year: moment(date).format("YYYY"),
+        month: moment(date).format("M"),
+        day: moment(date).format("D"),
+        isoWeekday: moment(date).isoWeekday(),
+    }
+}
+
+export const getHabitsDueOnDate = (habits, date) => {
+    if (!habits) return [];
+
+    const { isoWeekday } = momentizeDate(date);
+    return habits.filter(h => JSON.parse(h.frequency).indexOf(isoWeekday) > -1);;
 }

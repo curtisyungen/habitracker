@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import { habitAPI } from "../../utils";
-import { packHabitData, unpackHabitData, updateHabitTimeline } from '../../utils/habitUtils';
+import { HABIT } from "../../res/main";
+import { packHabitData, unpackHabitData, momentizeDate, updateHabitTimeline } from '../../utils/habitUtils';
+import c from "classnames";
 import "./habit.css";
 
-const visibleFields = ["title", "description", "category"];
+const visibleFields = [HABIT.FIELDS.TITLE.name, HABIT.FIELDS.CATEGORY.name];
 
-const Habit = ({ habit, date, onClick }) => {
+const Habit = ({ habit, date, onClick, callback }) => {
     const { user } = useAuth0();
     const [data, setData] = useState(unpackHabitData(habit));
+    const [isCompleted, setIsCompleted] = useState(false);
+
+    useEffect(() => {
+        const timeline = data.timeline;
+        const { year, month, day } = momentizeDate(date);
+
+        if (timeline[year] && timeline[year][month]) {
+            setIsCompleted(timeline[year][month].indexOf(day) > -1);
+        }
+    }, []);
 
     const onComplete = (e) => {
         e.preventDefault();
@@ -16,14 +28,14 @@ const Habit = ({ habit, date, onClick }) => {
 
         const timeline = updateHabitTimeline(data, date);
         habitAPI.updateHabit(user.email, packHabitData({ ...data, timeline })).then(res => {
-            console.log(res);
+            callback();
+            setData({ ...data, timeline });
         });
     }
 
     return (
         <div
-            className="habit"
-            style={{ gridTemplateColumns: `repeat(${visibleFields.length}, 1fr)` }}
+            className={c("habit", { isCompleted })}
             onClick={onClick}
         >
             {visibleFields.map(f => (

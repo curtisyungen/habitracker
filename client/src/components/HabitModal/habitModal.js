@@ -17,7 +17,7 @@ const DEFAULT_STATE = {
     start_date: moment().format("YYYY-MM-DD"),
     end_date: null,
     category: HABIT.CATEGORY.FITNESS,
-    frequency: [0, 1, 2, 3, 4, 5, 6],
+    frequency: [1, 2, 3, 4, 5, 6, 7],
     timeline: {},
     target: null,
     target_type: null,
@@ -150,7 +150,7 @@ const HabitModal = ({ open, close, habit, callback }) => {
                 <div className="input-group-prepend">
                     <div className="input-group-text">Frequency</div>
                 </div>
-                {[0, 1, 2, 3, 4, 5, 6].map(d => (
+                {[1, 2, 3, 4, 5, 6, 7].map(d => (
                     <div
                         key={d}
                         className={c("input-clickable-highlight", { isSelected: data.frequency.indexOf(d) > -1 })}

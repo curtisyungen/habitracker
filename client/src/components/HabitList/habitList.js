@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import { habitAPI } from '../../utils';
+import { getHabitsDueOnDate } from "../../utils/habitUtils";
 import { Habit, HabitModal } from "../../components";
 import moment from "moment";
 import "./habitList.css";
@@ -14,6 +15,7 @@ const MODE = {
 const HabitList = () => {
     const { user } = useAuth0();
     const [habits, setHabits] = useState([]);
+    const [displayedHabits, setDisplayedHabits] = useState([]);
     const [mode, setMode] = useState(MODE.NONE);
     const [habitToEdit, setHabitToEdit] = useState(null);
     const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
@@ -25,11 +27,13 @@ const HabitList = () => {
     const getHabits = () => {
         habitAPI.getAllHabitsForUser(user.email).then(res => {
             setHabits(res.data);
+            setDisplayedHabits(getHabitsDueOnDate(res.data, date));
         });
     }
 
     const scrollDate = (dir) => {
         setDate(moment(date).add(dir, "days").format("YYYY-MM-DD"));
+        setDisplayedHabits(getHabitsDueOnDate(habits, date));
     }
 
     return (
@@ -58,7 +62,7 @@ const HabitList = () => {
             <div className="habitList">
                 <button className="btn btn-success btn-sm" onClick={() => { setMode(MODE.ADD) }}>Add</button>
 
-                {habits.map(h => (
+                {displayedHabits.map(h => (
                     <Habit
                         key={h.id}
                         habit={h}
@@ -67,10 +71,11 @@ const HabitList = () => {
                             setHabitToEdit(h);
                             setMode(MODE.EDIT);
                         }}
+                        callback={() => { getHabits(); }}
                     />
                 ))}
 
-                {habits.length === 0 && "No habits found."}
+                {displayedHabits.length === 0 && "No habits found."}
             </div>
 
             {mode !== MODE.NONE ? (
