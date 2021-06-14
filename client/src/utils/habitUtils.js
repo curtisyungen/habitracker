@@ -63,7 +63,5 @@ export const momentizeDate = (date) => {
 
 export const getHabitsDueOnDate = (habits, date) => {
     if (!habits) return [];
-
-    const { isoWeekday } = momentizeDate(date);
-    return habits.filter(h => JSON.parse(h.frequency).indexOf(isoWeekday) > -1);;
+    return habits.filter(h => JSON.parse(h.frequency).indexOf(momentizeDate(date).isoWeekday) > -1);;
 }
