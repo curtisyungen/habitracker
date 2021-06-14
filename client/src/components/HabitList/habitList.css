@@ -1,3 +1,14 @@
 .habitList {
     
 }
+
+.habitListControls {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+.habitListControls button {
+    width: 100px;
+}
