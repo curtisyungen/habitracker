@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal } from "react-responsive-modal";
 import { useAuth0 } from "@auth0/auth0-react";
 import { HABIT } from '../../res/main';
-import { habitAPI } from "../../utils";
-import { packHabitData, unpackHabitData, validateHabitData } from "../../utils/habitUtils";
+import { habitAPI, HabitUtils } from "../../utils";
 import moment from "moment";
 import c from "classnames";
 import 'react-responsive-modal/styles.css';
@@ -31,7 +30,7 @@ const HabitModal = ({ open, close, habit, callback }) => {
 
     useEffect(() => {
         if (inEditMode) {
-            setData(unpackHabitData(habit));
+            setData(HabitUtils.unpackHabitData(habit));
         }
     }, []);
 
@@ -49,11 +48,11 @@ const HabitModal = ({ open, close, habit, callback }) => {
         e.preventDefault();
         e.stopPropagation();
 
-        if (validateHabitData(data)) {
+        if (HabitUtils.validateHabitData(data)) {
             if (inEditMode) {
                 habitAPI.updateHabit(
                     user.email,
-                    packHabitData(data),
+                    HabitUtils.packHabitData(data),
                 ).then(() => {
                     callback();
                     close();
@@ -61,7 +60,7 @@ const HabitModal = ({ open, close, habit, callback }) => {
             } else {
                 habitAPI.createHabit(
                     user.email,
-                    packHabitData(data),
+                    HabitUtils.packHabitData(data),
                 ).then(() => {
                     callback();
                     close();

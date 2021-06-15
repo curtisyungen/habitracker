@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-import { habitAPI } from '../../utils';
-import { filterHabits, MODE, FILTER, VIEW } from "../../utils/habitUtils";
+import { habitAPI, HabitUtils } from '../../utils';
+import { MODE, FILTER, VIEW } from "../../utils/habitUtils";
 import { Habit, HabitModal } from "../../components";
 import moment from "moment";
 import "./habitList.css";
@@ -22,17 +22,17 @@ const HabitList = () => {
     const getHabits = () => {
         habitAPI.getAllHabitsForUser(user.email).then(res => {
             setHabits(res.data);
-            setDisplayedHabits(filterHabits(res.data, filter, date));
+            setDisplayedHabits(HabitUtils.filterHabits(res.data, filter, date));
         });
     }
 
     const scrollDate = (dir) => {
         setDate(moment(date).add(dir, "days").format("YYYY-MM-DD"));
-        setDisplayedHabits(filterHabits(habits, date));
+        setDisplayedHabits(HabitUtils.filterHabits(habits, date));
     }
 
     const changeFilter = (filter) => {
-        setDisplayedHabits(filterHabits(habits, filter, date));
+        setDisplayedHabits(HabitUtils.filterHabits(habits, filter, date));
         setFilter(filter);
     }
 

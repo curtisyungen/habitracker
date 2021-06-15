@@ -20,73 +20,76 @@ export const FILTER = {
     ALL: 3,
 }
 
-export function validateHabitData(data) {
-    for (var key of Object.keys(HABIT.FIELDS)) {
-        if (HABIT.FIELDS[key].required && !data[HABIT.FIELDS[key].name]) {
-            alert(`Missing ${key}.`);
-            return false;
+export default class HabitUtils {
+
+    static filterHabits(habits, filter, date) {
+        if (!habits) return [];
+
+        switch (filter) {
+            case FILTER.DUE: return habits.filter(h => JSON.parse(h.frequency).indexOf(this.momentizeDate(date).isoWeekday) > -1);
+            case FILTER.ALL:
+            default:
+                return habits;
+        }
+    }
+
+    static momentizeDate(date) {
+        return {
+            year: moment(date).format("YYYY"),
+            month: moment(date).format("M"),
+            day: moment(date).format("D"),
+            isoWeekday: moment(date).isoWeekday(),
+        }
+    }
+
+    static updateHabitTimeline(habit, date) {
+        const timeline = habit.timeline;
+        const { year, month, day } = this.momentizeDate(date);
+
+        if (!timeline[year]) {
+            timeline[year] = {};
         }
 
-        return true;
-    }
-}
+        if (!timeline[year][month]) {
+            timeline[year][month] = [];
+        }
 
-export function packHabitData(data) {
-    return {
-        ...data,
-        frequency: JSON.stringify(data.frequency),
-        timeline: JSON.stringify(data.timeline),
-    }
-}
+        timeline[year][month] = timeline[year][month].indexOf(day) > -1
+            ? timeline[year][month].filter(f => f !== day)
+            : [...timeline[year][month], day].sort(this.sortAscending);
 
-export function unpackHabitData(data) {
-    return {
-        ...data,
-        frequency: JSON.parse(data.frequency),
-        timeline: JSON.parse(data.timeline),
-    }
-}
-
-export function updateHabitTimeline(habit, date) {
-    const timeline = habit.timeline;
-    const { year, month, day } = momentizeDate(date);
-
-    if (!timeline[year]) {
-        timeline[year] = {};
+        return timeline;
     }
 
-    if (!timeline[year][month]) {
-        timeline[year][month] = [];
+    sortAscending(a, b) {
+        if (a === b) return 0;
+        return a > b ? 1 : -1;
     }
 
-    timeline[year][month] = timeline[year][month].indexOf(day) > -1
-        ? timeline[year][month].filter(f => f !== day)
-        : [...timeline[year][month], day].sort(sortAscending);
+    static validateHabitData(data) {
+        for (var key of Object.keys(HABIT.FIELDS)) {
+            if (HABIT.FIELDS[key].required && !data[HABIT.FIELDS[key].name]) {
+                alert(`Missing ${key}.`);
+                return false;
+            }
 
-    return timeline;
-}
-
-function sortAscending(a, b) {
-    if (a === b) return 0;
-    return a > b ? 1 : -1;
-}
-
-export const momentizeDate = (date) => {
-    return {
-        year: moment(date).format("YYYY"),
-        month: moment(date).format("M"),
-        day: moment(date).format("D"),
-        isoWeekday: moment(date).isoWeekday(),
+            return true;
+        }
     }
-}
 
-export const filterHabits = (habits, filter, date) => {
-    if (!habits) return [];
+    static packHabitData(data) {
+        return {
+            ...data,
+            frequency: JSON.stringify(data.frequency),
+            timeline: JSON.stringify(data.timeline),
+        }
+    }
 
-    switch (filter) {
-        case FILTER.DUE: return habits.filter(h => JSON.parse(h.frequency).indexOf(momentizeDate(date).isoWeekday) > -1);
-        case FILTER.ALL:
-        default:
-            return habits;
+    static unpackHabitData(data) {
+        return {
+            ...data,
+            frequency: JSON.parse(data.frequency),
+            timeline: JSON.parse(data.timeline),
+        }
     }
 }

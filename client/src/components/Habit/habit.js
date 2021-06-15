@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-import { habitAPI } from "../../utils";
+import { habitAPI, HabitUtils } from "../../utils";
 import { HABIT } from "../../res/main";
-import { packHabitData, unpackHabitData, momentizeDate, updateHabitTimeline } from '../../utils/habitUtils';
 import c from "classnames";
 import "./habit.css";
 
@@ -10,12 +9,12 @@ const visibleFields = [HABIT.FIELDS.TITLE.name, HABIT.FIELDS.CATEGORY.name];
 
 const Habit = ({ habit, date, onClick, callback }) => {
     const { user } = useAuth0();
-    const [data, setData] = useState(unpackHabitData(habit));
+    const [data, setData] = useState(HabitUtils.unpackHabitData(habit));
     const [isCompleted, setIsCompleted] = useState(false);
 
     useEffect(() => {
         const timeline = data.timeline;
-        const { year, month, day } = momentizeDate(date);
+        const { year, month, day } = HabitUtils.momentizeDate(date);
 
         if (timeline[year] && timeline[year][month]) {
             setIsCompleted(timeline[year][month].indexOf(day) > -1);
@@ -26,8 +25,8 @@ const Habit = ({ habit, date, onClick, callback }) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const timeline = updateHabitTimeline(data, date);
-        habitAPI.updateHabit(user.email, packHabitData({ ...data, timeline })).then(res => {
+        const timeline = HabitUtils.updateHabitTimeline(data, date);
+        habitAPI.updateHabit(user.email, HabitUtils.packHabitData({ ...data, timeline })).then(res => {
             callback();
             setData({ ...data, timeline });
         });
