@@ -10,8 +10,6 @@ export const HABIT = {
         TITLE: { name: "title", required: true },
         DESCRIPTION: { name: "description", required: false },
         HABIT_TYPE: { name: "habit_type", required: true },
-        START_DATE: { name: "start_date", required: true },
-        END_DATE: { name: "end_date", required: false },
         CATEGORY: { name: "category", required: true },
         FREQUENCY: { name: "frequency", required: true },
         TIMELINE: { name: "timeline", required: true },

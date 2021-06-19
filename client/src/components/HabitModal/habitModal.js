@@ -13,8 +13,6 @@ const DEFAULT_STATE = {
     title: null,
     description: null,
     habit_type: HABIT.TYPE.CHECK_OFF,
-    start_date: moment().format("YYYY-MM-DD"),
-    end_date: null,
     category: HABIT.CATEGORY.FITNESS,
     frequency: [1, 2, 3, 4, 5, 6, 7],
     timeline: {},
@@ -26,7 +24,7 @@ const DEFAULT_STATE = {
 const HabitModal = ({ open, close, habit, callback }) => {
     const { user } = useAuth0();
     const [data, setData] = useState(DEFAULT_STATE);
-    const [inEditMode, setEditMode] = useState(!!habit);
+    const [inEditMode] = useState(!!habit);
 
     useEffect(() => {
         if (inEditMode) {
@@ -116,18 +114,6 @@ const HabitModal = ({ open, close, habit, callback }) => {
                         <option key={t} value={t}>{HABIT.TYPE[t]}</option>
                     ))}
                 </select>
-            </div>
-            {/* START DATE */}
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Start date</span>
-                </div>
-                <input
-                    type="date"
-                    className="form-control"
-                    onChange={e => updateData("start_date", e.target.value)}
-                    defaultValue={data.start_date}
-                />
             </div>
             {/* CATEGORY */}
             <div className="input-group mb-3">

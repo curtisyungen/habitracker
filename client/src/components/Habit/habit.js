@@ -10,7 +10,12 @@ const visibleFields = [HABIT.FIELDS.TITLE.name, HABIT.FIELDS.CATEGORY.name];
 const Habit = ({ habit, date, onClick, callback }) => {
     const { user } = useAuth0();
     const [data, setData] = useState(HabitUtils.unpackHabitData(habit));
+    const [metrics, setMetrics] = useState({});
     const [isCompleted, setIsCompleted] = useState(false);
+
+    useEffect(() => {
+        setMetrics(HabitUtils.getHabitMetrics(data));
+    }, []);
 
     useEffect(() => {
         const timeline = data.timeline;
@@ -39,6 +44,10 @@ const Habit = ({ habit, date, onClick, callback }) => {
         >
             {visibleFields.map(f => (
                 <div key={f} className="habit-cell">{data[f]}</div>
+            ))}
+
+            {Object.keys(metrics).map(m => (
+                <div key={m} className="habit-metric">{`${m}: ${metrics[m]}`}</div>
             ))}
 
             <button
