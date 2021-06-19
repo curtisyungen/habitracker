@@ -18,6 +18,25 @@
     white-space: nowrap;
 }
 
+.habit-container-metrics {
+    display: flex;
+    flex-direction: row;
+}
+
+.habit-metric {
+    flex-grow: 1;
+    font-size: 13px;
+    text-align: center;
+}
+
+.habit-metric-title {
+    width: 100%;
+}
+
+.habit-metric-value {
+    width: 100%;   
+}
+
 .isCompleted { 
     background: lightgreen;
 }

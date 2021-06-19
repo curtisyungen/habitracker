@@ -48,7 +48,7 @@ const HabitList = () => {
                 >
                     Left
                 </button>
-                <div className="date">{date}</div>
+                <div className="btn btn-outline-dark btn-sm date">{date}</div>
                 <button
                     className="btn btn-outline-dark btn-sm"
                     onClick={e => {

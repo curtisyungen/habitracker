@@ -46,9 +46,14 @@ const Habit = ({ habit, date, onClick, callback }) => {
                 <div key={f} className="habit-cell">{data[f]}</div>
             ))}
 
-            {Object.keys(metrics).map(m => (
-                <div key={m} className="habit-metric">{`${m}: ${metrics[m]}`}</div>
-            ))}
+            <div className="habit-container-metrics">
+                {Object.keys(metrics).map(m => (
+                    <div key={m} className="habit-metric">
+                        <div className="habit-metric-title">{m}</div>
+                        <div className="habit-metric-value">{metrics[m]}</div>
+                    </div>
+                ))}
+            </div>
 
             <button
                 className="btn btn-success btn-sm"

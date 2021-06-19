@@ -9,16 +9,9 @@ const Home = () => {
     return (
         <div className="page page-home">
             {isAuthenticated ? (
-                <>
-                    <div className="container">Profile</div>
-
-                    <div className="container">
-                        <p>Today</p>
-                        <HabitList />
-                    </div>
-
-                    <div className="container">Sidebar</div>
-                </>
+                <div className="container">
+                    <HabitList />
+                </div>
             ) : (
                 <div>Not logged in.</div>
             )}
