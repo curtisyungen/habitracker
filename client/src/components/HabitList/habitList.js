@@ -27,8 +27,9 @@ const HabitList = () => {
     }
 
     const scrollDate = (dir) => {
-        setDate(moment(date).add(dir, "days").format("YYYY-MM-DD"));
-        setDisplayedHabits(HabitUtils.filterHabits(habits, date));
+        const newDate = moment(date).add(dir, "days").format("YYYY-MM-DD");
+        setDate(newDate);
+        setDisplayedHabits(HabitUtils.filterHabits(habits, filter, newDate));
     }
 
     const changeFilter = (filter) => {
