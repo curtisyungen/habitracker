@@ -2,22 +2,22 @@ import { HABIT } from "../res/main";
 import moment from "moment";
 
 export const MODE = {
-    ADD: 0,
-    EDIT: 1,
-    NONE: 2,
+    ADD: "Add",
+    EDIT: "Edit",
+    NONE: "None",
 }
 
 export const VIEW = {
-    DAY: 0,
-    WEEK: 1,
-    MONTH: 2,
+    DAY: "Day",
+    WEEK: "Week",
+    MONTH: "Month",
 }
 
 export const FILTER = {
-    DUE: 0,
-    INCOMPLETE: 1,
-    COMPLETE: 2,
-    ALL: 3,
+    DUE: "Due",
+    INCOMPLETE: "Incomplete",
+    COMPLETE: "Complete",
+    ALL: "All",
 }
 
 export default class HabitUtils {

@@ -61,7 +61,15 @@ const HabitList = () => {
             </div>
             <div className="habitList">
                 <button className="btn btn-success btn-sm" onClick={() => { setMode(MODE.ADD) }}>Add</button>
-                <button className="btn btn-outline-dark btn-sm" onClick={() => changeFilter(FILTER.ALL)}>Show All</button>
+                <select
+                    className="btn btn-outline-dark btn-sm"
+                    onChange={e => changeFilter(e.target.value)}
+                    defaultValue={filter}
+                >
+                    {Object.keys(FILTER).map(f => (
+                        <option key={f} value={FILTER[f]}>{FILTER[f]}</option>
+                    ))}
+                </select>
 
                 {displayedHabits.map(h => (
                     <Habit
