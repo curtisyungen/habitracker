@@ -18,22 +18,22 @@ const Habit = ({ habit, date, onClick, callback }) => {
     }, []);
 
     useEffect(() => {
-        const timeline = data.timeline;
-        const { year, month, day } = HabitUtils.momentizeDate(date);
-
-        if (timeline[year] && timeline[year][month]) {
-            setIsCompleted(timeline[year][month].indexOf(day) > -1);
-        }
+        checkIfComplete();
     }, []);
+
+    const checkIfComplete = () => {
+        setIsCompleted(HabitUtils.checkIfDateInTimeline(data, date));
+    }
 
     const onComplete = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
         const timeline = HabitUtils.updateHabitTimeline(data, date);
-        habitAPI.updateHabit(user.email, HabitUtils.packHabitData({ ...data, timeline })).then(res => {
+        habitAPI.updateHabit(user.email, HabitUtils.packHabitData({ ...data, timeline })).then(() => {
             callback();
-            setData({ ...data, timeline });
+            checkIfComplete();
+            setMetrics(HabitUtils.getHabitMetrics(data));
         });
     }
 
@@ -56,10 +56,10 @@ const Habit = ({ habit, date, onClick, callback }) => {
             </div>
 
             <button
-                className="btn btn-success btn-sm"
+                className={c("btn btn-sm", { "btn-success": !isCompleted, "btn-danger": isCompleted })}
                 onClick={e => onComplete(e)}
             >
-                Complete
+                {isCompleted ? "Incomplete" : "Complete"}
             </button>
         </div>
     )

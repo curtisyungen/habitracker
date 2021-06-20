@@ -7,10 +7,6 @@
     width: 100%;
 }
 
-.habit:hover {
-    background: #f2f2f2;
-}
-
 .habit-cell {
     overflow: hidden;
     padding: 5px;
