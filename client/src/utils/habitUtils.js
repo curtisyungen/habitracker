@@ -158,16 +158,14 @@ export default class HabitUtils {
         let longestStreak = 0;
         let currentStreak = 0;
 
-        if (diff > 0) {
-            for (var i = 1; i < diff; i++) {
-                if (this.checkIfDateInTimeline(habit, moment(firstCompletion).add(i, "days"))) {
-                    currentStreak += 1;
-                    longestStreak = Math.max(longestStreak, currentStreak);
-                    totalCompletions += 1;
-                } else {
-                    longestStreak = Math.max(longestStreak, currentStreak);
-                    currentStreak = 1;
-                }
+        for (var i = 0; i <= diff; i++) {
+            if (this.checkIfDateInTimeline(habit, moment(firstCompletion).add(i, "days"))) {
+                currentStreak += 1;
+                longestStreak = Math.max(longestStreak, currentStreak);
+                totalCompletions += 1;
+            } else {
+                longestStreak = Math.max(longestStreak, currentStreak);
+                currentStreak = 0;
             }
         }
 
@@ -188,12 +186,7 @@ export default class HabitUtils {
     static checkIfDateInTimeline(habit, date) {
         const timeline = this.parseJSONIfNeeded(habit.timeline);
         const { year, month, day } = this.momentizeDate(date);
-
-        if (timeline[year] && timeline[year][month]) {
-            return day in timeline[year][month];
-        }
-
-        return false;
+        return timeline[year] && timeline[year][month] && day in timeline[year][month];
     }
 
     static parseJSONIfNeeded(string) {
