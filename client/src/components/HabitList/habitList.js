@@ -27,7 +27,7 @@ const HabitList = () => {
     }
 
     const scrollDate = (dir) => {
-        const newDate = moment(date).add(dir, "days").format("YYYY-MM-DD");
+        const newDate = dir === 0 ? moment().format("YYYY-MM-DD") : moment(date).add(dir, "days").format("YYYY-MM-DD");
         setDate(newDate);
         setDisplayedHabits(HabitUtils.filterHabits(habits, filter, newDate));
     }
@@ -49,7 +49,15 @@ const HabitList = () => {
                 >
                     Left
                 </button>
-                <div className="btn btn-outline-dark btn-sm date">{date}</div>
+                <button
+                    className="btn btn-outline-dark btn-sm"
+                    onClick={e => {
+                        e.preventDefault();
+                        scrollDate(0);
+                    }}
+                >
+                    {date}
+                </button>
                 <button
                     className="btn btn-outline-dark btn-sm"
                     onClick={e => {

@@ -67,7 +67,7 @@ export default class HabitUtils {
         if (day in timeline[year][month]) {
             delete timeline[year][month][day];
         } else {
-            timeline[year][month][day] = value || "";
+            timeline[year][month][day] = value || ""
         }
 
         return timeline;
@@ -154,15 +154,13 @@ export default class HabitUtils {
 
         // TOTAL COMPLETIONS
         // CURRENT & LONGEST STREAK
-        let totalCompletions = firstCompletion ? 1 : 0;
-        let longestStreak = firstCompletion ? 1 : 0;
-        let currentStreak = firstCompletion ? 1 : 0;
+        let totalCompletions = 0;
+        let longestStreak = 0;
+        let currentStreak = 0;
 
         if (diff > 0) {
-            let currDate = firstCompletion;
-
-            for (var i = 0; i < diff; i++) {
-                if (this.checkIfDateInTimeline(habit, currDate)) {
+            for (var i = 1; i < diff; i++) {
+                if (this.checkIfDateInTimeline(habit, moment(firstCompletion).add(i, "days"))) {
                     currentStreak += 1;
                     longestStreak = Math.max(longestStreak, currentStreak);
                     totalCompletions += 1;
@@ -170,14 +168,13 @@ export default class HabitUtils {
                     longestStreak = Math.max(longestStreak, currentStreak);
                     currentStreak = 1;
                 }
-                currDate = moment(currDate).add(1, "days");
             }
         }
 
         return {
             createDate,
-            firstCompletion,
-            lastCompletion,
+            firstCompletion: firstCompletion || "N/A",
+            lastCompletion: lastCompletion || "N/A",
             totalCompletions,
             longestStreak,
             currentStreak,

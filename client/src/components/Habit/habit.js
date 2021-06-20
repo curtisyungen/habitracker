@@ -9,17 +9,14 @@ const visibleFields = [HABIT.FIELDS.TITLE.name, HABIT.FIELDS.CATEGORY.name];
 
 const Habit = ({ habit, date, onClick, callback }) => {
     const { user } = useAuth0();
-    const [data, setData] = useState(HabitUtils.unpackHabitData(habit));
+    const [data] = useState(HabitUtils.unpackHabitData(habit));
     const [metrics, setMetrics] = useState({});
     const [isCompleted, setIsCompleted] = useState(false);
 
     useEffect(() => {
         setMetrics(HabitUtils.getHabitMetrics(data));
-    }, []);
-
-    useEffect(() => {
         checkIfComplete();
-    }, []);
+    }, [date]);
 
     const checkIfComplete = () => {
         setIsCompleted(HabitUtils.checkIfDateInTimeline(data, date));
