@@ -108,12 +108,12 @@ export default class HabitUtils {
 
         if (Object.keys(timeline).length === 0) {
             return {
-                createDate,
-                firstCompletion: "N/A",
-                lastCompletion: "N/A",
-                totalCompletions: 0,
-                longestStreak: 0,
-                currentStreak: 0,
+                "Create date": createDate,
+                "First completion": "N/A",
+                "Last completion": "N/A",
+                "Total completions": 0,
+                "Current streak": 0,
+                "Longest streak": 0,
             };
         }
 
@@ -170,12 +170,12 @@ export default class HabitUtils {
         }
 
         return {
-            createDate,
-            firstCompletion: firstCompletion || "N/A",
-            lastCompletion: lastCompletion || "N/A",
-            totalCompletions,
-            longestStreak,
-            currentStreak,
+            "Created": createDate,
+            "First completion": firstCompletion || "N/A",
+            "Last completion": lastCompletion || "N/A",
+            "Total completions": totalCompletions,
+            "Current streak": currentStreak,
+            "Longest streak": longestStreak,
         };
     }
 

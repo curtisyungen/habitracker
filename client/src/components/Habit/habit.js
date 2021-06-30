@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import { habitAPI, HabitUtils } from "../../utils";
 import { HABIT } from "../../res/main";
+import { getIcon } from "../../res/icons";
 import c from "classnames";
 import "./habit.css";
 
-const visibleFields = [HABIT.FIELDS.TITLE.name, HABIT.FIELDS.CATEGORY.name];
-
-const Habit = ({ habit, date, onClick, callback }) => {
+const Habit = ({ habit, date, onClick, onClickEdit, callback }) => {
     const { user } = useAuth0();
     const [data] = useState(HabitUtils.unpackHabitData(habit));
     const [metrics, setMetrics] = useState({});
@@ -39,25 +38,19 @@ const Habit = ({ habit, date, onClick, callback }) => {
             className={c("habit", { isCompleted })}
             onClick={onClick}
         >
-            {visibleFields.map(f => (
-                <div key={f} className="habit-cell">{data[f]}</div>
-            ))}
-
-            <div className="habit-container-metrics">
-                {Object.keys(metrics).map(m => (
-                    <div key={m} className="habit-metric">
-                        <div className="habit-metric-title">{m}</div>
-                        <div className="habit-metric-value">{metrics[m]}</div>
-                    </div>
-                ))}
+            <div className="habit-cell">{data["title"]}</div>
+            <div
+                className="habit-edit"
+                onClick={onClickEdit}
+            >
+                {getIcon("edit")}
             </div>
-
-            <button
-                className={c("btn btn-sm", { "btn-success": !isCompleted, "btn-danger": isCompleted })}
+            <div
+                className="habit-cell habit-status"
                 onClick={e => onComplete(e)}
             >
-                {isCompleted ? "Incomplete" : "Complete"}
-            </button>
+                {isCompleted ? "Complete" : "Incomplete"}
+            </div>
         </div>
     )
 }
