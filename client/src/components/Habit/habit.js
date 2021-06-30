@@ -40,12 +40,6 @@ const Habit = ({ habit, date, onClick, onClickEdit, callback }) => {
         >
             <div className="habit-cell">{data["title"]}</div>
             <div
-                className="habit-edit"
-                onClick={onClickEdit}
-            >
-                {getIcon("edit")}
-            </div>
-            <div
                 className="habit-cell habit-status"
                 onClick={e => onComplete(e)}
             >

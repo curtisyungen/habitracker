@@ -66,6 +66,14 @@ export default class HabitUtils {
 
         if (day in timeline[year][month]) {
             delete timeline[year][month][day];
+
+            if (Object.keys(timeline[year][month]).length === 0) {
+                delete timeline[year][month];
+
+                if (Object.keys(timeline[year]).length === 0) {
+                    delete timeline[year];
+                }
+            }
         } else {
             timeline[year][month][day] = value || ""
         }

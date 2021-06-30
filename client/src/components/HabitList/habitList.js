@@ -14,8 +14,6 @@ const HabitList = () => {
     const [filter, setFilter] = useState(FILTER.DUE);
     const [mode, setMode] = useState(MODE.NONE);
     const [habitToEdit, setHabitToEdit] = useState(null);
-    const [selectedHabit, setSelectedHabit] = useState(null);
-    const [metricsForSelectedHabit, setMetrics] = useState({})
 
     useEffect(() => {
         getHabits();
@@ -37,16 +35,6 @@ const HabitList = () => {
     const changeFilter = (filter) => {
         setDisplayedHabits(HabitUtils.filterHabits(habits, filter, date));
         setFilter(filter);
-    }
-
-    const getMetricsForHabit = (habit) => {
-        if (selectedHabit === habit) {
-            setSelectedHabit(null);
-            setMetrics({});
-        } else {
-            setSelectedHabit(habit);
-            setMetrics(HabitUtils.getHabitMetrics(HabitUtils.unpackHabitData(habit)));
-        }
     }
 
     return (
@@ -100,9 +88,6 @@ const HabitList = () => {
                         habit={h}
                         date={date}
                         onClick={() => {
-                            getMetricsForHabit(h);
-                        }}
-                        onClickEdit={() => {
                             setHabitToEdit(h);
                             setMode(MODE.EDIT);
                         }}
@@ -111,15 +96,6 @@ const HabitList = () => {
                 ))}
 
                 {displayedHabits.length === 0 && "No habits found."}
-            </div>
-
-            <div className="habitListMetricsBar">
-                {Object.keys(metricsForSelectedHabit).map(m => (
-                    <div key={m} className="habit-metrics-cell">
-                        <div className="habit-metrics-title">{m}</div>
-                        <div className="habit-metrics-value">{metricsForSelectedHabit[m]}</div>
-                    </div>
-                ))}
             </div>
 
             {mode !== MODE.NONE ? (

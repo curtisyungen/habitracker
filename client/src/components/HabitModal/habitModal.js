@@ -24,11 +24,13 @@ const DEFAULT_STATE = {
 const HabitModal = ({ open, close, habit, callback }) => {
     const { user } = useAuth0();
     const [data, setData] = useState(DEFAULT_STATE);
+    const [metrics, setMetrics] = useState({});
     const [inEditMode] = useState(!!habit);
 
     useEffect(() => {
         if (inEditMode) {
             setData(HabitUtils.unpackHabitData(habit));
+            setMetrics(HabitUtils.getHabitMetrics(HabitUtils.unpackHabitData(habit)));
         }
     }, []);
 
@@ -171,6 +173,13 @@ const HabitModal = ({ open, close, habit, callback }) => {
             ) : (
                 <></>
             )}
+            {/* METRICS */}
+            {Object.keys(metrics).map(m => (
+                <div className="habit-metrics-cell">
+                    <div className="habit-metrics-title">{m}</div>
+                    <div className="habit-metrics-value">{metrics[m]}</div>
+                </div>
+            ))}
             <button className="btn btn-success btn-sm" onClick={submitHabit}>Submit</button>
         </Modal>
     )
