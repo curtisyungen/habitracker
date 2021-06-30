@@ -175,7 +175,7 @@ const HabitModal = ({ open, close, habit, callback }) => {
             )}
             {/* METRICS */}
             {Object.keys(metrics).map(m => (
-                <div className="habit-metrics-cell">
+                <div key={m} className="habit-metrics-cell">
                     <div className="habit-metrics-title">{m}</div>
                     <div className="habit-metrics-value">{metrics[m]}</div>
                 </div>
