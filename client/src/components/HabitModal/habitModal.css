@@ -1,8 +1,83 @@
+:root {
+    --input-height: 40px;
+    --input-label-width: 110px;
+}
+
+.btn-submit-habit {
+    margin-top: 8px;
+    width: 100%;
+}
+
+.habit-metrics {
+    position: relative;
+    width: 100%;
+}
+
+.habit-metrics-cell {
+    font-size: 13px;
+    height: 14px;
+    margin: 5px 0px;
+    position: relative;
+}
+
+.habit-metrics-title {
+    left: 0;
+    position: absolute;
+    text-align: left;
+}
+
+.habit-metrics-value {
+    position: absolute;
+    right: 0;
+    text-align: right;
+}
+
 .input-clickable-highlight {
     cursor: pointer;
+    font-size: 13px;
     padding: 5px;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.input-frequency {
+    display: grid;
+    grid-gap: 1px;
+    grid-template-columns: repeat(7, 1fr);
+    width: calc(100% - var(--input-label-width));
+}
+
+.input-group {
+    border: none;
+    height: var(--input-height);
+    margin-bottom: 2px;
+    min-width: 400px;
+}
+
+.input-group > input,
+.input-group > select {
+    background: lightgray;
+    border: none;
+    border-radius: 0px;
+    font-size: 15px !important;
+    height: var(--input-height) !important;
+}
+
+.input-group-prepend {
+    background: rgb(196, 196, 196);
+    border: none;
+    box-shadow: none;
+    opacity: 1;
+}
+
+.input-group-text {
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    font-size: 13px;
+    width: var(--input-label-width);
 }
 
 .isSelected {
-    background: green;
+    background: lightgreen;
 }

@@ -77,7 +77,7 @@ const HabitModal = ({ open, close, habit, callback }) => {
             <h4>{inEditMode ? "Edit" : "Add"} Habit</h4>
 
             {/* TITLE */}
-            <div className="input-group mb-3">
+            <div className="input-group">
                 <div className="input-group-prepend">
                     <span className="input-group-text">Title</span>
                 </div>
@@ -90,7 +90,7 @@ const HabitModal = ({ open, close, habit, callback }) => {
                 />
             </div>
             {/* DESCRIPTION */}
-            <div className="input-group mb-3">
+            <div className="input-group">
                 <div className="input-group-prepend">
                     <span className="input-group-text">Description</span>
                 </div>
@@ -103,7 +103,7 @@ const HabitModal = ({ open, close, habit, callback }) => {
                 />
             </div>
             {/* HABIT TYPE */}
-            <div className="input-group mb-3">
+            <div className="input-group">
                 <div className="input-group-prepend">
                     <span className="input-group-text">Habit type</span>
                 </div>
@@ -118,7 +118,7 @@ const HabitModal = ({ open, close, habit, callback }) => {
                 </select>
             </div>
             {/* CATEGORY */}
-            <div className="input-group mb-3">
+            <div className="input-group">
                 <div className="input-group-prepend">
                     <div className="input-group-text">Category</div>
                 </div>
@@ -133,23 +133,25 @@ const HabitModal = ({ open, close, habit, callback }) => {
                 </select>
             </div>
             {/* FREQUENCY */}
-            <div className="input-group mb-3">
+            <div className="input-group">
                 <div className="input-group-prepend">
                     <div className="input-group-text">Frequency</div>
                 </div>
-                {[1, 2, 3, 4, 5, 6, 7].map(d => (
-                    <div
-                        key={d}
-                        className={c("input-clickable-highlight", { isSelected: data.frequency.indexOf(d) > -1 })}
-                        onClick={() => updateData("frequency", d)}
-                    >
-                        {moment().day(d).format("dddd")}
-                    </div>
-                ))}
+                <div className="input-frequency">
+                    {[1, 2, 3, 4, 5, 6, 7].map(d => (
+                        <div
+                            key={d}
+                            className={c("input-clickable-highlight", { isSelected: data.frequency.indexOf(d) > -1 })}
+                            onClick={() => updateData("frequency", d)}
+                        >
+                            {moment().day(d).format("ddd")}
+                        </div>
+                    ))}
+                </div>
             </div>
             {/* TARGET */}
             {data.habit_type && data.habit_type === HABIT.TYPE.ENTER_VALUE ? (
-                <div className="input-group mb-3">
+                <div className="input-group">
                     <div className="input-group-prepend">
                         <span className="input-group-text">Target</span>
                     </div>
@@ -174,13 +176,15 @@ const HabitModal = ({ open, close, habit, callback }) => {
                 <></>
             )}
             {/* METRICS */}
-            {Object.keys(metrics).map(m => (
-                <div key={m} className="habit-metrics-cell">
-                    <div className="habit-metrics-title">{m}</div>
-                    <div className="habit-metrics-value">{metrics[m]}</div>
-                </div>
-            ))}
-            <button className="btn btn-success btn-sm" onClick={submitHabit}>Submit</button>
+            <div className="habit-metrics">
+                {Object.keys(metrics).map(m => (
+                    <div key={m} className="habit-metrics-cell">
+                        <div className="habit-metrics-title">{m}</div>
+                        <div className="habit-metrics-value">{metrics[m]}</div>
+                    </div>
+                ))}
+            </div>
+            <button className="btn btn-success btn-sm btn-submit-habit" onClick={submitHabit}>Submit</button>
         </Modal>
     )
 }
