@@ -6,7 +6,6 @@
     height: 100px;
     margin-bottom: 2px;
     position: relative;
-    transition: 0.35s;
 }
 
 .habit-cell {
@@ -14,11 +13,37 @@
     cursor: pointer;
     padding: 5px;
     text-align: center;
+    transition: 0.25s;
     white-space: nowrap;
 }
 
-.habit-cell-sub {
+.habit-summary {
+    border: 1px solid darkgray;
+    cursor: pointer;
+    padding: 5px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.habit-summary-footer {
+    border-top: 1px solid darkgray;
+    bottom: 0;
     font-size: 13px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-transform: uppercase;
+}
+
+.habit-summary-header {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.habit-summary-stat {
+    font-size: 12px;
     text-align: left;
 }
 
@@ -67,6 +92,11 @@
 
 .isCompleted { 
     background: rgba(20,202,113,.97);
+}
+
+.isFuture {
+    background: lightgray;
+    cursor: default;
 }
 
 .isToday {

@@ -24,6 +24,10 @@ const Habit = ({ habit, dates, onClick, callback }) => {
         e.preventDefault();
         e.stopPropagation();
 
+        if (date > moment().format("YYYY-MM-DD")) {
+            return;
+        }
+
         const timeline = HabitUtils.updateHabitTimeline(data, date);
         habitAPI.updateHabit(user.email, HabitUtils.packHabitData({ ...data, timeline })).then(() => {
             callback();
@@ -36,17 +40,23 @@ const Habit = ({ habit, dates, onClick, callback }) => {
             className="habit"
             onClick={onClick}
         >
-            <div className="habit-cell">
-                {data["title"]}
-                <div>
-                    <div className="habit-cell-sub">Total: {metrics["Total completions"]}</div>
-                    <div className="habit-cell-sub">CS: {metrics["Current streak"]}</div>
+            <div className="habit-summary">
+                <div className="habit-summary-header">{data["title"]}</div>
+                <div className="habit-summary-body">
+                    <div className="habit-summary-stat">Streak: {metrics["Current streak"]}</div>
+                    <div className="habit-summary-stat">Total: {metrics["Total completions"]}</div>
                 </div>
+                <div className="habit-summary-footer">{data["category"]}</div>
             </div>
+
             {dates.map(d => (
                 <div
                     key={d}
-                    className={c("habit-cell", { isCompleted: HabitUtils.checkIfDateInTimeline(data, d), isToday: d === TODAY })}
+                    className={c("habit-cell", {
+                        isCompleted: HabitUtils.checkIfDateInTimeline(data, d),
+                        isFuture: moment().format("YYYY-MM-DD") < d,
+                        isToday: d === TODAY
+                    })}
                     onClick={e => onComplete(e, d)}
                 />
             ))}

@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { habitAPI, HabitUtils } from '../../utils';
 import { MODE, FILTER } from "../../utils/habitUtils";
 import { Habit, HabitModal } from "../../components";
+import { getIcon } from "../../res/icons";
 import moment from "moment";
 import "./habitList.css";
 
@@ -46,25 +47,6 @@ const HabitList = () => {
     return (
         <>
             <div className="habitListControls">
-                <button
-                    className="btn btn-outline-dark btn-sm"
-                    onClick={e => {
-                        e.preventDefault();
-                        scrollDate(-1);
-                    }}
-                >
-                    Left
-                </button>
-                <button
-                    className="btn btn-outline-dark btn-sm"
-                    onClick={e => {
-                        e.preventDefault();
-                        scrollDate(1);
-                    }}
-                >
-                    Right
-                </button>
-
                 <select
                     className="btn btn-outline-dark btn-sm"
                     onChange={e => changeFilter(e.target.value)}
@@ -74,9 +56,24 @@ const HabitList = () => {
                         <option key={f} value={FILTER[f]}>{FILTER[f]}</option>
                     ))}
                 </select>
-
-                <button className="btn btn-success btn-sm btn-add" onClick={() => { setMode(MODE.ADD) }}>Add</button>
-
+                <div
+                    className="btn btn-outline-dark btn-sm"
+                    onClick={() => scrollDate(-1)}
+                >
+                    {getIcon("left")}
+                </div>
+                <div
+                    className="btn btn-outline-dark btn-sm"
+                    onClick={() => scrollDate(1)}
+                >
+                    {getIcon("right")}
+                </div>
+                <div
+                    className="btn btn-success btn-sm btn-add-habit"
+                    onClick={() => { setMode(MODE.ADD) }}
+                >
+                    {getIcon("add")}
+                </div>
             </div>
             <div className="habitList">
                 <div className="habitListHeader">

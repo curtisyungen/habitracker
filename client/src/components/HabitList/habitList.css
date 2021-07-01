@@ -5,6 +5,22 @@
     width: 100%;
 }
 
+.habitListControls > * {
+    background: lightgray;
+    border: 1px solid darkgray;
+    border-left: 0px;
+    border-radius: 0px;
+    border-style: solid;
+    color: black;
+    height: 31px;
+    width: 100px;
+}
+
+.habitListControls > select {
+    border-left: 1px solid darkgray;
+    box-shadow: none !important;
+}
+
 .habitListControls button {
     width: 100px;
 }
