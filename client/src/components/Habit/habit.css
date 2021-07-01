@@ -1,8 +1,8 @@
 .habit {
     cursor: pointer;
-    display: grid;
-    grid-gap: 2px;
-    grid-template-columns: repeat(8, 1fr);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     height: 100px;
     margin-bottom: 2px;
     position: relative;
@@ -11,19 +11,27 @@
 .habit-cell {
     border: 1px solid darkgray;
     cursor: pointer;
+    margin-right: 2px;
     padding: 5px;
     text-align: center;
     transition: 0.25s;
     white-space: nowrap;
+    width: 100px;
+}
+
+.habit-cell:last-child {
+    margin-right: 0px;
 }
 
 .habit-summary {
     border: 1px solid darkgray;
     cursor: pointer;
+    margin-right: 2px;
     padding: 5px;
     position: relative;
     text-align: center;
     white-space: nowrap;
+    width: 100px;
 }
 
 .habit-summary-footer {

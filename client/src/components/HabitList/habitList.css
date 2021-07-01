@@ -1,8 +1,12 @@
+.habitListContainer {
+    margin: auto;
+    width: 816px;
+}
+
 .habitListControls {
     display: flex;
     justify-content: center;
-    text-align: center;
-    width: 100%;
+    width: 816px;
 }
 
 .habitListControls > * {
@@ -26,15 +30,25 @@
 }
 
 .habitListHeader {
-    display: grid;
-    grid-gap: 2px;
-    grid-template-columns: repeat(8, 1fr);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 50px;
+    margin-bottom: 2px;
     margin-top: 20px;
 }
 
-.habitList-date {
+.habitListHeader > * {
+    border: 1px solid darkgray;
     font-size: 13px;
+    margin-right: 2px;
+    padding-top: 5px;
     text-align: center;
+    width: 100px;
+}
+
+.habitList-date:last-child {
+    margin-right: 0px;
 }
 
 .habitList-date-name {

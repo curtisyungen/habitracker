@@ -45,7 +45,7 @@ const HabitList = () => {
     }
 
     return (
-        <>
+        <div className="habitListContainer">
             <div className="habitListControls">
                 <select
                     className="btn btn-outline-dark btn-sm"
@@ -115,7 +115,7 @@ const HabitList = () => {
             ) : (
                 <></>
             )}
-        </>
+        </div>
     )
 }
 

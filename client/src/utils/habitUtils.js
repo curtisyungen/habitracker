@@ -5,6 +5,7 @@ export const MODE = {
     ADD: "Add",
     EDIT: "Edit",
     NONE: "None",
+    ENTER_VALUE: "Enter value",
 }
 
 export const VIEW = {
@@ -64,18 +65,36 @@ export default class HabitUtils {
             timeline[year][month] = {};
         }
 
-        if (day in timeline[year][month]) {
-            delete timeline[year][month][day];
+        const habitType = habit.habit_type;
 
-            if (Object.keys(timeline[year][month]).length === 0) {
-                delete timeline[year][month];
+        if (habitType === HABIT.TYPE.CHECK_OFF) {
+            if (day in timeline[year][month]) {
+                delete timeline[year][month][day];
 
-                if (Object.keys(timeline[year]).length === 0) {
-                    delete timeline[year];
+                if (Object.keys(timeline[year][month]).length === 0) {
+                    delete timeline[year][month];
+
+                    if (Object.keys(timeline[year]).length === 0) {
+                        delete timeline[year];
+                    }
                 }
+            } else {
+                timeline[year][month][day] = value || ""
             }
         } else {
-            timeline[year][month][day] = value || ""
+            if (value && value !== "") {
+                timeline[year][month][day] = value;
+            } else {
+                delete timeline[year][month][day];
+
+                if (Object.keys(timeline[year][month]).length === 0) {
+                    delete timeline[year][month];
+
+                    if (Object.keys(timeline[year]).length === 0) {
+                        delete timeline[year];
+                    }
+                }
+            }
         }
 
         return timeline;
@@ -195,6 +214,14 @@ export default class HabitUtils {
         const timeline = this.parseJSONIfNeeded(habit.timeline);
         const { year, month, day } = this.momentizeDate(date);
         return timeline[year] && timeline[year][month] && day in timeline[year][month];
+    }
+
+    static getValueForDate(habit, date) {
+        const timeline = this.parseJSONIfNeeded(habit.timeline);
+        const { year, month, day } = this.momentizeDate(date);
+        if (timeline[year] && timeline[year][month] && day in timeline[year][month]) {
+            return timeline[year][month][day];
+        }
     }
 
     static parseJSONIfNeeded(string) {
