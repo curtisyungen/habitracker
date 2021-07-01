@@ -14,7 +14,10 @@ class HabitController {
             db.Habits.findAll({
                 where: {
                     userId: user.dataValues.userId,
-                }
+                },
+                order: [
+                    ["title", "ASC"],
+                ],
             }).then(habits => {
                 let result = [];
                 for (var i = 0; i < habits.length; i++) {

@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    height: 100px;
+    height: 90px;
     margin-bottom: 2px;
     position: relative;
 }
@@ -13,6 +13,7 @@
     cursor: pointer;
     margin-right: 2px;
     padding: 5px;
+    padding-top: 30px;
     text-align: center;
     transition: 0.25s;
     white-space: nowrap;
@@ -45,13 +46,16 @@
 }
 
 .habit-summary-header {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 3px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .habit-summary-stat {
-    font-size: 12px;
+    font-size: 11px;
     text-align: left;
 }
 

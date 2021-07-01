@@ -4,7 +4,9 @@ export const HABIT = {
     CATEGORY: {
         FITNESS: "Fitness",
         HEALTH: "Health",
+        PERSONAL: "Personal",
         RECREATION: "Recreation",
+        WORK: "Work",
     },
     FIELDS: {
         TITLE: { name: "title", required: true },

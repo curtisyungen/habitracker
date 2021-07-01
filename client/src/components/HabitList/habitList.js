@@ -34,7 +34,13 @@ const HabitList = () => {
     }
 
     const scrollDate = (dir) => {
-        const newMonday = moment(monday).add(dir * 7, "days").format("YYYY-MM-DD");
+        let newMonday;
+        if (dir === 0) {
+            newMonday = moment().day("monday").format("YYYY-MM-DD");
+        } else {
+            newMonday = moment(monday).add(dir * 7, "days").format("YYYY-MM-DD");
+        }
+
         setMonday(newMonday);
         loadDates(newMonday);
     }
@@ -61,6 +67,12 @@ const HabitList = () => {
                     onClick={() => scrollDate(-1)}
                 >
                     {getIcon("left")}
+                </div>
+                <div
+                    className="btn btn-outline-dark btn-sm"
+                    onClick={() => scrollDate(0)}
+                >
+                    {" "}
                 </div>
                 <div
                     className="btn btn-outline-dark btn-sm"
