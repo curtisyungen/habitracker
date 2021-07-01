@@ -17,6 +17,11 @@
     white-space: nowrap;
 }
 
+.habit-cell-sub {
+    font-size: 13px;
+    text-align: left;
+}
+
 .habit-edit {
     color: #505050;
     cursor: pointer;
@@ -62,4 +67,8 @@
 
 .isCompleted { 
     background: rgba(20,202,113,.97);
+}
+
+.isToday {
+    border: 2px solid gold;
 }
