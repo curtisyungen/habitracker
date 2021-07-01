@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import { habitAPI, HabitUtils } from '../../utils';
-import { MODE, FILTER } from "../../utils/habitUtils";
+import { MODE } from "../../utils/habitUtils";
 import { Habit, HabitModal } from "../../components";
 import moment from "moment";
 import "./habitList.css";
@@ -10,36 +10,31 @@ const HabitList = () => {
     const { user } = useAuth0();
     const [habits, setHabits] = useState([]);
     const [displayedHabits, setDisplayedHabits] = useState([]);
-    const [dates, setDates] = useState([]);
     const [monday, setMonday] = useState(moment().day("monday").format("YYYY-MM-DD"));
-    const [filter, setFilter] = useState(FILTER.ALL);
+    const [dates, setDates] = useState([]);
     const [mode, setMode] = useState(MODE.NONE);
     const [habitToEdit, setHabitToEdit] = useState(null);
 
     useEffect(() => {
-        loadDates();
+        loadDates(monday);
         getHabits();
     }, []);
 
     const getHabits = () => {
         habitAPI.getAllHabitsForUser(user.email).then(res => {
             setHabits(res.data);
-            setDisplayedHabits(HabitUtils.filterHabits(res.data, filter));
+            setDisplayedHabits(res.data);
         });
     }
 
-    const loadDates = () => {
+    const loadDates = (monday) => {
         setDates([0, 1, 2, 3, 4, 5, 6].map(d => moment(monday).add(d, "days").format("YYYY-MM-DD")));
     }
 
     const scrollDate = (dir) => {
-        setMonday(moment(monday).add(dir * 7, "days").format("YYYY-MM-DD"));
-        loadDates();
-    }
-
-    const changeFilter = (filter) => {
-        setDisplayedHabits(HabitUtils.filterHabits(habits, filter));
-        setFilter(filter);
+        const newMonday = moment(monday).add(dir * 7, "days").format("YYYY-MM-DD");
+        setMonday(newMonday);
+        loadDates(newMonday);
     }
 
     return (
@@ -63,16 +58,6 @@ const HabitList = () => {
                 >
                     Right
                 </button>
-
-                <select
-                    className="btn btn-outline-dark btn-sm"
-                    onChange={e => changeFilter(e.target.value)}
-                    defaultValue={filter}
-                >
-                    {Object.keys(FILTER).map(f => (
-                        <option key={f} value={FILTER[f]}>{FILTER[f]}</option>
-                    ))}
-                </select>
 
                 <button className="btn btn-success btn-sm btn-add" onClick={() => { setMode(MODE.ADD) }}>Add</button>
 

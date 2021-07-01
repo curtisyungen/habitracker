@@ -13,27 +13,7 @@ export const VIEW = {
     MONTH: "Month",
 }
 
-export const FILTER = {
-    INCOMPLETE: "Incomplete",
-    COMPLETE: "Complete",
-    ALL: "All",
-}
-
 export default class HabitUtils {
-
-    static filterHabits(habits, filter, date) {
-        if (!habits) return [];
-
-        switch (filter) {
-            case FILTER.INCOMPLETE:
-                return habits.filter(h => !this.checkIfDateInTimeline(h, date))
-            case FILTER.COMPLETE:
-                return habits.filter(h => this.checkIfDateInTimeline(h, date))
-            case FILTER.ALL:
-            default:
-                return habits;
-        }
-    }
 
     static momentizeDate(date) {
         return {

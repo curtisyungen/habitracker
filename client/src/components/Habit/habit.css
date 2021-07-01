@@ -1,10 +1,10 @@
 .habit {
     cursor: pointer;
     display: grid;
-    grid-gap: 1px;
+    grid-gap: 2px;
     grid-template-columns: repeat(8, 1fr);
     height: 100px;
-    margin-bottom: 1px;
+    margin-bottom: 2px;
     position: relative;
     transition: 0.35s;
 }
@@ -61,5 +61,5 @@
 }
 
 .isCompleted { 
-    background: rgb(90, 212, 90);
+    background: rgba(20,202,113,.97);
 }
