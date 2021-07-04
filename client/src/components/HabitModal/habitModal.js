@@ -113,7 +113,7 @@ const HabitModal = ({ open, close, habit, callback }) => {
                     defaultValue={data.habit_type}
                 >
                     {Object.keys(HABIT.TYPE).map(t => (
-                        <option key={t} value={t}>{HABIT.TYPE[t]}</option>
+                        <option key={t} value={HABIT.TYPE[t]}>{HABIT.TYPE[t]}</option>
                     ))}
                 </select>
             </div>
@@ -128,7 +128,7 @@ const HabitModal = ({ open, close, habit, callback }) => {
                     defaultValue={data.category}
                 >
                     {Object.keys(HABIT.CATEGORY).map(t => (
-                        <option key={t} value={t}>{HABIT.CATEGORY[t]}</option>
+                        <option key={t} value={HABIT.CATEGORY[t]}>{HABIT.CATEGORY[t]}</option>
                     ))}
                 </select>
             </div>
@@ -175,6 +175,21 @@ const HabitModal = ({ open, close, habit, callback }) => {
             ) : (
                 <></>
             )}
+            {/* STATUS */}
+            <div className="input-group">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text">Status</span>
+                    </div>
+                    <select
+                        className="form-control"
+                        onChange={e => updateData("status", e.target.value)}
+                        defaultValue={data.status}
+                    >
+                        {Object.keys(HABIT.STATUS).map(s => (
+                            <option key={s} value={HABIT.STATUS[s]}>{HABIT.STATUS[s]}</option>
+                        ))}
+                    </select>
+                </div>
             {/* METRICS */}
             <div className="habit-metrics">
                 {Object.keys(metrics).map(m => (

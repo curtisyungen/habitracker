@@ -18,6 +18,8 @@ export const FILTER = {
     DUE: "Due",
     INCOMPLETE: "Incomplete",
     COMPLETE: "Complete",
+    INACTIVE: "Inactive",
+    ACTIVE: "Active",
     ALL: "All",
 }
 
@@ -33,6 +35,10 @@ export default class HabitUtils {
                 return habits.filter(h => this.checkIfHabitDueToday(h, date) && !this.checkIfDateInTimeline(h, date))
             case FILTER.COMPLETE:
                 return habits.filter(h => this.checkIfHabitDueToday(h, date) && this.checkIfDateInTimeline(h, date))
+            case FILTER.INACTIVE:
+                return habits.filter(h => h.status === HABIT.STATUS.INACTIVE);
+            case FILTER.ACTIVE:
+                return habits.filter(h => h.status === HABIT.STATUS.ACTIVE);
             case FILTER.ALL:
             default:
                 return habits;

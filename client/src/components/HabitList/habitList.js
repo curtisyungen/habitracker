@@ -13,7 +13,7 @@ const HabitList = () => {
     const [displayedHabits, setDisplayedHabits] = useState([]);
     const [monday, setMonday] = useState(moment().day("monday").format("YYYY-MM-DD"));
     const [dates, setDates] = useState([]);
-    const [filter, setFilter] = useState(FILTER.ALL);
+    const [filter, setFilter] = useState(FILTER.ACTIVE);
     const [mode, setMode] = useState(MODE.NONE);
     const [habitToEdit, setHabitToEdit] = useState(null);
 
