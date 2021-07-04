@@ -1,92 +1,97 @@
 .habit {
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    height: 90px;
-    margin-bottom: 2px;
-    position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 90px;
+  margin-bottom: 2px;
+  position: relative;
 }
 
 .habit-cell {
-    border: 1px solid darkgray;
-    cursor: pointer;
-    margin-right: 2px;
-    padding: 5px;
-    padding-top: 30px;
-    text-align: center;
-    transition: 0.25s;
-    white-space: nowrap;
-    width: 100px;
+  border: 1px solid darkgray;
+  cursor: pointer;
+  margin-right: 2px;
+  padding: 5px;
+  padding-top: 30px;
+  text-align: center;
+  transition: 0.25s;
+  white-space: nowrap;
+  width: 100px;
 }
 
 .habit-cell:last-child {
-    margin-right: 0px;
+  margin-right: 0px;
 }
 
 .habit-summary {
-    border: 1px solid darkgray;
-    cursor: pointer;
-    margin-right: 2px;
-    padding: 5px;
-    position: relative;
-    text-align: center;
-    white-space: nowrap;
-    width: 100px;
+  border: 1px solid darkgray;
+  cursor: pointer;
+  margin-right: 2px;
+  padding: 5px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: 100px;
 }
 
 .habit-summary-footer {
-    border-top: 1px solid darkgray;
-    bottom: 0;
-    font-size: 13px;
-    left: 0;
-    position: absolute;
-    right: 0;
-    text-transform: uppercase;
+  border-top: 1px solid darkgray;
+  bottom: 0;
+  font-size: 13px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  text-transform: uppercase;
 }
 
 .habit-summary-header {
-    font-size: 12px;
-    font-weight: 700;
-    margin-bottom: 3px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.habit-summary-header:hover {
+  overflow: visible;
+  text-overflow: inherit;
 }
 
 .habit-summary-stat {
-    font-size: 11px;
-    text-align: left;
+  font-size: 11px;
+  text-align: left;
 }
 
 .habit-edit {
-    color: #505050;
-    cursor: pointer;
-    font-size: 12px;
-    position: absolute;
-    right: 5px;
-    top: 5px;
+  color: #505050;
+  cursor: pointer;
+  font-size: 12px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
 
 .habit-status {
-    border-top: 1px solid darkgray;
-    bottom: 0;
-    font-size: 11px;
-    height: 28px;
-    position: absolute;
-    text-transform: uppercase;
-    width: 100%;
+  border-top: 1px solid darkgray;
+  bottom: 0;
+  font-size: 11px;
+  height: 28px;
+  position: absolute;
+  text-transform: uppercase;
+  width: 100%;
 }
 
-.isCompleted { 
-    background: rgba(20,202,113,.97);
+.isCompleted {
+  background: rgba(20, 202, 113, 0.97);
 }
 
 .isFuture {
-    background: lightgray;
-    cursor: default;
+  background: lightgray;
+  cursor: default;
 }
 
 .isToday {
-    border: 2px solid gold;
+  border: 2px solid gold;
 }

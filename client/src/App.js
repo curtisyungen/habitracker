@@ -18,7 +18,14 @@ function App() {
   if (isLoading) return <div>Loading...</div>
 
   return (
-    <div className="App">
+    <div 
+      className="App" 
+      style={{
+        backgroundImage: `url("https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3dpdHplcmxhbmR8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80")`,
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+      }}
+      >
       <Navbar />
       {routeResult}
     </div>
