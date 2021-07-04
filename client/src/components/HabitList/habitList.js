@@ -11,7 +11,7 @@ const HabitList = () => {
     const { user } = useAuth0();
     const [habits, setHabits] = useState([]);
     const [displayedHabits, setDisplayedHabits] = useState([]);
-    const [monday, setMonday] = useState(moment().day("monday").format("YYYY-MM-DD"));
+    const [monday, setMonday] = useState(HabitUtils.momentizeDate(moment()).thisMonday);
     const [dates, setDates] = useState([]);
     const [filter, setFilter] = useState(FILTER.ACTIVE);
     const [mode, setMode] = useState(MODE.NONE);
@@ -36,7 +36,7 @@ const HabitList = () => {
     const scrollDate = (dir) => {
         let newMonday;
         if (dir === 0) {
-            newMonday = moment().day("monday").format("YYYY-MM-DD");
+            newMonday = HabitUtils.momentizeDate(moment()).thisMonday;
         } else {
             newMonday = moment(monday).add(dir * 7, "days").format("YYYY-MM-DD");
         }

@@ -52,6 +52,7 @@ export default class HabitUtils {
             day: moment(date).format("D"),
             yyyymmdd: moment(date).format("YYYY-MM-DD"),
             isoWeekday: moment(date).isoWeekday(),
+            thisMonday: moment(date).day("monday") > moment(date) ? moment(date).subtract(1, "week").day("monday") : moment(date).day("monday")
         }
     }
 
