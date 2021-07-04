@@ -30,11 +30,22 @@ export default class HabitUtils {
 
         switch (filter) {
             case FILTER.DUE:
-                return habits.filter(h => this.checkIfHabitDueToday(h, date));
+                return habits.filter(h => (
+                    this.checkIfHabitDueToday(h, date) &&
+                    h.status === HABIT.STATUS.ACTIVE
+                ));
             case FILTER.INCOMPLETE:
-                return habits.filter(h => this.checkIfHabitDueToday(h, date) && !this.checkIfDateInTimeline(h, date))
+                return habits.filter(h => (
+                    this.checkIfHabitDueToday(h, date) &&
+                    !this.checkIfDateInTimeline(h, date) &&
+                    h.status === HABIT.STATUS.ACTIVE
+                ));
             case FILTER.COMPLETE:
-                return habits.filter(h => this.checkIfHabitDueToday(h, date) && this.checkIfDateInTimeline(h, date))
+                return habits.filter(h => (
+                    this.checkIfHabitDueToday(h, date) &&
+                    this.checkIfDateInTimeline(h, date) &&
+                    h.status === HABIT.STATUS.ACTIVE
+                ));
             case FILTER.INACTIVE:
                 return habits.filter(h => h.status === HABIT.STATUS.INACTIVE);
             case FILTER.ACTIVE:
