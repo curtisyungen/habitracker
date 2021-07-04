@@ -2,6 +2,8 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+    faCheck,
+    faCheckCircle,
     faChevronDown,
     faChevronLeft,
     faChevronRight,
@@ -11,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
+    faCheckCircle,
     faChevronDown,
     faChevronLeft,
     faChevronRight,
@@ -23,6 +26,8 @@ export function getIcon(name, classes) {
     switch (name.toLowerCase()) {
         case "add":
             return <FontAwesomeIcon className={classes} icon={faPlus} />;
+        case "check":
+            return <FontAwesomeIcon className={classes} icon={faCheckCircle} />;
         case "chevdown":
             return <FontAwesomeIcon className={classes} icon={faChevronDown} />;
         case "edit":

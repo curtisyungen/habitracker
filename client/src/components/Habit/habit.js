@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { habitAPI, HabitUtils } from "../../utils";
 import { MODE } from "../../utils/habitUtils";
 import { HABIT } from '../../res/main';
+import { getIcon } from "../../res/icons";
 import c from "classnames";
 import moment from "moment";
 import "./habit.css";
@@ -19,7 +20,7 @@ const Habit = ({ habit, dates, onClick, callback }) => {
 
     useEffect(() => {
         getMetrics();
-    }, [])
+    }, []);
 
     const getMetrics = () => {
         setMetrics(HabitUtils.getHabitMetrics(data));
@@ -73,7 +74,11 @@ const Habit = ({ habit, dates, onClick, callback }) => {
                         })}
                         onClick={e => onComplete(e, d)}
                     >
-                        {HabitUtils.getValueForDate(data, d)}
+                        {habit.habit_type === HABIT.TYPE.CHECK_OFF ? (
+                            <div className="habit-check">{getIcon("check", "habit-check-icon")}</div>
+                        ) : (
+                            HabitUtils.getValueForDate(data, d)
+                        )}
                     </div>
                 ))}
             </div>

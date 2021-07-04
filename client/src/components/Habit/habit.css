@@ -13,15 +13,31 @@
   cursor: pointer;
   margin-right: 2px;
   padding: 5px;
-  padding-top: 30px;
+  padding-top: 32px;
   text-align: center;
   transition: 0.25s;
   white-space: nowrap;
   width: 100px;
 }
 
+.habit-cell:hover {
+  background: lightgray;
+}
+
 .habit-cell:last-child {
   margin-right: 0px;
+}
+
+.habit-cell:hover .habit-check-icon {
+  color: darkgray;
+  visibility: visible;
+}
+
+.habit-check-icon {
+  color: darkgreen;
+  height: 25px;
+  visibility: hidden;
+  width: 25px !important;
 }
 
 .habit-summary {
@@ -87,9 +103,23 @@
   background: rgba(20, 202, 113, 0.97);
 }
 
+.isCompleted:hover {
+  background: rgba(20, 202, 113, 0.97);
+  color: inherit;
+}
+
+.isCompleted .habit-check-icon {
+  color: darkgreen !important;
+  visibility: visible;
+}
+
 .isFuture {
   background: lightgray;
   cursor: default;
+}
+
+.isFuture .habit-check-icon {
+  visibility: hidden !important;
 }
 
 .isToday {
