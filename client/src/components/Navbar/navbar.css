@@ -1,5 +1,5 @@
 .navbar {
-  background: white !important;
+  background: inherit;
   border-bottom: 1px solid lightgray;
   color: white;
   height: 55px;

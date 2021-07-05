@@ -1,17 +1,24 @@
+:root {
+  --border-cell: 1px solid darkgray;
+  --marginRight: 2px;
+  --marginBottom: 2px;
+}
+
 .habit {
   cursor: pointer;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   height: 90px;
-  margin-bottom: 2px;
+  margin-bottom: var(--marginBottom);
   position: relative;
 }
 
 .habit-cell {
-  border: 1px solid darkgray;
+  background: rgba(255, 255, 255, 0.82);
+  border: var(--border-cell);
   cursor: pointer;
-  margin-right: 2px;
+  margin-right: var(--marginRight);
   padding: 5px;
   padding-top: 32px;
   text-align: center;
@@ -41,9 +48,10 @@
 }
 
 .habit-summary {
-  border: 1px solid darkgray;
+  background: rgba(255, 255, 255, 0.82);
+  border: var(--border-cell);
   cursor: pointer;
-  margin-right: 2px;
+  margin-right: var(--marginRight);
   padding: 5px;
   position: relative;
   text-align: center;

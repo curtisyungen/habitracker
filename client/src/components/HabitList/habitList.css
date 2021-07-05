@@ -1,3 +1,9 @@
+:root {
+  --border-cell: 1px solid darkgray;
+  --marginBottom: 2px;
+  --marginRight: 2px;
+}
+
 .habitListBody {
   max-height: calc(100vh - 113px);
   overflow-y: scroll;
@@ -63,13 +69,14 @@
   flex-direction: row;
   flex-wrap: nowrap;
   height: 50px;
+  margin-bottom: var(--marginBottom);
 }
 
 .habitListHeader > * {
   background: rgba(255, 255, 255, 0.82);
-  border: 1px solid darkgray;
+  border: var(--border-cell);
   font-size: 13px;
-  margin-right: 2px;
+  margin-right: var(--marginRight);
   padding-top: 5px;
   text-align: center;
   width: 100px;
