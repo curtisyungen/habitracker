@@ -75,11 +75,7 @@ const Habit = ({ habit, dates, onClick, callback }) => {
                         })}
                         onClick={e => onComplete(e, d)}
                     >
-                        {habit.habit_type === HABIT.TYPE.CHECK_OFF ? (
-                            <div className="habit-check">{getIcon("check", "habit-check-icon")}</div>
-                        ) : (
-                            HabitUtils.getValueForDate(data, d)
-                        )}
+                        <div className="habit-check">{HabitUtils.getCheckValueOrTarget(habit, d)}</div>
                     </div>
                 ))}
             </div>

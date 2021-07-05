@@ -1,5 +1,6 @@
 import { HABIT } from "../res/main";
 import moment from "moment";
+import { getIcon } from "../res/icons";
 
 export const MODE = {
     ADD: "Add",
@@ -237,9 +238,19 @@ export default class HabitUtils {
     static getValueForDate(habit, date) {
         const timeline = this.parseJSONIfNeeded(habit.timeline);
         const { year, month, day } = this.momentizeDate(date);
-        if (timeline[year] && timeline[year][month] && day in timeline[year][month]) {
+        if (timeline[year] && timeline[year][month]) {
             return timeline[year][month][day];
         }
+    }
+
+    static getCheckValueOrTarget(habit, date) {
+        if (habit.habit_type === HABIT.TYPE.CHECK_OFF) {
+            return getIcon("check", "habit-check-icon");
+        }
+
+        const timeline = this.parseJSONIfNeeded(habit.timeline);
+        const { year, month, day } = this.momentizeDate(date);
+        return this.checkIfDateInTimeline(habit, date) ? timeline[year][month][day] : habit.target;
     }
 
     static parseJSONIfNeeded(string) {

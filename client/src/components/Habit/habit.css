@@ -35,15 +35,19 @@
   margin-right: 0px;
 }
 
+.habit-cell:hover .habit-check,
 .habit-cell:hover .habit-check-icon {
   color: darkgray;
   visibility: visible;
 }
 
+.habit-check {
+  visibility: hidden;
+}
+
 .habit-check-icon {
   color: darkgreen;
   height: 25px;
-  visibility: hidden;
   width: 25px !important;
 }
 
@@ -116,6 +120,11 @@
   color: inherit;
 }
 
+.isCompleted .habit-check {
+  color: black !important;
+  visibility: visible;
+}
+
 .isCompleted .habit-check-icon {
   color: darkgreen !important;
   visibility: visible;
@@ -126,6 +135,7 @@
   cursor: default;
 }
 
+.isFuture .habit-check,
 .isFuture .habit-check-icon {
   visibility: hidden !important;
 }
