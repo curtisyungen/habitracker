@@ -24,6 +24,11 @@ export const FILTER = {
     ALL: "All",
 }
 
+export const SORT = {
+    CATEGORY: "category",
+    TITLE: "title",
+}
+
 export default class HabitUtils {
 
     static filterHabits(habits, filter, date) {
@@ -55,6 +60,15 @@ export default class HabitUtils {
             default:
                 return habits;
         }
+    }
+
+    static sortHabits(habits, sort) {
+        function sortBy(a, b) {
+            if (a[sort] === b[sort]) return 0;
+            return a[sort] > b[sort] ? 1 : -1;
+        }
+
+        return habits.sort(sortBy);
     }
 
     static momentizeDate(date) {

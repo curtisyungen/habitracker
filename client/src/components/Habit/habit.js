@@ -4,7 +4,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { habitAPI, HabitUtils } from "../../utils";
 import { MODE } from "../../utils/habitUtils";
 import { HABIT } from '../../res/main';
-import { getIcon } from "../../res/icons";
 import c from "classnames";
 import moment from "moment";
 import "./habit.css";

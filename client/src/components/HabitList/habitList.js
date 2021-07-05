@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import { habitAPI, HabitUtils } from '../../utils';
-import { MODE, FILTER } from "../../utils/habitUtils";
+import { FILTER, MODE, SORT } from "../../utils/habitUtils";
 import { Habit, HabitModal } from "../../components";
 import { getIcon } from "../../res/icons";
 import moment from "moment";
@@ -13,7 +13,6 @@ const HabitList = () => {
     const [displayedHabits, setDisplayedHabits] = useState([]);
     const [monday, setMonday] = useState(HabitUtils.momentizeDate(moment()).thisMonday);
     const [dates, setDates] = useState([]);
-    const [filter, setFilter] = useState(FILTER.ACTIVE);
     const [mode, setMode] = useState(MODE.NONE);
     const [habitToEdit, setHabitToEdit] = useState(null);
 
@@ -25,7 +24,7 @@ const HabitList = () => {
     const getHabits = () => {
         habitAPI.getAllHabitsForUser(user.email).then(res => {
             setHabits(res.data);
-            setDisplayedHabits(HabitUtils.filterHabits(res.data, filter, moment().format("YYYY-MM-DD")));
+            setDisplayedHabits(HabitUtils.filterHabits(res.data, FILTER.ACTIVE, moment().format("YYYY-MM-DD")));
         });
     }
 
@@ -47,7 +46,10 @@ const HabitList = () => {
 
     const changeFilter = (filter) => {
         setDisplayedHabits(HabitUtils.filterHabits(habits, filter, moment().format("YYYY-MM-DD")));
-        setFilter(filter);
+    }
+
+    const changeSort = sort => {
+        setDisplayedHabits(HabitUtils.sortHabits(displayedHabits, sort));
     }
 
     return (
@@ -57,7 +59,7 @@ const HabitList = () => {
                     <select
                         className="btn btn-outline-dark btn-sm"
                         onChange={e => changeFilter(e.target.value)}
-                        defaultValue={filter}
+                        defaultValue={FILTER.ACTIVE}
                     >
                         {Object.keys(FILTER).map(f => (
                             <option key={f} value={FILTER[f]}>{FILTER[f]}</option>
@@ -89,9 +91,15 @@ const HabitList = () => {
                     </div>
                 </div>
                 <div className="habitListHeader">
-                    <div className="habitListHeader-sort disable-select">
-                        Empty
-                    </div>
+                    <select
+                        className="habitListHeader-sort disable-select"
+                        onChange={e => changeSort(e.target.value)}
+                        defaultValue={SORT.TITLE}
+                    >
+                        {Object.keys(SORT).map(s => (
+                            <option key={s} value={SORT[s]}>{SORT[s]}</option>
+                        ))}
+                    </select>
                     {dates.map(d => (
                         <div key={d} className="habitList-date disable-select">
                             <div className="habitList-date-name">{moment(d).format("dddd")}</div>
