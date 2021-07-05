@@ -93,3 +93,9 @@
 .habitList-date-value {
   font-size: 11px;
 }
+
+@media only screen and (max-width: 768px) {
+  .habitListContainer {
+    margin-left: 0px;
+  }
+}

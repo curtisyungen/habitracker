@@ -7,9 +7,9 @@
 
 .container-no-scroll {
   /* background: rgba(255, 255, 255, 0.82); */
-  box-shadow: 0 0 0 1px solid #c2c2c2;
   min-height: calc(100vh - 50px);
   max-height: calc(100vh - 50px);
+  min-width: 916px;
   overflow-x: hidden;
   overflow-y: hidden;
   padding-left: 10px;
@@ -38,4 +38,15 @@
   padding-bottom: 0px;
   position: relative;
   width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  .container-no-scroll {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .page {
+    padding: 0px 100px;
+  }
 }
