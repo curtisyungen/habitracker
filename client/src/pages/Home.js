@@ -9,7 +9,7 @@ const Home = () => {
     return (
         <div className="page page-home">
             {isAuthenticated ? (
-                <div className="container">
+                <div className="container-no-scroll">
                     <HabitList />
                 </div>
             ) : (

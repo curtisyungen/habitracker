@@ -52,69 +52,69 @@ const HabitList = () => {
 
     return (
         <div className="habitListContainer">
-            <div className="habitListControls">
-                <select
-                    className="btn btn-outline-dark btn-sm"
-                    onChange={e => changeFilter(e.target.value)}
-                    defaultValue={filter}
-                >
-                    {Object.keys(FILTER).map(f => (
-                        <option key={f} value={FILTER[f]}>{FILTER[f]}</option>
-                    ))}
-                </select>
-                <div
-                    className="btn btn-outline-dark btn-sm"
-                    onClick={() => scrollDate(-1)}
-                >
-                    {getIcon("left")}
+            <div className="habitListFixedHeader">
+                <div className="habitListControls">
+                    <select
+                        className="btn btn-outline-dark btn-sm"
+                        onChange={e => changeFilter(e.target.value)}
+                        defaultValue={filter}
+                    >
+                        {Object.keys(FILTER).map(f => (
+                            <option key={f} value={FILTER[f]}>{FILTER[f]}</option>
+                        ))}
+                    </select>
+                    <div
+                        className="btn btn-outline-dark btn-sm"
+                        onClick={() => scrollDate(-1)}
+                    >
+                        {getIcon("left")}
+                    </div>
+                    <div
+                        className="btn btn-outline-dark btn-sm"
+                        onClick={() => scrollDate(0)}
+                    >
+                        {" "}
+                    </div>
+                    <div
+                        className="btn btn-outline-dark btn-sm"
+                        onClick={() => scrollDate(1)}
+                    >
+                        {getIcon("right")}
+                    </div>
+                    <div
+                        className="btn btn-success btn-sm btn-add-habit"
+                        onClick={() => { setMode(MODE.ADD) }}
+                    >
+                        {getIcon("add")}
+                    </div>
                 </div>
-                <div
-                    className="btn btn-outline-dark btn-sm"
-                    onClick={() => scrollDate(0)}
-                >
-                    {" "}
-                </div>
-                <div
-                    className="btn btn-outline-dark btn-sm"
-                    onClick={() => scrollDate(1)}
-                >
-                    {getIcon("right")}
-                </div>
-                <div
-                    className="btn btn-success btn-sm btn-add-habit"
-                    onClick={() => { setMode(MODE.ADD) }}
-                >
-                    {getIcon("add")}
-                </div>
-            </div>
-            <div className="habitList">
                 <div className="habitListHeader">
-                    <div className="habitListHeader-sort">
+                    <div className="habitListHeader-sort disable-select">
                         Empty
                     </div>
                     {dates.map(d => (
-                        <div key={d} className="habitList-date">
+                        <div key={d} className="habitList-date disable-select">
                             <div className="habitList-date-name">{moment(d).format("dddd")}</div>
                             <div className="habitList-date-value">{d}</div>
                         </div>
                     ))}
                 </div>
-                <div className="habitListBody">
-                    {displayedHabits.map(h => (
-                        <Habit
-                            key={h.id}
-                            habit={h}
-                            dates={dates}
-                            onClick={() => {
-                                setHabitToEdit(h);
-                                setMode(MODE.EDIT);
-                            }}
-                            callback={() => { getHabits(); }}
-                        />
-                    ))}
+            </div>
+            <div className="habitListBody">
+                {displayedHabits.map(h => (
+                    <Habit
+                        key={h.id}
+                        habit={h}
+                        dates={dates}
+                        onClick={() => {
+                            setHabitToEdit(h);
+                            setMode(MODE.EDIT);
+                        }}
+                        callback={() => { getHabits(); }}
+                    />
+                ))}
 
-                    {displayedHabits.length === 0 && <div className="text-center mt-3">No habits found.</div>}
-                </div>
+                {displayedHabits.length === 0 && <div className="text-center mt-3">No habits found.</div>}
             </div>
 
             {mode !== MODE.NONE ? (

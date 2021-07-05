@@ -1,10 +1,31 @@
+.habitListBody {
+  max-height: calc(100vh - 113px);
+  overflow-y: scroll;
+  padding-bottom: 150px;
+  position: absolute;
+  top: 93px;
+  z-index: 998;
+}
+
+.habitListBody::-webkit-scrollbar {
+  display: none;
+}
+
 .habitListContainer {
   margin: auto;
-  min-height: 100vh;
+  max-height: calc(100vh - 55px);
+  min-height: calc(100vh - 55px);
+  overflow-y: hidden;
+  position: relative;
   width: 816px;
 }
 
+.habitListContainer::-webkit-scrollbar {
+  display: none;
+}
+
 .habitListControls {
+  background: inherit;
   display: flex;
   justify-content: center;
   width: 816px;
@@ -18,6 +39,7 @@
   border-style: solid;
   color: black;
   height: 31px;
+  margin-bottom: 10px;
   width: 100px;
 }
 
@@ -30,16 +52,21 @@
   width: 100px;
 }
 
+.habitListFixedHeader {
+  position: fixed;
+  width: 816px;
+  z-index: 999;
+}
+
 .habitListHeader {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   height: 50px;
-  margin-bottom: 2px;
-  margin-top: 20px;
 }
 
 .habitListHeader > * {
+  background: rgba(255, 255, 255, 0.82);
   border: 1px solid darkgray;
   font-size: 13px;
   margin-right: 2px;

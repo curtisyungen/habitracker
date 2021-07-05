@@ -8,6 +8,7 @@ import { getIcon } from "../../res/icons";
 import c from "classnames";
 import moment from "moment";
 import "./habit.css";
+import "../../styles/main.css";
 
 const TODAY = moment().format("YYYY-MM-DD");
 
@@ -55,7 +56,7 @@ const Habit = ({ habit, dates, onClick, callback }) => {
                 className="habit"
                 onClick={onClick}
             >
-                <div className="habit-summary">
+                <div className="habit-summary disable-select">
                     <div className="habit-summary-header">{data["title"]}</div>
                     <div className="habit-summary-body">
                         <div className="habit-summary-stat">Streak: {metrics["Current streak"]}</div>
