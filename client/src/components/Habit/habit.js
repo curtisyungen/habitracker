@@ -61,7 +61,13 @@ const Habit = ({ habit, dates, onClick, callback }) => {
                         <div className="habit-summary-stat">Streak: {metrics["Current streak"]}</div>
                         <div className="habit-summary-stat">Total: {metrics["Total completions"]}</div>
                     </div>
-                    <div className="habit-summary-footer">{data["category"]}</div>
+                    <div 
+                        className="habit-summary-footer" 
+                        style={{ backgroundColor: data["category"].color 
+                    }}
+                    >
+                        {data["category"].name}
+                    </div>
                 </div>
 
                 {dates.map(d => (

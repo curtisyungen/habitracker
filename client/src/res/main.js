@@ -2,11 +2,11 @@ export const SITE_TITLE = "HABITRACKER";
 
 export const HABIT = {
     CATEGORY: {
-        FITNESS: "Fitness",
-        HEALTH: "Health",
-        PERSONAL: "Personal",
-        RECREATION: "Recreation",
-        WORK: "Work",
+        FITNESS: { name: "Fitness", color: "green"},
+        HEALTH: { name: "Health", color: "blue" },
+        PERSONAL: { name: "Personal", color: "tan" },
+        RECREATION: { name: "Recreation", color: "purple" },
+        WORK: { name: "Work", color: "gray" },
     },
     FIELDS: {
         TITLE: { name: "title", required: true },

@@ -75,7 +75,7 @@ const HabitList = () => {
                         className="btn btn-outline-dark btn-sm"
                         onClick={() => scrollDate(0)}
                     >
-                        {" "}
+                        {"This week"}
                     </div>
                     <div
                         className="btn btn-outline-dark btn-sm"

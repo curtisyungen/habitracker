@@ -25,8 +25,11 @@ export const FILTER = {
 }
 
 export const SORT = {
-    CATEGORY: "category",
-    TITLE: "title",
+    CATEGORY: "Category",
+    CURR_STREAK: "Current streak",
+    TITLE: "Title",
+    TOTAL_COMPLETIONS: "Total completions",
+    TOTAL_STREAK: "Total streak",
 }
 
 export default class HabitUtils {

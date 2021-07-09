@@ -1,6 +1,5 @@
 .navbar {
   background: inherit;
-  border-bottom: 1px solid lightgray;
   color: white;
   height: 55px;
   left: 0;
@@ -9,6 +8,10 @@
   top: 0;
   width: 100%;
   z-index: 1000;
+}
+
+.navbar-brand {
+  font-weight: 700;
 }
 
 .navbar-nav {

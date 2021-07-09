@@ -52,6 +52,7 @@
 .habitListControls > select {
   border-left: 1px solid darkgray;
   box-shadow: none !important;
+  cursor: pointer;
 }
 
 .habitListControls button {
