@@ -1,12 +1,9 @@
 import React from "react";
-
 import Routes from "./Router";
 import { useRoutes } from "hookrouter";
-
 import { useAuth0 } from "@auth0/auth0-react";
-
+import { BACKGROUND } from "./res/main";
 import { Navbar } from "./components";
-
 import './App.css';
 
 function App() {
@@ -20,11 +17,7 @@ function App() {
   return (
     <div 
       className="app" 
-      style={{
-        backgroundImage: `url("https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3dpdHplcmxhbmR8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80")`,
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed",
-      }}
+      style={{ ...BACKGROUND.SWISS }}
       >
       <Navbar />
       {routeResult}

@@ -5,6 +5,10 @@ export default {
         return axios.get("/api/users/getUser", { params: { userId } });
     },
 
+    getUserSettings: function(email) {
+        return axios.get("/api/users/getUserSettings", { params: { email }});
+    },
+
     findOrCreateUser: function (user) {
         return axios.post("/api/users/findOrCreateUser", { user });
     },

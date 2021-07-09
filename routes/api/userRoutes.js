@@ -6,6 +6,10 @@ router.get("/getUser", (req, res) => {
     controller.getUser(req, res);
 });
 
+router.get("/getUserSettings", (req, res) => {
+    controller.getUserSettings(req, res);
+});
+
 router.post("/findOrCreateUser", (req, res) => {
     controller.findOrCreateUser(req, res);
 });

@@ -1,5 +1,14 @@
 export const SITE_TITLE = "HABITRACKER";
 
+export const BACKGROUND = {
+    SWISS: { 
+        title: "Swiss", 
+        backgroundSize: "cover", 
+        backgroundAttachment: "fixed", 
+        backgroundImage: "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3dpdHplcmxhbmR8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80" 
+    },
+}
+
 export const HABIT = {
     CATEGORY: {
         FITNESS: { name: "Fitness", color: "green"},
@@ -46,6 +55,9 @@ export const USER = {
 }
 
 export const DEFAULT = {
-    SETTINGS: {},
+    SETTINGS: {
+        BACKGROUND: BACKGROUND.SWISS,
+        CATEGORIES: { ...HABIT.CATEGORY },
+    },
     STATUS: USER.STATUS.ACTIVE,
 }

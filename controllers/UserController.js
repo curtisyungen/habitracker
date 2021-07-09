@@ -13,6 +13,18 @@ class UserController {
         });
     }
 
+    getUserSettings(req, res) {
+        db.Users.findOne({
+            where: {
+                email: req.query.email,
+            }
+        }).then(user => {
+            res.json(user.settings);
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
     findOrCreateUser(req, res) {
         db.Users.findOrCreate({
             where: {
