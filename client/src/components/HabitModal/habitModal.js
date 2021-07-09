@@ -128,7 +128,7 @@ const HabitModal = ({ open, close, habit, callback }) => {
                     defaultValue={data.category}
                 >
                     {Object.keys(HABIT.CATEGORY).map(t => (
-                        <option key={t} value={HABIT.CATEGORY[t]}>{HABIT.CATEGORY[t]}</option>
+                        <option key={t} value={HABIT.CATEGORY[t].name}>{HABIT.CATEGORY[t].name}</option>
                     ))}
                 </select>
             </div>
