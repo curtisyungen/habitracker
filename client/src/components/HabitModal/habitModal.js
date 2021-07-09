@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from "react-responsive-modal";
 import { useAuth0 } from "@auth0/auth0-react";
-import { HABIT } from '../../res/main';
+import { DEFAULT, HABIT } from '../../res/main';
 import { habitAPI, HabitUtils } from "../../utils";
 import moment from "moment";
 import c from "classnames";
@@ -12,8 +12,8 @@ import "../../styles/main.css";
 const DEFAULT_STATE = {
     title: null,
     description: null,
-    habit_type: HABIT.TYPE.CHECK_OFF,
-    category: HABIT.CATEGORY.FITNESS,
+    habit_type: DEFAULT.HABIT_TYPE,
+    category: DEFAULT.CATEGORY,
     frequency: [1, 2, 3, 4, 5, 6, 7],
     timeline: {},
     target: null,
@@ -125,10 +125,10 @@ const HabitModal = ({ open, close, habit, callback }) => {
                 <select
                     className="form-control"
                     onChange={e => updateData("category", e.target.value)}
-                    defaultValue={data.category}
+                    defaultValue={data.category.name}
                 >
                     {Object.keys(HABIT.CATEGORY).map(t => (
-                        <option key={t} value={HABIT.CATEGORY[t].name}>{HABIT.CATEGORY[t].name}</option>
+                        <option key={t} value={HABIT.CATEGORY[t]}>{HABIT.CATEGORY[t].name}</option>
                     ))}
                 </select>
             </div>

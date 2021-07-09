@@ -55,6 +55,9 @@ export const USER = {
 }
 
 export const DEFAULT = {
+    CATEGORY: HABIT.CATEGORY.FITNESS.name,
+    CATEGORY_COLOR: "gray",
+    HABIT_TYPE: HABIT.TYPE.CHECK_OFF,
     SETTINGS: {
         BACKGROUND: BACKGROUND.SWISS,
         CATEGORIES: { ...HABIT.CATEGORY },
