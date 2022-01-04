@@ -12,10 +12,12 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        habit_type: {
+        // check_off, enter_value
+        type: {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        // Health, fitness, recreation, etc.
         category: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -32,10 +34,12 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true,
         },
+        // time, quantity
         target_type: {
             type: DataTypes.STRING,
             allowNull: true,
         },
+        // Active, Inactive
         status: {
             type: DataTypes.STRING,
             allowNull: false,

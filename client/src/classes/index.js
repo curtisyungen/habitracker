@@ -1,3 +1,4 @@
+import Habit from "./Habit";
 import User from "./User";
 
-export { User };
+export { Habit, User };
