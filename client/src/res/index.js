@@ -44,6 +44,10 @@ export const PAGES = {
 
 export const SITE_TITLE = "HABITRACKER";
 
+export const SIZE = {
+    NAVBAR_HEIGHT: "55px",
+}
+
 export const STATUS = {
     ACTIVE: "Active",
     INACTIVE: "Inactive",

@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-import { SITE_TITLE } from "../../res/main";
-import { Settings } from "../../components";
-import "./navbar.css";
+import styled from 'styled-components';
+
+import { SITE_TITLE, SIZE } from "../res";
+import { COLORS, FONT_SIZE } from "../styles/theme";
+
+const NavbarContainer = styled("div")`
+    height: ${SIZE.NAVBAR_HEIGHT};
+    min-width: 100vw;
+    width: 100%;
+`;
 
 const Navbar = () => {
-    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+    const { isAuthenticated, logout } = useAuth0();
     const [showSettings, setShowSettings] = useState(false);
 
     const toggleSettings = (shouldShow) => {
@@ -13,30 +20,10 @@ const Navbar = () => {
     }
 
     return (
-        <>
-            <nav className="navbar navbar-expand-lg navbar-light">
-                <a className="navbar-brand" href="/">{SITE_TITLE}</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav">
-                        {isAuthenticated ? (
-                            <>
-                                <a className="nav-item nav-link" href="/">Home</a>
-                                <div className="nav-item nav-link" onClick={() => toggleSettings(true)}>Settings</div>
-                                <div className="nav-item nav-link" onClick={() => logout()}>Logout</div>
-                            </>
-                        ) : (
-                            <div className="nav-item nav-link" onClick={() => loginWithRedirect()}>Login</div>
-                        )}
-                    </div>
-                </div>
-            </nav>
+        <NavbarContainer className="background">
 
-            {showSettings && <Settings open={true} close={() => toggleSettings(false)} />}
-        </>
-    )
+        </NavbarContainer>
+    );
 }
 
 export default Navbar;

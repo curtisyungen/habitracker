@@ -1,28 +1,18 @@
 const db = require("../models/index.js");
 
 class UserController {
-    getUser(req, res) {
+    getUserById(req, res) {
         db.Users.findOne({
             where: {
                 userId: req.query.userId,
-            }
-        }).then(user => {
-            res.json(user);
-        }).catch(e => {
-            console.log(e);
-        });
-    }
-
-    getUserSettings(req, res) {
-        db.Users.findOne({
-            where: {
-                email: req.query.email,
-            }
-        }).then(user => {
-            res.json(user.settings);
-        }).catch(e => {
-            console.log(e);
-        });
+            },
+        })
+            .then((user) => {
+                res.json(user);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     }
 
     findOrCreateUser(req, res) {
@@ -32,41 +22,48 @@ class UserController {
             },
             defaults: {
                 userId: Math.round(Math.random() * 1000000000),
-                name: req.body.user.name,
-                settings: req.body.user.settings,
-                status: req.body.user.status,
-            }
-        }).spread((user, created) => {
-            if (created) {
-                res.json("User created.");
-            } else {
-                res.json("User found.");
-            }
-        }).catch(e => {
-            console.log(e);
-        });
+                userName: req.body.user.name,
+                theme: "Light",
+                status: "Active",
+            },
+        })
+            .spread((user, created) => {
+                res.json(user);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     }
 
     updateUser(req, res) {
         db.Users.update(
-            req.body.user
-        ).then(() => {
-            res.json("User updated.");
-        }).catch(e => {
-            console.log(e);
-        });
+            { ...req.body.userData },
+            {
+                where: {
+                    userId: req.body.userId,
+                },
+            }
+        )
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     }
 
     deleteUser(req, res) {
         db.Users.destroy({
             where: {
                 userId: req.body.userId,
-            }
-        }).then(() => {
-            res.json("User deleted.");
-        }).catch(e => {
-            console.log(e);
-        });
+            },
+        })
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     }
 }
 
