@@ -66,4 +66,12 @@ export const AppContainer = styled("div")`
     & .color {
         color: var(--color);
     }
+
+    & button,
+    input,
+    select {
+        background: var(--background);
+        border-color: var(--borderColor);
+        color: var(--color);
+    }
 `;

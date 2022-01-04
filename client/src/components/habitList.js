@@ -90,7 +90,6 @@ const HabitList = ({}) => {
             <HabitModal
                 open={mode !== MODE.NONE}
                 close={() => setMode(MODE.NONE)}
-                mode={mode}
                 habitData={selectedHabit}
                 setHabitData={setHabitData}
             />
