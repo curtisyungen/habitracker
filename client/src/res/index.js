@@ -1,6 +1,7 @@
 export const PAGES = {
     ERROR: "/error",
     HOME: "/home",
+    LOGIN: "/login",
     LOGIN_REDIRECT: "/loginRedirect",
 }
 

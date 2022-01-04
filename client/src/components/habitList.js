@@ -1,7 +1,21 @@
-import React, { useContext } from "react";
+import moment from "moment";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { MainContext } from "../App";
+import { HabitModal } from ".";
+import { ICON, IconHelper } from "../helpers";
+import { Button, Flex } from "../styles";
+import { FONT_SIZE } from "../styles/theme";
+import { habitAPI } from "../utils";
+
+const MODE = {
+    ADD: "Add",
+    EDIT: "Edit",
+    NONE: "None",
+};
+
+const ButtonContainer = styled("div")``;
 
 const Container = styled("div")`
     overflow-y: scroll;
@@ -26,10 +40,62 @@ const Habit = styled("div")`
     width: 100%;
 `;
 
+const HabitTitle = styled("div")`
+    cursor: pointer;
+    position: relative;
+`;
+
 const HabitList = ({}) => {
     const { state } = useContext(MainContext);
+    const [habits, setHabits] = useState(null);
+    const [selectedHabit, setSelectedHabit] = useState(null);
+    const [mode, setMode] = useState(MODE.NONE);
 
-    return <Container></Container>;
+    useEffect(() => {
+        if (!state.currentUser) return;
+        habitAPI
+            .getAllHabitsForUser(state.currentUser.getUserId())
+            .then((res) => {
+                setHabits(res.data);
+            });
+    }, [state.currentUser]);
+
+    const setHabitData = (habitData) => {};
+
+    if (!habits) {
+        return <></>;
+    }
+
+    return (
+        <Container>
+            <ButtonContainer>
+                <Button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setMode(MODE.ADD);
+                    }}
+                >
+                    {IconHelper.getIcon(ICON.ADD)}
+                </Button>
+            </ButtonContainer>
+            {habits.map((h, idx) => (
+                <Habit key={idx}>
+                    <HabitTitle>{h.title}</HabitTitle>
+                    {[0, 1, 2, 3, 4, 5, 6].map((d, idx) => (
+                        <Day key={idx}>{moment().day(d).format("ddd")}</Day>
+                    ))}
+                </Habit>
+            ))}
+
+            <HabitModal
+                open={mode !== MODE.NONE}
+                close={() => setMode(MODE.NONE)}
+                mode={mode}
+                habitData={selectedHabit}
+                setHabitData={setHabitData}
+            />
+        </Container>
+    );
 };
 
 export default HabitList;

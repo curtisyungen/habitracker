@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { IMAGES } from "../images";
 import { SITE_TITLE, SIZE } from "../res";
+import { Flex } from "../styles";
 import { COLORS, FONT_SIZE } from "../styles/theme";
 
 const Logo = styled("img")`
@@ -24,14 +25,16 @@ const NavbarContainer = styled("div")`
 
 const Title = styled("div")`
     font-size: ${FONT_SIZE.L};
-    line-height: ${FONT_SIZE.L};
+    height: 100%;
 `;
 
 const Navbar = () => {
     return (
         <NavbarContainer className="background borderColor">
-            <Logo src={IMAGES.LOGO} alt="logo" />
-            <Title>{SITE_TITLE}</Title>
+            <Flex>
+                <Logo src={IMAGES.LOGO} alt="logo" />
+                <Title>{SITE_TITLE}</Title>
+            </Flex>
         </NavbarContainer>
     );
 };

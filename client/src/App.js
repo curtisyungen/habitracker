@@ -5,7 +5,7 @@ import { useRoutes } from "hookrouter";
 
 import { User } from "./classes";
 import { Loading, Navbar } from "./components";
-import { Login } from "./pages";
+import { Error, Login } from "./pages";
 import { AppContainer } from "./styles/theme";
 import { userAPI } from "./utils";
 
@@ -56,8 +56,8 @@ const App = () => {
         }
     }, [isAuthenticated]);
 
-    if (error) return <div>Error: {error.message}</div>;
-    if (isLoading) return <div>Loading...</div>;
+    if (error) return <Error message={error.message} />;
+    if (isLoading) return <Loading />;
 
     if (!isAuthenticated) {
         return <Login />;

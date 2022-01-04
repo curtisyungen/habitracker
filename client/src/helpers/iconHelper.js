@@ -33,7 +33,7 @@ export const ICON = {
 };
 
 export default class IconHelper {
-    getIcon(icon) {
+    static getIcon(icon) {
         if (!icon) return <FontAwesomeIcon icon={ICON.QUESTION} />;
         return <FontAwesomeIcon icon={icon} />;
     }

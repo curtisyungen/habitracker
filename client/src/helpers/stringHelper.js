@@ -1,4 +1,4 @@
-export class StringHelper {
+export default class StringHelper {
     static parseJSON(string, defaultValue) {
         if (!string) return defaultValue;
         try {
