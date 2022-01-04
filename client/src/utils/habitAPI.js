@@ -1,19 +1,19 @@
 import axios from "axios";
 
 export default {
-    getAllHabitsForUser: function (email) {
-        return axios.get("/api/habits/getAllHabitsForUser", { params: { email } });
+    getAllHabitsForUser: function (userId) {
+        return axios.get("/api/habits/getAllHabitsForUser", { params: { userId } });
     },
 
-    createHabit: function (email, habit) {
-        return axios.post("/api/habits/createHabit", { email, habit });
+    createHabit: function (userId, habit) {
+        return axios.post("/api/habits/createHabit", { userId, habit });
     },
 
-    updateHabit: function (email, habit) {
-        return axios.put("/api/habits/updateHabit", { email, habit });
+    updateHabit: function (userId, habitId, habitData) {
+        return axios.put("/api/habits/updateHabit", { userId, habitId, habitData });
     },
 
-    deleteHabit: function (email, habitId) {
-        return axios.delete("/api/habits/deleteHabit", { email, habitId });
+    deleteHabit: function (userId, habitId) {
+        return axios.delete("/api/habits/deleteHabit", { userId, habitId });
     },
 }

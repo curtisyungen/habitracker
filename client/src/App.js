@@ -41,6 +41,9 @@ const App = () => {
     useEffect(() => {
         if (isAuthenticated) {
             userAPI.findOrCreateUser(user).then((res) => {
+                if (!res.data) {
+                    return;
+                }
                 dispatch({
                     type: MAIN_ACTIONS.SET_CURRENT_USER,
                     currentUser: new User(
