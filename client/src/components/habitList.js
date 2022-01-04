@@ -5,8 +5,8 @@ import styled from "styled-components";
 import { MainContext } from "../App";
 import { HabitModal } from ".";
 import { HabitHelper, ICON, IconHelper } from "../helpers";
-import { Button, Flex } from "../styles";
-import { FONT_SIZE } from "../styles/theme";
+import { Button, Flex, Text } from "../styles";
+import { COLORS, FONT_SIZE, FONT_WEIGHT } from "../styles/theme";
 import { habitAPI } from "../utils";
 
 const MODE = {
@@ -19,9 +19,19 @@ const ButtonContainer = styled("div")`
     margin: 10px 0px;
 `;
 
-const Container = styled("div")`
-    overflow-y: scroll;
-    position: relative;
+const Category = styled("div")`
+    background: ${(props) => props.background || "transparent"};
+    border: 0px;
+    border-style: solid;
+    border-top-width: 1px;
+    bottom: 0;
+    font-size: ${FONT_SIZE.S};
+    height: 25px;
+    left: 0;
+    line-height: 25px;
+    position: absolute;
+    right: 0;
+    text-align: center;
     width: 100%;
 `;
 
@@ -38,13 +48,44 @@ const Habit = styled("div")`
     display: grid;
     grid-gap: 2px;
     grid-template-columns: repeat(8, 1fr);
+    margin-top: 4px;
     min-width: 100%;
     width: 100%;
 `;
 
-const HabitTitle = styled("div")`
-    cursor: pointer;
+const ListContainer = styled("div")`
+    overflow-y: scroll;
     position: relative;
+    width: 100%;
+`;
+
+const ListHeader = styled("div")`
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: repeat(8, 1fr);
+    font-size: ${FONT_SIZE.S};
+    height: 30px;
+    line-height: 30px;
+    min-width: 100%;
+    text-align: center;
+    width: 100%;
+
+    & div {
+        border-style: solid;
+        border-width: 1px;
+    }
+`;
+
+const TitleContainer = styled("div")`
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    font-size: ${FONT_SIZE.M};
+    font-weight: ${FONT_WEIGHT.BOLD};
+    position: relative;
+    text-align: center;
+    text-transform: capitalize;
+    width: 100%;
 `;
 
 const HabitList = ({}) => {
@@ -55,14 +96,18 @@ const HabitList = ({}) => {
 
     useEffect(() => {
         if (!state.currentUser) return;
+        loadHabits();
+    }, [state.currentUser]);
+
+    const loadHabits = () => {
         habitAPI
             .getAllHabitsForUser(state.currentUser.getUserId())
             .then((res) => {
                 setHabits(res.data);
             });
-    }, [state.currentUser]);
+    };
 
-    const setHabitData = (habitData) => {
+    const createOrUpdateHabit = (habitData) => {
         switch (mode) {
             case MODE.ADD:
                 habitAPI
@@ -71,6 +116,7 @@ const HabitList = ({}) => {
                         HabitHelper.getBundledHabitData(habitData)
                     )
                     .then(() => {
+                        loadHabits();
                         setMode(MODE.NONE);
                     });
                 break;
@@ -82,6 +128,7 @@ const HabitList = ({}) => {
                         HabitHelper.getBundledHabitData(habitData)
                     )
                     .then(() => {
+                        loadHabits();
                         setMode(MODE.NONE);
                         setSelectedHabit(null);
                     });
@@ -95,7 +142,7 @@ const HabitList = ({}) => {
     }
 
     return (
-        <Container>
+        <ListContainer>
             <ButtonContainer>
                 <Button
                     onClick={(e) => {
@@ -107,24 +154,37 @@ const HabitList = ({}) => {
                     {IconHelper.getIcon(ICON.ADD)}
                 </Button>
             </ButtonContainer>
+            <ListHeader>
+                <Text className="background borderColor">Title</Text>
+                {[0, 1, 2, 3, 4, 5, 6].map((d, idx) => (
+                    <Text key={idx} className="background borderColor">
+                        {moment().day(d).format("ddd")}
+                    </Text>
+                ))}
+            </ListHeader>
             {habits.map((h, idx) => (
                 <Habit key={idx}>
-                    <HabitTitle onClick={() => setSelectedHabit(h)}>
-                        {h.title}
-                    </HabitTitle>
+                    <TitleContainer
+                        className="background borderColor"
+                        onClick={() => setSelectedHabit(h)}
+                    >
+                        <Text>{h.title}</Text>
+                        <Category background={COLORS.CATEGORY[h.category]}>
+                            {h.category}
+                        </Category>
+                    </TitleContainer>
                     {[0, 1, 2, 3, 4, 5, 6].map((d, idx) => (
-                        <Day key={idx}>{moment().day(d).format("ddd")}</Day>
+                        <Day key={idx}></Day>
                     ))}
                 </Habit>
             ))}
-
             <HabitModal
                 open={mode !== MODE.NONE}
                 close={() => setMode(MODE.NONE)}
                 habitData={selectedHabit}
-                setHabitData={setHabitData}
+                setHabitData={createOrUpdateHabit}
             />
-        </Container>
+        </ListContainer>
     );
 };
 

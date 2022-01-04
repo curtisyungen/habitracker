@@ -98,3 +98,8 @@ export const Select = styled("select")`
         outline: none;
     }
 `;
+
+export const Text = styled("div")`
+    font-size: ${props => props.fontSize || FONT_SIZE.M};
+    text-align: ${props => props.textAlign || "center"};
+`;

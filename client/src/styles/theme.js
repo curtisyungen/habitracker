@@ -1,11 +1,38 @@
 import styled from "styled-components";
 
+import { HABIT } from "../res";
+
+export const THEME = {
+    DARK: "Dark",
+    LIGHT: "Light",
+};
+
 export const COLORS = {
     BLACK: "#000000",
-    THEME_DARK_BORDER: "#ffffff",
-    THEME_DARK_TEXT: "#ffffff",
-    THEME_LIGHT_BORDER: "#000000",
-    THEME_LIGHT_TEXT: "#000000",
+    CATEGORY: {
+        [HABIT.CATEGORY.ART]: "yellow",
+        [HABIT.CATEGORY.DIET]: "gray",
+        [HABIT.CATEGORY.FITNESS]: "purple",
+        [HABIT.CATEGORY.HEALTH]: "green",
+        [HABIT.CATEGORY.MUSIC]: "blue",
+        [HABIT.CATEGORY.OTHER]: "lightgray",
+        [HABIT.CATEGORY.PERSONAL]: "brown",
+        [HABIT.CATEGORY.RECREATION]: "teal",
+    },
+    THEME: {
+        BACKGROUND: {
+            [THEME.DARK]: "rgba(0, 0, 0, 0.85)",
+            [THEME.LIGHT]: "rgba(255, 255, 255, 0.85)",
+        },
+        BORDER: {
+            [THEME.DARK]: "#ffffff",
+            [THEME.LIGHT]: "#000000",
+        },
+        COLOR: {
+            [THEME.DARK]: "#ffffff",
+            [THEME.LIGHT]: "#000000",
+        },
+    },
     WHITE: "#ffffff",
 };
 
@@ -18,32 +45,17 @@ export const FONT_SIZE = {
     XXL: "24px",
 };
 
+export const FONT_WEIGHT = {
+    BOLD: 700,
+    NORMAL: 400,
+};
+
 export const SCREEN_SIZE = {
     XS: "320px",
     S: "580px",
     M: "768px",
     L: "1024px",
     XL: "1400px",
-}
-
-export const THEME = {
-    DARK: "Dark",
-    LIGHT: "Light",
-};
-
-export const THEME_COLORS = {
-    BACKGROUND: {
-        [THEME.DARK]: "rgba(0, 0, 0, 0.85)",
-        [THEME.LIGHT]: "rgba(255, 255, 255, 0.85)",
-    },
-    BORDER: {
-        [THEME.DARK]: "#ffffff",
-        [THEME.LIGHT]: "#000000",
-    },
-    COLOR: {
-        [THEME.DARK]: "#ffffff",
-        [THEME.LIGHT]: "#000000",
-    },
 };
 
 export const TRANSITION = {
@@ -61,9 +73,9 @@ export const AppContainer = styled("div")`
     position: relative;
     width: 100%;
 
-    --background: ${(props) => THEME_COLORS.BACKGROUND[props.theme]};
-    --borderColor: ${(props) => THEME_COLORS.BORDER[props.theme]};
-    --color: ${(props) => THEME_COLORS.COLOR[props.theme]};
+    --background: ${(props) => COLORS.THEME.BACKGROUND[props.theme]};
+    --borderColor: ${(props) => COLORS.THEME.BORDER[props.theme]};
+    --color: ${(props) => COLORS.THEME.COLOR[props.theme]};
 
     & .background {
         background: var(--background);
