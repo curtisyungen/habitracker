@@ -96,19 +96,21 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                         ))}
                     </Select>
                 </Flex>
-                <Flex>
-                    <LabelPrepend>Status</LabelPrepend>
-                    <Select
-                        onChange={(e) => setStatus(e.target.value)}
-                        value={status}
-                    >
-                        {Object.keys(STATUS).map((s, idx) => (
-                            <option key={idx} value={STATUS[s]}>
-                                {STATUS[s]}
-                            </option>
-                        ))}
-                    </Select>
-                </Flex>
+                {habitData && (
+                    <Flex>
+                        <LabelPrepend>Status</LabelPrepend>
+                        <Select
+                            onChange={(e) => setStatus(e.target.value)}
+                            value={status}
+                        >
+                            {Object.keys(STATUS).map((s, idx) => (
+                                <option key={idx} value={STATUS[s]}>
+                                    {STATUS[s]}
+                                </option>
+                            ))}
+                        </Select>
+                    </Flex>
+                )}
                 <Button
                     onClick={(e) => {
                         e.preventDefault();

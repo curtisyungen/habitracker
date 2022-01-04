@@ -25,6 +25,14 @@ export const Flex = styled("div")`
     justify-content: ${(props) => props.justifyContent || "start"};
 `;
 
+export const Grid = styled("div")`
+    display: grid;
+    grid-gap: ${(props) => props.gridGap || "2px"};
+    grid-template-columns: ${(props) => props.gridTemplateColumns || "unset"};
+    grid-template-rows: ${(props) => props.gridTemplateRows || "unset"};
+    width: ${(props) => props.width || "100%"};
+`;
+
 export const Input = styled("input")`
     border: 0px;
     border-bottom-width: 1px;
@@ -99,7 +107,12 @@ export const Select = styled("select")`
     }
 `;
 
+export const Spacer = styled("div")`
+    height: ${(props) => props.height || "0px"};
+    width: 100%;
+`;
+
 export const Text = styled("div")`
-    font-size: ${props => props.fontSize || FONT_SIZE.M};
-    text-align: ${props => props.textAlign || "center"};
+    font-size: ${(props) => props.fontSize || FONT_SIZE.M};
+    text-align: ${(props) => props.textAlign || "center"};
 `;

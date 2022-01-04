@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -5,7 +6,7 @@ import styled from "styled-components";
 import { MainContext } from "../App";
 import { HabitModal } from ".";
 import { HabitHelper, ICON, IconHelper } from "../helpers";
-import { Button, Flex, Text } from "../styles";
+import { Button, Flex, Grid, Text } from "../styles";
 import { COLORS, FONT_SIZE, FONT_WEIGHT } from "../styles/theme";
 import { habitAPI } from "../utils";
 
@@ -48,14 +49,23 @@ const Habit = styled("div")`
     display: grid;
     grid-gap: 2px;
     grid-template-columns: repeat(8, 1fr);
-    margin-top: 4px;
+    margin-top: 2px;
     min-width: 100%;
     width: 100%;
+`;
+
+const ListBody = styled("div")`
+    margin-top: 4px;
 `;
 
 const ListContainer = styled("div")`
     overflow-y: scroll;
     position: relative;
+    width: 100%;
+`;
+
+const ListControls = styled("div")`
+    margin: 10px 0px;
     width: 100%;
 `;
 
@@ -90,6 +100,9 @@ const TitleContainer = styled("div")`
 
 const HabitList = ({}) => {
     const { state } = useContext(MainContext);
+    const [date, setDate] = useState(
+        moment().day("Sunday").format("YYYY-MM-DD")
+    );
     const [habits, setHabits] = useState(null);
     const [mode, setMode] = useState(MODE.NONE);
     const [selectedHabit, setSelectedHabit] = useState(null);
@@ -103,7 +116,9 @@ const HabitList = ({}) => {
         habitAPI
             .getAllHabitsForUser(state.currentUser.getUserId())
             .then((res) => {
-                setHabits(res.data);
+                setHabits(
+                    res.data.map((i) => HabitHelper.getUnbundledHabitData(i))
+                );
             });
     };
 
@@ -137,6 +152,44 @@ const HabitList = ({}) => {
         }
     };
 
+    const onDayClicked = (habit, day) => {
+        const year = moment(date).format("YYYY");
+        const month = moment(date).format("M");
+        const _date = moment(date).add(day, "days").format("D");
+
+        console.log(year, month, _date, day);
+
+        const timeline = JSON.parse(JSON.stringify(habit.timeline));
+        if (!timeline[year]) {
+            timeline[year] = {};
+        }
+
+        if (!timeline[year][month]) {
+            timeline[year][month] = {};
+        }
+
+        if (timeline[year][month][_date]) {
+            delete timeline[year][month][_date];
+        } else {
+            timeline[year][month][_date] = true;
+        }
+        habitAPI.updateHabit(habit.id, { timeline: JSON.stringify(timeline) });
+    };
+
+    const scrollDate = (dir) => {
+        switch (dir) {
+            case -1:
+                setDate(moment(date).subtract(7, "days").format("YYYY-MM-DD"));
+                break;
+            case 1:
+                setDate(moment(date).add(7, "days").format("YYYY-MM-DD"));
+                break;
+            case 0:
+            default:
+                setDate(moment().format("YYYY-MM-DD"));
+        }
+    };
+
     if (!habits) {
         return <></>;
     }
@@ -154,6 +207,35 @@ const HabitList = ({}) => {
                     {IconHelper.getIcon(ICON.ADD)}
                 </Button>
             </ButtonContainer>
+            <ListControls>
+                <Grid gridTemplateColumns="repeat(3, 1fr)" width="300px">
+                    <Button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            scrollDate(-1);
+                        }}
+                    >
+                        {IconHelper.getIcon(ICON.LEFT)}
+                    </Button>
+                    <Button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            scrollDate(0);
+                        }}
+                        width="150px"
+                    >
+                        {date}
+                    </Button>
+                    <Button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            scrollDate(1);
+                        }}
+                    >
+                        {IconHelper.getIcon(ICON.RIGHT)}
+                    </Button>
+                </Grid>
+            </ListControls>
             <ListHeader>
                 <Text className="background borderColor">Title</Text>
                 {[0, 1, 2, 3, 4, 5, 6].map((d, idx) => (
@@ -162,22 +244,33 @@ const HabitList = ({}) => {
                     </Text>
                 ))}
             </ListHeader>
-            {habits.map((h, idx) => (
-                <Habit key={idx}>
-                    <TitleContainer
-                        className="background borderColor"
-                        onClick={() => setSelectedHabit(h)}
-                    >
-                        <Text>{h.title}</Text>
-                        <Category background={COLORS.CATEGORY[h.category]}>
-                            {h.category}
-                        </Category>
-                    </TitleContainer>
-                    {[0, 1, 2, 3, 4, 5, 6].map((d, idx) => (
-                        <Day key={idx}></Day>
-                    ))}
-                </Habit>
-            ))}
+            <ListBody>
+                {habits.map((h, idx) => (
+                    <Habit key={idx}>
+                        <TitleContainer
+                            className="background borderColor"
+                            onClick={() => {
+                                setSelectedHabit(h);
+                                setMode(MODE.EDIT);
+                            }}
+                        >
+                            <Text>{h.title}</Text>
+                            <Category background={COLORS.CATEGORY[h.category]}>
+                                {h.category}
+                            </Category>
+                        </TitleContainer>
+                        {[0, 1, 2, 3, 4, 5, 6].map((d, idx) => (
+                            <Day
+                                key={idx}
+                                className={classNames({ complete: true })}
+                                onClick={() => {
+                                    onDayClicked(h, d);
+                                }}
+                            ></Day>
+                        ))}
+                    </Habit>
+                ))}
+            </ListBody>
             <HabitModal
                 open={mode !== MODE.NONE}
                 close={() => setMode(MODE.NONE)}
