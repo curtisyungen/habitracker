@@ -11,6 +11,12 @@ export default class StringHelper {
 
     static stringifyJSON(string) {
         if (!string) return;
+        if (Array.isArray(string)) {
+            return JSON.stringify(string);
+        }
+        if (typeof string === "object") {
+            return JSON.stringify(string);
+        }
         try {
             JSON.parse(string);
         } catch (e) {

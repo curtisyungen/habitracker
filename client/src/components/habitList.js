@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { MainContext } from "../App";
 import { HabitModal } from ".";
-import { ICON, IconHelper } from "../helpers";
+import { HabitHelper, ICON, IconHelper } from "../helpers";
 import { Button, Flex } from "../styles";
 import { FONT_SIZE } from "../styles/theme";
 import { habitAPI } from "../utils";
@@ -66,7 +66,10 @@ const HabitList = ({}) => {
         switch (mode) {
             case MODE.ADD:
                 habitAPI
-                    .createHabit(state.currentUser.getUserId(), habitData)
+                    .createHabit(
+                        state.currentUser.getUserId(),
+                        HabitHelper.getBundledHabitData(habitData)
+                    )
                     .then(() => {
                         setMode(MODE.NONE);
                     });
@@ -76,10 +79,11 @@ const HabitList = ({}) => {
                     .updateHabit(
                         state.currentUser.getUserId(),
                         habitData.id,
-                        habitData
+                        HabitHelper.getBundledHabitData(habitData)
                     )
                     .then(() => {
                         setMode(MODE.NONE);
+                        setSelectedHabit(null);
                     });
             default:
                 return;

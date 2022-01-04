@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { ModalContainer } from ".";
-import { HABIT } from "../res";
+import { HABIT, STATUS } from "../res";
 import { Button, Flex, Input, LabelPrepend, Select } from "../styles";
 
 const Wrapper = styled("div")`
@@ -10,16 +10,19 @@ const Wrapper = styled("div")`
 `;
 
 const HabitModal = ({ open, close, habitData, setHabitData }) => {
+    const [id, setId] = useState(Math.random() * 1000000);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [type, setType] = useState(HABIT.TYPE.CHECK_OFF);
-    const [category, setCategory] = useState(null);
+    const [category, setCategory] = useState(HABIT.CATEGORY.OTHER);
     const [target, setTarget] = useState(null);
     const [targetType, setTargetType] = useState(null);
     const [timeline] = useState({});
+    const [status, setStatus] = useState(STATUS.ACTIVE);
 
     useEffect(() => {
         if (!habitData) return;
+        setId(habitData.id);
         setTitle(habitData.title);
         setDescription(habitData.description);
         setType(habitData.type);
@@ -93,11 +96,24 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                         ))}
                     </Select>
                 </Flex>
-
+                <Flex>
+                    <LabelPrepend>Status</LabelPrepend>
+                    <Select
+                        onChange={(e) => setStatus(e.target.value)}
+                        value={status}
+                    >
+                        {Object.keys(STATUS).map((s, idx) => (
+                            <option key={idx} value={STATUS[s]}>
+                                {STATUS[s]}
+                            </option>
+                        ))}
+                    </Select>
+                </Flex>
                 <Button
                     onClick={(e) => {
                         e.preventDefault();
                         setHabitData({
+                            id,
                             title,
                             description,
                             type,
@@ -105,6 +121,7 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                             target,
                             targetType,
                             timeline,
+                            status,
                         });
                     }}
                     width="100px"

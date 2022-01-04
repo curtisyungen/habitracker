@@ -5,6 +5,7 @@ export const HABIT = {
         FITNESS: "Fitness",
         HEALTH: "Health",
         MUSIC: "Music",
+        OTHER: "Other",
         PERSONAL: "Personal",
         RECREATION: "Recreation",
     },
