@@ -55,7 +55,7 @@ export const AppContainer = styled("div")`
 
     --background: ${(props) => THEME_COLORS.BACKGROUND[props.theme]};
     --borderColor: ${(props) => THEME_COLORS.BORDER[props.theme]};
-    --color: ${(props) => THEME.COLORS.COLOR[props.theme]};
+    --color: ${(props) => THEME_COLORS.COLOR[props.theme]};
 
     & .background {
         background: var(--background);

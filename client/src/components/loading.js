@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PageContainer } from "../../styles";
+import { PageContainer } from "../styles";
 
 const Loading = () => {
     return (

@@ -16,6 +16,6 @@ export const STATUS = {
 }
 
 export const VALIDATION = {
-    AUTH0_CLIENT_ID = "StZpJpHpOZqb2FibCR4CBjKHif3hZ9Cw",
-    AUTH0_DOMAIN = "dev-nzv9rx9y.us.auth0.com",
+    AUTH0_CLIENT_ID: "StZpJpHpOZqb2FibCR4CBjKHif3hZ9Cw",
+    AUTH0_DOMAIN: "dev-nzv9rx9y.us.auth0.com",
 }

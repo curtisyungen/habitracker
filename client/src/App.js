@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useRoutes } from "hookrouter";
 
 import { User } from "./classes";
-import { Navbar } from "./components";
+import { Loading, Navbar } from "./components";
 import { Login } from "./pages";
 import { AppContainer } from "./styles/theme";
 import { userAPI } from "./utils";
@@ -61,6 +61,10 @@ const App = () => {
 
     if (!isAuthenticated) {
         return <Login />;
+    }
+
+    if (!state.currentUser) {
+        return <Loading />;
     }
 
     return (
