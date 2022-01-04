@@ -23,7 +23,7 @@ class HabitController {
     createHabit(req, res) {
         db.Habits.create({
             userId: req.body.userId,
-            ...req.body.habit,
+            ...req.body.habitData,
         })
             .then((result) => {
                 res.json(result);

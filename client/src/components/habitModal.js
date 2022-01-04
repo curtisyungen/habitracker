@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { ModalContainer } from ".";
@@ -16,6 +16,7 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
     const [category, setCategory] = useState(null);
     const [target, setTarget] = useState(null);
     const [targetType, setTargetType] = useState(null);
+    const [timeline] = useState({});
 
     useEffect(() => {
         if (!habitData) return;
@@ -63,7 +64,7 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                     <LabelPrepend>Category</LabelPrepend>
                     <Select
                         onChange={(e) => setCategory(e.target.value)}
-                        value={type}
+                        value={category}
                     >
                         {Object.keys(HABIT.CATEGORY).map((c, idx) => (
                             <option key={idx} value={HABIT.CATEGORY[c]}>
@@ -103,6 +104,7 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                             category,
                             target,
                             targetType,
+                            timeline,
                         });
                     }}
                     width="100px"

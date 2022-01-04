@@ -5,8 +5,8 @@ export default {
         return axios.get("/api/habits/getAllHabitsForUser", { params: { userId } });
     },
 
-    createHabit: function (userId, habit) {
-        return axios.post("/api/habits/createHabit", { userId, habit });
+    createHabit: function (userId, habitData) {
+        return axios.post("/api/habits/createHabit", { userId, habitData });
     },
 
     updateHabit: function (userId, habitId, habitData) {

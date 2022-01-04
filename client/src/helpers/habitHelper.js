@@ -33,5 +33,29 @@ export const VIEW = {
 };
 
 export default class HabitHelper {
+    static getBundledHabitData(data) {
+        return {
+            title: data.title,
+            description: data.description,
+            type: data.type,
+            category: data.category,
+            target: data.target,
+            targetType: data.targetType,
+            timeline: StringHelper.stringifyJSON(data.timeline),
+            status: data.status,
+        };
+    }
 
+    static getUnbundledHabitData(data) {
+        return {
+            title: data.title,
+            description: data.description,
+            type: data.type,
+            category: data.category,
+            target: data.target,
+            targetType: data.targetType,
+            timeline: StringHelper.parseJSON(data.timeline, {}),
+            status: data.status,
+        };
+    }
 }

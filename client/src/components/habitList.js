@@ -15,7 +15,9 @@ const MODE = {
     NONE: "None",
 };
 
-const ButtonContainer = styled("div")``;
+const ButtonContainer = styled("div")`
+    margin: 10px 0px;
+`;
 
 const Container = styled("div")`
     overflow-y: scroll;
@@ -48,8 +50,8 @@ const HabitTitle = styled("div")`
 const HabitList = ({}) => {
     const { state } = useContext(MainContext);
     const [habits, setHabits] = useState(null);
-    const [selectedHabit, setSelectedHabit] = useState(null);
     const [mode, setMode] = useState(MODE.NONE);
+    const [selectedHabit, setSelectedHabit] = useState(null);
 
     useEffect(() => {
         if (!state.currentUser) return;
@@ -60,7 +62,29 @@ const HabitList = ({}) => {
             });
     }, [state.currentUser]);
 
-    const setHabitData = (habitData) => {};
+    const setHabitData = (habitData) => {
+        switch (mode) {
+            case MODE.ADD:
+                habitAPI
+                    .createHabit(state.currentUser.getUserId(), habitData)
+                    .then(() => {
+                        setMode(MODE.NONE);
+                    });
+                break;
+            case MODE.EDIT:
+                habitAPI
+                    .updateHabit(
+                        state.currentUser.getUserId(),
+                        habitData.id,
+                        habitData
+                    )
+                    .then(() => {
+                        setMode(MODE.NONE);
+                    });
+            default:
+                return;
+        }
+    };
 
     if (!habits) {
         return <></>;
@@ -74,13 +98,16 @@ const HabitList = ({}) => {
                         e.preventDefault();
                         setMode(MODE.ADD);
                     }}
+                    width="100px"
                 >
                     {IconHelper.getIcon(ICON.ADD)}
                 </Button>
             </ButtonContainer>
             {habits.map((h, idx) => (
                 <Habit key={idx}>
-                    <HabitTitle>{h.title}</HabitTitle>
+                    <HabitTitle onClick={() => setSelectedHabit(h)}>
+                        {h.title}
+                    </HabitTitle>
                     {[0, 1, 2, 3, 4, 5, 6].map((d, idx) => (
                         <Day key={idx}>{moment().day(d).format("ddd")}</Day>
                     ))}

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { SIZE } from "../res";
-import { COLORS, FONT_SIZE } from "./theme";
+import { COLORS, FONT_SIZE, SCREEN_SIZE } from "./theme";
 
 export const Button = styled("button")`
     border-radius: 0px;
@@ -11,6 +11,11 @@ export const Button = styled("button")`
     outline: none;
     user-select: none;
     width: ${(props) => props.width || "100%"};
+
+    &:active,
+    :focus {
+        outline: none;
+    }
 `;
 
 export const Flex = styled("div")`
@@ -44,6 +49,7 @@ export const Label = styled("label")`
     border-style: solid;
     font-size: ${(props) => props.fontSize || FONT_SIZE.M};
     height: ${(props) => props.height || SIZE.INPUT_HEIGHT};
+    line-height: ${(props) => props.height || SIZE.INPUT_HEIGHT};
     min-width: ${SIZE.INPUT_MIN_WIDTH};
     text-align: ${(props) => props.textAlign || "center"};
     width: ${(props) => props.width || SIZE.INPUT_MIN_WIDTH};
@@ -61,8 +67,17 @@ export const PageContainer = styled("div")`
     height: 100%;
     min-height: 100vh;
     min-width: 100vw;
+    padding: 0px 100px;
     position: relative;
     width: 100%;
+
+    @media (max-width: ${SCREEN_SIZE.M}) {
+        padding: 0px 5px;
+    }
+
+    @media (max-width: ${SCREEN_SIZE.S}) {
+        padding: 0px;
+    }
 `;
 
 export const Select = styled("select")`
@@ -70,7 +85,8 @@ export const Select = styled("select")`
     border-bottom-width: 1px;
     border-style: solid;
     font-size: ${(props) => props.fontSize || FONT_SIZE.M};
-    height: ${SIZE.INPUT_HEIGHT};
+    height: ${(props) => props.height || SIZE.INPUT_HEIGHT};
+    line-height: ${(props) => props.height || SIZE.INPUT_HEIGHT};
     margin-left: ${(props) => props.marginLeft || "0px"};
     margin-right: ${(props) => props.marginRight || "0px"};
     min-width: ${SIZE.INPUT_MIN_WIDTH};

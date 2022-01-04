@@ -18,6 +18,14 @@ export const FONT_SIZE = {
     XXL: "24px",
 };
 
+export const SCREEN_SIZE = {
+    XS: "320px",
+    S: "580px",
+    M: "768px",
+    L: "1024px",
+    XL: "1400px",
+}
+
 export const THEME = {
     DARK: "Dark",
     LIGHT: "Light",

@@ -22,22 +22,18 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        frequency: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        timeline: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         target: {
             type: DataTypes.STRING,
             allowNull: true,
         },
         // time, quantity
-        target_type: {
+        targetType: {
             type: DataTypes.STRING,
             allowNull: true,
+        },
+        timeline: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         // Active, Inactive
         status: {
