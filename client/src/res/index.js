@@ -1,14 +1,3 @@
-export const SITE_TITLE = "HABITRACKER";
-
-export const BACKGROUND = {
-    SWISS: { 
-        title: "Swiss", 
-        backgroundSize: "cover", 
-        backgroundAttachment: "fixed", 
-        backgroundImage: "url('https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3dpdHplcmxhbmR8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80')"
-    },
-}
-
 export const HABIT = {
     CATEGORY: {
         FITNESS: { name: "Fitness", color: "green"},
@@ -47,20 +36,20 @@ export const HABIT = {
     }
 }
 
-export const USER = {
-    STATUS: {
-        ACTIVE: "Active",
-        INACTIVE: "Inactive",
-    }
+export const PAGES = {
+    ERROR: "/error",
+    HOME: "/home",
+    LOGIN_REDIRECT: "/loginRedirect",
 }
 
-export const DEFAULT = {
-    CATEGORY: HABIT.CATEGORY.FITNESS.name,
-    CATEGORY_COLOR: "gray",
-    HABIT_TYPE: HABIT.TYPE.CHECK_OFF,
-    SETTINGS: {
-        BACKGROUND: BACKGROUND.SWISS,
-        CATEGORIES: { ...HABIT.CATEGORY },
-    },
-    STATUS: USER.STATUS.ACTIVE,
+export const SITE_TITLE = "HABITRACKER";
+
+export const STATUS = {
+    ACTIVE: "Active",
+    INACTIVE: "Inactive",
+}
+
+export const VALIDATION = {
+    AUTH0_CLIENT_ID = "gw8kILOU1QVBI7iI2cwNGZp0zBNOV9Cg",
+    AUTH0_DOMAIN = "dev-sjy6qpev.us.auth0.com",
 }

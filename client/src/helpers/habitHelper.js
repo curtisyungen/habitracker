@@ -1,28 +1,23 @@
-import { HABIT } from "../res/main";
 import moment from "moment";
-import { getIcon } from "../res/icons";
+
+import { HABIT } from "../res/main";
+import { ICON, IconHelper, StringHelper } from ".";
+
+export const FILTER = {
+    ACTIVE: "Active",
+    ALL: "All",
+    COMPLETE: "Complete",
+    DUE: "Due",
+    INACTIVE: "Inactive",
+    INCOMPLETE: "Incomplete",
+};
 
 export const MODE = {
     ADD: "Add",
     EDIT: "Edit",
-    NONE: "None",
     ENTER_VALUE: "Enter value",
-}
-
-export const VIEW = {
-    DAY: "Day",
-    WEEK: "Week",
-    MONTH: "Month",
-}
-
-export const FILTER = {
-    DUE: "Due",
-    INCOMPLETE: "Incomplete",
-    COMPLETE: "Complete",
-    INACTIVE: "Inactive",
-    ACTIVE: "Active",
-    ALL: "All",
-}
+    NONE: "None",
+};
 
 export const SORT = {
     CATEGORY: "Category",
@@ -30,35 +25,43 @@ export const SORT = {
     TITLE: "Title",
     TOTAL_COMPLETIONS: "Total completions",
     TOTAL_STREAK: "Total streak",
-}
+};
 
-export default class HabitUtils {
+export const VIEW = {
+    DAY: "Day",
+    MONTH: "Month",
+    WEEK: "Week",
+};
 
+export default class HabitHelper {
     static filterHabits(habits, filter, date) {
         if (!habits) return [];
 
         switch (filter) {
             case FILTER.DUE:
-                return habits.filter(h => (
-                    this.checkIfHabitDueToday(h, date) &&
-                    h.status === HABIT.STATUS.ACTIVE
-                ));
+                return habits.filter(
+                    (h) =>
+                        this.checkIfHabitDueToday(h, date) &&
+                        h.status === HABIT.STATUS.ACTIVE
+                );
             case FILTER.INCOMPLETE:
-                return habits.filter(h => (
-                    this.checkIfHabitDueToday(h, date) &&
-                    !this.checkIfDateInTimeline(h, date) &&
-                    h.status === HABIT.STATUS.ACTIVE
-                ));
+                return habits.filter(
+                    (h) =>
+                        this.checkIfHabitDueToday(h, date) &&
+                        !this.checkIfDateInTimeline(h, date) &&
+                        h.status === HABIT.STATUS.ACTIVE
+                );
             case FILTER.COMPLETE:
-                return habits.filter(h => (
-                    this.checkIfHabitDueToday(h, date) &&
-                    this.checkIfDateInTimeline(h, date) &&
-                    h.status === HABIT.STATUS.ACTIVE
-                ));
+                return habits.filter(
+                    (h) =>
+                        this.checkIfHabitDueToday(h, date) &&
+                        this.checkIfDateInTimeline(h, date) &&
+                        h.status === HABIT.STATUS.ACTIVE
+                );
             case FILTER.INACTIVE:
-                return habits.filter(h => h.status === HABIT.STATUS.INACTIVE);
+                return habits.filter((h) => h.status === HABIT.STATUS.INACTIVE);
             case FILTER.ACTIVE:
-                return habits.filter(h => h.status === HABIT.STATUS.ACTIVE);
+                return habits.filter((h) => h.status === HABIT.STATUS.ACTIVE);
             case FILTER.ALL:
             default:
                 return habits;
@@ -81,12 +84,19 @@ export default class HabitUtils {
             day: moment(date).format("D"),
             yyyymmdd: moment(date).format("YYYY-MM-DD"),
             isoWeekday: moment(date).isoWeekday(),
-            thisMonday: moment(date).day("monday") > moment(date) ? moment(date).subtract(1, "week").day("monday") : moment(date).day("monday")
-        }
+            thisMonday:
+                moment(date).day("monday") > moment(date)
+                    ? moment(date).subtract(1, "week").day("monday")
+                    : moment(date).day("monday"),
+        };
     }
 
     static formatDate(year, month, day) {
-        return moment().year(year).month(month - 1).date(day).format("YYYY-MM-DD");
+        return moment()
+            .year(year)
+            .month(month - 1)
+            .date(day)
+            .format("YYYY-MM-DD");
     }
 
     static updateHabitTimeline(habit, date, value) {
@@ -115,7 +125,7 @@ export default class HabitUtils {
                     }
                 }
             } else {
-                timeline[year][month][day] = value || ""
+                timeline[year][month][day] = value || "";
             }
         } else {
             if (value && value !== "") {
@@ -152,7 +162,7 @@ export default class HabitUtils {
             ...data,
             frequency: JSON.stringify(data.frequency),
             timeline: JSON.stringify(data.timeline),
-        }
+        };
     }
 
     static unpackHabitData(data) {
@@ -160,7 +170,7 @@ export default class HabitUtils {
             ...data,
             frequency: JSON.parse(data.frequency),
             timeline: JSON.parse(data.timeline),
-        }
+        };
     }
 
     static getHabitMetrics(habit) {
@@ -211,9 +221,14 @@ export default class HabitUtils {
             maxDay = Math.max(maxDay, parseInt(dy));
         }
 
-        const firstCompletion = maxDay > -1 ? this.formatDate(minYear, minMonth, minDay) : null;
-        const lastCompletion = maxDay > -1 ? this.formatDate(maxYear, maxMonth, maxDay) : null;
-        const diff = firstCompletion && lastCompletion ? moment(lastCompletion).diff(firstCompletion, "days") : 0;
+        const firstCompletion =
+            maxDay > -1 ? this.formatDate(minYear, minMonth, minDay) : null;
+        const lastCompletion =
+            maxDay > -1 ? this.formatDate(maxYear, maxMonth, maxDay) : null;
+        const diff =
+            firstCompletion && lastCompletion
+                ? moment(lastCompletion).diff(firstCompletion, "days")
+                : 0;
 
         // TOTAL COMPLETIONS
         // CURRENT & LONGEST STREAK
@@ -222,7 +237,12 @@ export default class HabitUtils {
         let currentStreak = 0;
 
         for (var i = 0; i <= diff; i++) {
-            if (this.checkIfDateInTimeline(habit, moment(firstCompletion).add(i, "days"))) {
+            if (
+                this.checkIfDateInTimeline(
+                    habit,
+                    moment(firstCompletion).add(i, "days")
+                )
+            ) {
                 currentStreak += 1;
                 longestStreak = Math.max(longestStreak, currentStreak);
                 totalCompletions += 1;
@@ -233,7 +253,7 @@ export default class HabitUtils {
         }
 
         return {
-            "Created": createDate,
+            Created: createDate,
             "First completion": firstCompletion || "N/A",
             "Last completion": lastCompletion || "N/A",
             "Total completions": totalCompletions,
@@ -243,17 +263,25 @@ export default class HabitUtils {
     }
 
     static checkIfHabitDueToday(habit, date) {
-        return this.parseJSONIfNeeded(habit.frequency).indexOf(this.momentizeDate(date).isoWeekday) > -1;
+        return (
+            StringHelper.parseJSON(habit.frequency).indexOf(
+                this.momentizeDate(date).isoWeekday
+            ) > -1
+        );
     }
 
     static checkIfDateInTimeline(habit, date) {
-        const timeline = this.parseJSONIfNeeded(habit.timeline);
+        const timeline = StringHelper.parseJSON(habit.timeline);
         const { year, month, day } = this.momentizeDate(date);
-        return timeline[year] && timeline[year][month] && day in timeline[year][month];
+        return (
+            timeline[year] &&
+            timeline[year][month] &&
+            day in timeline[year][month]
+        );
     }
 
     static getValueForDate(habit, date) {
-        const timeline = this.parseJSONIfNeeded(habit.timeline);
+        const timeline = StringHelper.parseJSON(habit.timeline);
         const { year, month, day } = this.momentizeDate(date);
         if (timeline[year] && timeline[year][month]) {
             return timeline[year][month][day];
@@ -262,12 +290,14 @@ export default class HabitUtils {
 
     static getCheckValueOrTarget(habit, date) {
         if (habit.habit_type === HABIT.TYPE.CHECK_OFF) {
-            return getIcon("check", "habit-check-icon");
+            return IconHelper.getIcon(ICON.CHECK);
         }
 
-        const timeline = this.parseJSONIfNeeded(habit.timeline);
+        const timeline = StringHelper.parseJSON(habit.timeline);
         const { year, month, day } = this.momentizeDate(date);
-        return this.checkIfDateInTimeline(habit, date) ? timeline[year][month][day] : habit.target;
+        return this.checkIfDateInTimeline(habit, date)
+            ? timeline[year][month][day]
+            : habit.target;
     }
 
     static parseJSONIfNeeded(string) {

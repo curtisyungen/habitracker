@@ -1,12 +1,12 @@
 import React from 'react';
-import "./loading.css";
-import "../../styles/main.css";
+
+import { PageContainer } from "../../styles";
 
 const Loading = () => {
     return (
-        <div className="page page-loading">
+        <PageContainer>
             Loading...
-        </div>
+        </PageContainer>
     )
 }
 

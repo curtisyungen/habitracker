@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-import { habitAPI, HabitUtils } from '../../utils';
-import { FILTER, MODE, SORT } from "../../utils/habitUtils";
-import { Habit, HabitModal } from "../../components";
-import { getIcon } from "../../res/icons";
 import moment from "moment";
-import "./habitList.css";
+
+import { Habit, HabitModal } from ".";
+import { HabitHelper, IconHelper } from "../helpers";
+import { FILTER, MODE, SORT, VIEW } from "../helpers/habitHelper";
+import { habitAPI } from '../utils';
+
 
 const HabitList = () => {
     const { user } = useAuth0();
     const [habits, setHabits] = useState([]);
     const [displayedHabits, setDisplayedHabits] = useState([]);
-    const [monday, setMonday] = useState(HabitUtils.momentizeDate(moment()).thisMonday);
+    const [monday, setMonday] = useState(HabitHelper.momentizeDate(moment()).thisMonday);
     const [dates, setDates] = useState([]);
     const [mode, setMode] = useState(MODE.NONE);
     const [habitToEdit, setHabitToEdit] = useState(null);

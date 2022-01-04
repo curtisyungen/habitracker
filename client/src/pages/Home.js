@@ -1,13 +1,13 @@
 import React from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
+
 import { HabitList } from "../components";
-import "./Home.css";
-import "../styles/main.css";
+import { PageContainer } from '../styles';
 
 const Home = () => {
     const { isAuthenticated } = useAuth0();
     return (
-        <div className="page page-home">
+        <PageContainer>
             {isAuthenticated ? (
                 <div className="container-no-scroll">
                     <HabitList />
@@ -15,8 +15,8 @@ const Home = () => {
             ) : (
                 <div>Not logged in.</div>
             )}
-        </div>
-    )
+        </PageContainer>
+    );
 }
 
 export default Home;

@@ -1,19 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
-import App from './App';
-import './index.css';
 
-const domain = process.env.REACT_APP_AUTH0_DOMAIN || "dev-sjy6qpev.us.auth0.com";
-const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID || "gw8kILOU1QVBI7iI2cwNGZp0zBNOV9Cg";
+import App from "./App";
+import { PAGES, VALIDATION } from "./res";
 
 ReactDOM.render(
-  <Auth0Provider
-    domain={domain}
-    clientId={clientId}
-    redirectUri={`${window.location.origin}/loginRedirect`}
-  >
-    <App />
-  </Auth0Provider>,
-  document.getElementById('root')
+    <Auth0Provider
+        domain={VALIDATION.AUTH0_DOMAIN}
+        clientId={VALIDATION.AUTH0_CLIENT_ID}
+        redirectUri={`${window.location.origin}${PAGES.LOGIN_REDIRECT}`}
+    >
+        <App />
+    </Auth0Provider>,
+    document.getElementById("root")
 );

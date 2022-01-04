@@ -1,12 +1,9 @@
-import React from 'react';
-import "../styles/main.css";
+import React from "react";
 
-const Error = () => {
-    return (
-        <div className="page page-error">
-            Page not found.
-        </div>
-    )
-}
+import { PageContainer } from "../styles";
+
+const Error = ({ message = "Page not found." }) => {
+    return <PageContainer>{message}</PageContainer>;
+};
 
 export default Error;
