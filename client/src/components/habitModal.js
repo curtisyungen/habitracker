@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import Modal from "react-responsive-modal";
 import styled from "styled-components";
 
+import { ModalContainer } from ".";
+
 const HabitModal = ({ open, close, mode, habitData, setHabitData }) => {
-    return <Modal open={open} onClose={close}></Modal>;
+    return <ModalContainer open={open} close={close}></ModalContainer>;
 };
 
 export default HabitModal;
