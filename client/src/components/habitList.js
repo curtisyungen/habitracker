@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 import { MainContext } from "../App";
 import { HabitComponent, HabitModal } from ".";
-import { Habit } from "../classes";
 import { DateHelper, ICON, IconHelper, StringHelper } from "../helpers";
 import { Button, Grid, Text } from "../styles";
 import { FONT_SIZE } from "../styles/theme";
@@ -64,23 +63,7 @@ const HabitList = () => {
         habitAPI
             .getAllHabitsForUser(state.currentUser.getUserId())
             .then((res) => {
-                setHabits(
-                    res.data.map(
-                        (i) =>
-                            new Habit(
-                                i.id,
-                                i.userId,
-                                i.title,
-                                i.description,
-                                i.type,
-                                i.category,
-                                i.target,
-                                i.targetType,
-                                StringHelper.parseJSON(i.timeline, {}),
-                                i.status
-                            )
-                    )
-                );
+                setHabits(res.data);
             });
     };
 
@@ -105,14 +88,10 @@ const HabitList = () => {
     const scrollDate = (dir) => {
         switch (dir) {
             case -1:
-                setStartDate(
-                    DateHelper.getPrevWeekStart(startDate)
-                );
+                setStartDate(DateHelper.getPrevWeekStart(startDate));
                 break;
             case 1:
-                setStartDate(
-                    DateHelper.getNextWeekStart(startDate)
-                );
+                setStartDate(DateHelper.getNextWeekStart(startDate));
                 break;
             case 0:
             default:
@@ -181,8 +160,8 @@ const HabitList = () => {
                     ))}
                 </ListHeader>
                 <ListBody>
-                    {habits.map((habit, idx) => (
-                        <HabitComponent key={idx} habit={habit} dates={dates} />
+                    {habits.map((h, idx) => (
+                        <HabitComponent key={idx} habitData={h} dates={dates} />
                     ))}
                 </ListBody>
             </ListContainer>

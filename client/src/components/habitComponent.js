@@ -5,12 +5,12 @@ import styled from "styled-components";
 
 import { MainContext } from "../App";
 import { HabitModal, ModalContainer } from ".";
-import { ICON, IconHelper, StringHelper } from "../helpers";
+import { Habit } from "../classes";
+import { DateHelper, ICON, IconHelper } from "../helpers";
 import { HABIT, SIZE } from "../res";
 import { Button, Flex, Input, Label, LabelPrepend, Text } from "../styles";
 import { COLORS, FONT_SIZE, FONT_WEIGHT, TRANSITION } from "../styles/theme";
 import { habitAPI } from "../utils";
-import { Habit } from "../classes";
 
 const Category = styled("div")`
     background: ${(props) => props.background || "transparent"};
@@ -108,11 +108,17 @@ const TitleContainer = styled("div")`
 
 const TODAY = moment().format("YYYY-MM-DD");
 
-const HabitComponent = ({ habit, dates }) => {
+const HabitComponent = ({ habitData, dates }) => {
     const { state } = useContext(MainContext);
+    const [habit, setHabit] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
     const [inEditMode, setInEditMode] = useState(false);
     const [inEnterValueMode, setInEnterValueMode] = useState(false);
+
+    useEffect(() => {
+        if (!habitData) return;
+        setHabit(new Habit({ ...habitData }));
+    }, [habitData]);
 
     const onDayClicked = (date) => {
         if (date > TODAY) {
@@ -123,13 +129,47 @@ const HabitComponent = ({ habit, dates }) => {
             setSelectedDate(date);
             return;
         }
-        habit.updateDateInTimeline(date, true);
+        updateDateInTimeline(date, true);
     };
 
     const onValueEntered = (value) => {
-        habit.updateDateInTimeline(selectedDate, value);
+        updateDateInTimeline(selectedDate, value);
         setInEnterValueMode(false);
         setSelectedDate(null);
+    };
+
+    const updateDateInTimeline = (date, value) => {
+        const { year, month, day } = DateHelper.getYearMonthDay(date);
+
+        const newTimeline = JSON.parse(JSON.stringify(habit.getTimeline()));
+
+        if (!newTimeline[year]) {
+            newTimeline[year] = {};
+        }
+
+        if (!newTimeline[year][month]) {
+            newTimeline[year][month] = {};
+        }
+
+        if (!newTimeline[year][month][day]) {
+            newTimeline[year][month][day] = value;
+        } else {
+            delete newTimeline[year][month][day];
+
+            if (Object.keys(newTimeline[year][month]).length === 0) {
+                delete newTimeline[year][month];
+
+                if (Object.keys(newTimeline[year]).length === 0) {
+                    delete newTimeline[year];
+                }
+            }
+        }
+
+        setHabit((habit) => new Habit({ ...habit, timeline: newTimeline }));
+
+        habitAPI.updateHabit(state.currentUser.getUserId(), habit.getId(), {
+            timeline: JSON.stringify(newTimeline),
+        });
     };
 
     const updateHabit = (habitData) => {
@@ -204,7 +244,7 @@ const HabitComponent = ({ habit, dates }) => {
             <HabitModal
                 open={inEditMode}
                 close={() => setInEditMode(false)}
-                habitData={habit}
+                habitData={habitData}
                 setHabitData={updateHabit}
             />
         </>

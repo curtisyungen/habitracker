@@ -2,10 +2,9 @@ import moment from "moment";
 
 import { DateHelper, StringHelper } from "../helpers";
 import { STATUS } from "../res";
-import { habitAPI } from "../utils";
 
 export default class Habit {
-    constructor(
+    constructor({
         id,
         userId,
         title,
@@ -13,19 +12,19 @@ export default class Habit {
         type,
         category,
         target,
-        target_type,
+        targetType,
         timeline,
-        status
-    ) {
+        status,
+    }) {
         this.id = id;
         this.userId = userId;
         this.title = title;
         this.description = description;
         this.type = type;
         this.category = category;
-        this.timeline = StringHelper.parseJSON(timeline);
         this.target = target;
-        this.target_type = target_type;
+        this.targetType = targetType;
+        this.timeline = StringHelper.parseJSON(timeline);
         this.status = status;
 
         this.calculateMetrics();
@@ -66,6 +65,10 @@ export default class Habit {
         };
     };
 
+    getId = () => {
+        return this.id;
+    }
+
     getTitle = () => {
         return this.title;
     };
@@ -95,7 +98,7 @@ export default class Habit {
     };
 
     getTargetType = () => {
-        return this.target_type;
+        return this.targetType;
     };
 
     getIsActive = () => {
@@ -104,6 +107,8 @@ export default class Habit {
 
     getBundledHabitData = () => {
         return {
+            id: this.id,
+            userId: this.userId,
             title: this.title,
             description: this.description,
             type: this.type,
@@ -131,33 +136,7 @@ export default class Habit {
         return this.metrics;
     };
 
-    updateDateInTimeline = (date, value) => {
-        const { year, month, day } = DateHelper.getYearMonthDay(date);
-
-        if (!this.timeline[year]) {
-            this.timeline[year] = {};
-        }
-
-        if (!this.timeline[year][month]) {
-            this.timeline[year][month] = {};
-        }
-
-        if (!this.timeline[year][month][day]) {
-            this.timeline[year][month][day] = value;
-        } else {
-            delete this.timeline[year][month][day];
-
-            if (Object.keys(this.timeline[year][month]).length === 0) {
-                delete this.timeline[year][month];
-
-                if (Object.keys(this.timeline[year]).length === 0) {
-                    delete this.timeline[year];
-                }
-            }
-        }
-
-        habitAPI.updateHabit(this.userId, this.id, {
-            timeline: JSON.stringify(this.timeline),
-        });
+    setTimeline = (timeline) => {
+        this.timeline = StringHelper.parseJSON(timeline);
     };
 }
