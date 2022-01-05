@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classNames from "classnames";
 import moment from "moment";
 import styled from "styled-components";
@@ -105,17 +105,28 @@ const TitleContainer = styled("div")`
     width: 100px;
 `;
 
-const Habit = ({ habit }) => {
+const TODAY = moment().format("YYYY-MM-DD");
+
+const Habit = ({ habit, dates }) => {
     const { state } = useContext(MainContext);
-    const [date, setDate] = useState(HabitHelper.momentizeDate().currWeekStart);
-    const [selectedDay, setSelectedDay] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(null);
     const [inEditMode, setInEditMode] = useState(false);
     const [inEnterValueMode, setInEnterValueMode] = useState(false);
 
-    const getValueForDay = (habit, day) => {
-        return HabitHelper.getDateInTimeline(
+    const onDayClicked = (date) => {
+        if (date > TODAY) {
+            return;
+        }
+        if (habit.type === HABIT.TYPE.ENTER_VALUE) {
+            setInEnterValueMode(true);
+            setSelectedDate(date);
+            return;
+        }
+        HabitHelper.updateDateInTimeline(
+            state.currentUser.getUserId(),
             habit,
-            moment(date).add(day, "days")
+            date,
+            true
         );
     };
 
@@ -123,32 +134,12 @@ const Habit = ({ habit }) => {
         HabitHelper.updateDateInTimeline(
             state.currentUser.getUserId(),
             habit,
-            moment(date).add(selectedDay, "days"),
+            selectedDate,
             value,
             () => {
-                setSelectedDay(null);
                 setInEnterValueMode(false);
+                setSelectedDate(null);
             }
-        );
-    };
-
-    const onDayClicked = (habit, day) => {
-        if (
-            moment(date).add(day, "days").format("YYYY-MM-DD") >
-            moment().format("YYYY-MM-DD")
-        ) {
-            return;
-        }
-        if (habit.type === HABIT.TYPE.ENTER_VALUE) {
-            setSelectedDay(day);
-            setInEnterValueMode(true);
-            return;
-        }
-        HabitHelper.updateDateInTimeline(
-            state.currentUser.getUserId(),
-            habit,
-            moment(date).add(day, "days"),
-            true
         );
     };
 
@@ -157,11 +148,11 @@ const Habit = ({ habit }) => {
             .updateHabit(state.currentUser.getUserId(), habitData.id, habitData)
             .then(() => {
                 setInEditMode(false);
-                setSelectedDay(null);
+                setSelectedDate(null);
             });
     };
 
-    if (!habit) {
+    if (!habit || !dates) {
         return <></>;
     }
 
@@ -185,24 +176,23 @@ const Habit = ({ habit }) => {
                         {habit.category}
                     </Category>
                 </TitleContainer>
-                {[0, 1, 2, 3, 4, 5, 6].map((day, idx) => (
+                {dates.map((date, idx) => (
                     <Day
                         key={idx}
                         className={classNames("backgroundHoverable", {
-                            disabled:
-                                moment(date)
-                                    .add(idx, "days")
-                                    .format("YYYY-MM-DD") >
-                                moment().format("YYYY-MM-DD"),
+                            disabled: date > TODAY,
                             enterValue: habit.type === HABIT.TYPE.ENTER_VALUE,
-                            highlight: getValueForDay(habit, idx),
+                            highlight: HabitHelper.getDateInTimeline(
+                                habit,
+                                date
+                            ),
                         })}
                         onClick={() => {
-                            onDayClicked(habit, day);
+                            onDayClicked(date);
                         }}
                     >
                         <Text fontSize={FONT_SIZE.L}>
-                            {getValueForDay(habit, idx)}
+                            {HabitHelper.getDateInTimeline(habit, date)}
                             <CompleteIcon>
                                 {IconHelper.getIcon(ICON.CHECK)}
                             </CompleteIcon>
@@ -214,15 +204,13 @@ const Habit = ({ habit }) => {
             <EnterValueModal
                 open={inEnterValueMode}
                 close={() => {
-                    setSelectedDay(null);
                     setInEnterValueMode(false);
+                    setSelectedDate(null);
                 }}
-                date={moment(date)
-                    .add(selectedDay, "days")
-                    .format("YYYY-MM-DD")}
+                date={selectedDate}
                 target={habit.target}
                 targetType={habit.targetType}
-                value={getValueForDay(habit, selectedDay)}
+                value={HabitHelper.getDateInTimeline(habit, selectedDate)}
                 setValue={(value) => onValueEntered(value)}
             />
 

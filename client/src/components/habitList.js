@@ -39,9 +39,12 @@ const ListHeader = styled("div")`
     width: 100%;
 `;
 
-const HabitList = ({}) => {
+const HabitList = () => {
     const { state } = useContext(MainContext);
-    const [date, setDate] = useState(HabitHelper.momentizeDate().currWeekStart);
+    const [startDate, setStartDate] = useState(
+        HabitHelper.momentizeDate().currWeekStart
+    );
+    const [dates, setDates] = useState(null);
     const [habits, setHabits] = useState(null);
     const [inAddMode, setInAddMode] = useState(false);
 
@@ -49,6 +52,14 @@ const HabitList = ({}) => {
         if (!state.currentUser) return;
         loadHabits();
     }, [state.currentUser]);
+
+    useEffect(() => {
+        setDates(
+            [0, 1, 2, 3, 4, 5, 6].map((i) =>
+                moment(startDate).add(i, "days").format("YYYY-MM-DD")
+            )
+        );
+    }, [startDate]);
 
     const loadHabits = () => {
         habitAPI
@@ -75,14 +86,18 @@ const HabitList = ({}) => {
     const scrollDate = (dir) => {
         switch (dir) {
             case -1:
-                setDate(HabitHelper.momentizeDate(date).prevWeekStart);
+                setStartDate(
+                    HabitHelper.momentizeDate(startDate).prevWeekStart
+                );
                 break;
             case 1:
-                setDate(HabitHelper.momentizeDate(date).nextWeekStart);
+                setStartDate(
+                    HabitHelper.momentizeDate(startDate).nextWeekStart
+                );
                 break;
             case 0:
             default:
-                setDate(HabitHelper.momentizeDate().currWeekStart);
+                setStartDate(HabitHelper.momentizeDate().currWeekStart);
         }
     };
 
@@ -125,7 +140,7 @@ const HabitList = ({}) => {
                             }}
                             width="150px"
                         >
-                            {date}
+                            {startDate}
                         </Button>
                         <Button
                             onClick={(e) => {
@@ -139,22 +154,16 @@ const HabitList = ({}) => {
                 </ListControls>
                 <ListHeader>
                     <Text className="background borderColor">Title</Text>
-                    {[...new Array(7)].map((d, idx) => (
+                    {dates.map((d, idx) => (
                         <Text key={idx} className="background borderColor">
-                            <Text>
-                                {moment(date).add(idx, "days").format("dddd")}
-                            </Text>
-                            <Text>
-                                {moment(date)
-                                    .add(idx, "days")
-                                    .format("YYYY-MM-DD")}
-                            </Text>
+                            <Text>{moment(d).format("dddd")}</Text>
+                            <Text>{d}</Text>
                         </Text>
                     ))}
                 </ListHeader>
                 <ListBody>
                     {habits.map((habit, idx) => (
-                        <Habit key={idx} habit={habit} />
+                        <Habit key={idx} habit={habit} dates={dates} />
                     ))}
                 </ListBody>
             </ListContainer>
