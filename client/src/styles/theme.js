@@ -24,6 +24,10 @@ export const COLORS = {
             [THEME.DARK]: "rgba(0, 0, 0, 0.85)",
             [THEME.LIGHT]: "rgba(255, 255, 255, 0.85)",
         },
+        BACKGROUND_HOVER: {
+            [THEME.DARK]: "rgba(0, 0, 0, 0.55)",
+            [THEME.LIGHT]: "rgba(235, 235, 235, 0.85)",
+        },
         BORDER: {
             [THEME.DARK]: "#ffffff",
             [THEME.LIGHT]: "#000000",
@@ -78,12 +82,18 @@ export const AppContainer = styled("div")`
     width: 100%;
 
     --background: ${(props) => COLORS.THEME.BACKGROUND[props.theme]};
+    --backgroundHover: ${(props) => COLORS.THEME.BACKGROUND_HOVER[props.theme]};
     --borderColor: ${(props) => COLORS.THEME.BORDER[props.theme]};
     --color: ${(props) => COLORS.THEME.COLOR[props.theme]};
     --highlight: ${(props) => COLORS.THEME.HIGHLIGHT[props.theme]};
 
     & .background {
         background: var(--background);
+    }
+    & .backgroundHoverable {
+        &:hover {
+            background: var(--backgroundHover);
+        }
     }
     & .borderColor {
         border-color: var(--borderColor);
@@ -94,6 +104,11 @@ export const AppContainer = styled("div")`
     & .highlight {
         background: var(--highlight);
         color: ${COLORS.BLACK};
+
+        &:hover {
+            background: var(--highlight);
+            color: ${COLORS.BLACK};
+        }
     }
 
     & button,

@@ -4,9 +4,18 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { MainContext } from "../App";
-import { HabitModal } from ".";
+import { HabitModal, ModalContainer } from ".";
 import { HabitHelper, ICON, IconHelper } from "../helpers";
-import { Button, Grid, Text } from "../styles";
+import { HABIT, SIZE } from "../res";
+import {
+    Button,
+    Flex,
+    Label,
+    Grid,
+    Input,
+    LabelPrepend,
+    Text,
+} from "../styles";
 import { COLORS, FONT_SIZE, FONT_WEIGHT, TRANSITION } from "../styles/theme";
 import { habitAPI } from "../utils";
 
@@ -41,10 +50,20 @@ const Day = styled("div")`
     border-width: 1px;
     cursor: pointer;
     height: 100%;
-    min-height: 50px;
-    min-width: 50px;
+    min-height: ${SIZE.HABIT_HEIGHT};
+    min-width: ${SIZE.HABIT_HEIGHT};
+    position: relative;
+    text-align: center;
     transition: ${TRANSITION.FAST};
     width: 100%;
+
+    & div {
+        position: absolute;
+        top: 50%;
+        text-align: center;
+        transform: translateY(-50%);
+        width: 100%;
+    }
 `;
 
 const Habit = styled("div")`
@@ -80,9 +99,6 @@ const ListHeader = styled("div")`
     min-width: 100%;
     text-align: center;
     width: 100%;
-
-    & div {
-    }
 `;
 
 const TitleContainer = styled("div")`
@@ -97,12 +113,51 @@ const TitleContainer = styled("div")`
     width: 100%;
 `;
 
+const EnterValueModal = ({
+    open,
+    close,
+    date,
+    target,
+    targetType,
+    setValue,
+}) => {
+    const [valueInternal, setValueInternal] = useState(null);
+
+    return (
+        <ModalContainer open={open} close={close}>
+            <h4>Enter value</h4>
+            <Label>{date}</Label>
+            <Flex>
+                <LabelPrepend>{targetType}</LabelPrepend>
+                <Input
+                    onChange={(e) => setValueInternal(e.target.value)}
+                    placeholder={target}
+                    type="text"
+                    value={valueInternal}
+                />
+            </Flex>
+            <Button
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setValue(valueInternal);
+                    setValueInternal(null);
+                }}
+            >
+                Submit
+            </Button>
+        </ModalContainer>
+    );
+};
+
 const HabitList = ({}) => {
     const { state } = useContext(MainContext);
     const [date, setDate] = useState(HabitHelper.momentizeDate().currWeekStart);
     const [habits, setHabits] = useState(null);
     const [mode, setMode] = useState(MODE.NONE);
+    const [selectedDay, setSelectedDay] = useState(null);
     const [selectedHabit, setSelectedHabit] = useState(null);
+    const [showEnterValueModal, setShowEnterValueModal] = useState(false);
 
     useEffect(() => {
         if (!state.currentUser) return;
@@ -150,31 +205,29 @@ const HabitList = ({}) => {
     };
 
     const onDayClicked = (habit, day) => {
-        const year = HabitHelper.momentizeDate(date).year;
-        const month = HabitHelper.momentizeDate(date).month;
-        const _date = moment(date).add(day, "days").format("D");
-
-        const timeline = JSON.parse(JSON.stringify(habit.timeline));
-        if (!timeline[year]) {
-            timeline[year] = {};
+        if (habit.type === HABIT.TYPE.ENTER_VALUE) {
+            setSelectedDay(day);
+            setSelectedHabit(habit);
+            setShowEnterValueModal(true);
+            return;
         }
+        HabitHelper.updateDateInTimeline(
+            state.currentUser.getUserId(),
+            habit,
+            moment(date).add(day, "days"),
+            true,
+            () => loadHabits()
+        );
+    };
 
-        if (!timeline[year][month]) {
-            timeline[year][month] = {};
-        }
-
-        if (timeline[year][month][_date]) {
-            delete timeline[year][month][_date];
-        } else {
-            timeline[year][month][_date] = true;
-        }
-        habitAPI
-            .updateHabit(state.currentUser.getUserId(), habit.id, {
-                timeline: JSON.stringify(timeline),
-            })
-            .then(() => {
-                loadHabits();
-            });
+    const onValueEntered = (value) => {
+        HabitHelper.updateDateInTimeline(
+            state.currentUser.getUserId(),
+            selectedHabit,
+            moment(date).add(selectedDay, "days"),
+            value,
+            () => loadHabits()
+        );
     };
 
     const scrollDate = (dir) => {
@@ -270,20 +323,23 @@ const HabitList = ({}) => {
                         {[0, 1, 2, 3, 4, 5, 6].map((day, idx) => (
                             <Day
                                 key={idx}
-                                className={
-                                    ("backgroundHoverable",
-                                    classNames({
-                                        highlight:
-                                            HabitHelper.getDateInTimeline(
-                                                habit,
-                                                moment(date).add(idx, "days")
-                                            ),
-                                    }))
-                                }
+                                className={classNames("backgroundHoverable", {
+                                    highlight: HabitHelper.getDateInTimeline(
+                                        habit,
+                                        moment(date).add(idx, "days")
+                                    ),
+                                })}
                                 onClick={() => {
                                     onDayClicked(habit, day);
                                 }}
-                            ></Day>
+                            >
+                                <Text fontSize={FONT_SIZE.L}>
+                                    {HabitHelper.getDateInTimeline(
+                                        habit,
+                                        moment(date).add(idx, "days")
+                                    )}
+                                </Text>
+                            </Day>
                         ))}
                     </Habit>
                 ))}
@@ -294,6 +350,22 @@ const HabitList = ({}) => {
                 habitData={selectedHabit}
                 setHabitData={createOrUpdateHabit}
             />
+            {selectedHabit && showEnterValueModal && (
+                <EnterValueModal
+                    open={showEnterValueModal}
+                    close={() => {
+                        setSelectedDay(null);
+                        setSelectedHabit(null);
+                        setShowEnterValueModal(false);
+                    }}
+                    date={moment(date)
+                        .add(selectedDay, "days")
+                        .format("YYYY-MM-DD")}
+                    target={selectedHabit.target}
+                    targetType={selectedHabit.targetType}
+                    setValue={(value) => onValueEntered(value)}
+                />
+            )}
         </ListContainer>
     );
 };

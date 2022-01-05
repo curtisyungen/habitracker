@@ -2,6 +2,7 @@ import { faHourglassEnd } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 
 import { ICON, IconHelper, StringHelper } from ".";
+import { habitAPI } from "../utils";
 
 export const FILTER = {
     ACTIVE: "Active",
@@ -76,6 +77,43 @@ export default class HabitHelper {
             return timeline[year][month][day];
         }
         return false;
+    }
+
+    static updateDateInTimeline(userId, habit, date, value, onUpdateComplete) {
+        const year = HabitHelper.momentizeDate(date).year;
+        const month = HabitHelper.momentizeDate(date).month;
+        const _date = moment(date).format("D");
+
+        const timeline = JSON.parse(JSON.stringify(habit.timeline));
+        if (!timeline[year]) {
+            timeline[year] = {};
+        }
+
+        if (!timeline[year][month]) {
+            timeline[year][month] = {};
+        }
+
+        if (!timeline[year][month][_date]) {
+            timeline[year][month][_date] = value;
+        } else {
+            delete timeline[year][month][_date];
+
+            if (Object.keys(timeline[year][month].length === 0)) {
+                delete timeline[year][month];
+
+                if (Object.keys(timeline[year]).length === 0) {
+                    delete timeline[year];
+                }
+            }
+        }
+
+        habitAPI
+            .updateHabit(userId, habit.id, {
+                timeline: JSON.stringify(timeline),
+            })
+            .then(() => {
+                onUpdateComplete();
+            });
     }
 
     static momentizeDate(date = moment()) {
