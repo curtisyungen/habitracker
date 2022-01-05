@@ -19,6 +19,8 @@ export const COLORS = {
         [HABIT.CATEGORY.PERSONAL]: "brown",
         [HABIT.CATEGORY.RECREATION]: "teal",
     },
+    GRAY_DARK: "#808080",
+    GRAY_LIGHT: "#f2f2f2",
     THEME: {
         BACKGROUND: {
             [THEME.DARK]: "rgba(0, 0, 0, 0.85)",
@@ -35,6 +37,10 @@ export const COLORS = {
         COLOR: {
             [THEME.DARK]: "#ffffff",
             [THEME.LIGHT]: "#000000",
+        },
+        DISABLED: {
+            [THEME.DARK]: "#808080",
+            [THEME.LIGHT]: "#c2c2c2",
         },
         HIGHLIGHT: {
             [THEME.DARK]: "gold",
@@ -83,6 +89,7 @@ export const AppContainer = styled("div")`
     width: 100%;
 
     --background: ${(props) => COLORS.THEME.BACKGROUND[props.theme]};
+    --backgroundDisabled: ${(props) => COLORS.THEME.DISABLED[props.theme]};
     --backgroundHover: ${(props) => COLORS.THEME.BACKGROUND_HOVER[props.theme]};
     --borderColor: ${(props) => COLORS.THEME.BORDER[props.theme]};
     --color: ${(props) => COLORS.THEME.COLOR[props.theme]};
@@ -101,6 +108,15 @@ export const AppContainer = styled("div")`
     }
     & .color {
         color: var(--color);
+    }
+    & .disabled {
+        background: var(--backgroundDisabled);
+        cursor: default !important;
+        opacity: 0.5 !important;
+
+        &:hover {
+            background: var(--backgroundDisabled) !important;
+        }
     }
     & .highlight {
         background: var(--highlight);

@@ -69,6 +69,7 @@ export default class HabitHelper {
         const year = this.momentizeDate(date).year;
         const month = this.momentizeDate(date).month;
         const day = this.momentizeDate(date).date;
+
         if (
             timeline[year] &&
             timeline[year][month] &&
@@ -77,6 +78,40 @@ export default class HabitHelper {
             return timeline[year][month][day];
         }
         return false;
+    }
+
+    static getHabitMetrics(habit) {
+        let currStreak = 0,
+            earliestCompletion,
+            longestStreak = 0,
+            mostRecentCompletion,
+            totalCompletions = 0;
+
+        const startDate = moment("2020-09-01").format("YYYY-MM-DD");
+        const endDate = moment().format("YYYY-MM-DD");
+
+        let currDate = startDate;
+        while (currDate <= endDate) {
+            if (this.getDateInTimeline(habit, currDate)) {
+                if (!earliestCompletion) {
+                    earliestCompletion = currDate;
+                }
+                currStreak += 1;
+                longestStreak = Math.max(longestStreak, currStreak);
+                mostRecentCompletion = currDate;
+                totalCompletions += 1;
+            } else {
+                currStreak = 0;
+            }
+            currDate = moment(currDate).add(1, "days").format("YYYY-MM-DD");
+        }
+        return {
+            currStreak,
+            earliestCompletion,
+            longestStreak,
+            mostRecentCompletion,
+            totalCompletions,
+        };
     }
 
     static updateDateInTimeline(userId, habit, date, value, onUpdateComplete) {
@@ -88,11 +123,11 @@ export default class HabitHelper {
         if (!timeline[year]) {
             timeline[year] = {};
         }
-        
+
         if (!timeline[year][month]) {
             timeline[year][month] = {};
         }
-        
+
         if (!timeline[year][month][_date]) {
             timeline[year][month][_date] = value;
         } else {

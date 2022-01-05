@@ -65,10 +65,12 @@ const Day = styled("div")`
     transition: ${TRANSITION.FAST};
     width: 100%;
 
-    &.enterValue {
-        &.highlight ${CompleteIcon} {
-            display: none;
-        }
+    &.disabled ${CompleteIcon} {
+        display: none;
+    }
+
+    &.enterValue .highlight ${CompleteIcon} {
+        display: none;
     }
 
     &.highlight {
@@ -85,18 +87,18 @@ const Day = styled("div")`
         }
     }
 
+    &:hover {
+        & ${CompleteIcon} {
+            opacity: 0.5;
+        }
+    }
+
     & div {
         position: absolute;
         top: 50%;
         text-align: center;
         transform: translateY(-50%);
         width: 100%;
-    }
-
-    &:hover {
-        & ${CompleteIcon} {
-            opacity: 0.5;
-        }
     }
 `;
 
@@ -140,7 +142,7 @@ const TitleContainer = styled("div")`
     border-width: 1px;
     cursor: pointer;
     font-size: ${FONT_SIZE.M};
-    font-weight: ${FONT_WEIGHT.BOLD};
+    padding: 5px;
     position: relative;
     text-align: center;
     text-transform: capitalize;
@@ -247,6 +249,12 @@ const HabitList = ({}) => {
     };
 
     const onDayClicked = (habit, day) => {
+        if (
+            moment(date).add(day, "days").format("YYYY-MM-DD") >
+            moment().format("YYYY-MM-DD")
+        ) {
+            return;
+        }
         if (habit.type === HABIT.TYPE.ENTER_VALUE) {
             setSelectedDay(day);
             setSelectedHabit(habit);
@@ -360,7 +368,18 @@ const HabitList = ({}) => {
                                 setMode(MODE.EDIT);
                             }}
                         >
-                            <Text>{habit.title}</Text>
+                            <Text fontWeight={FONT_WEIGHT.BOLD}>
+                                {habit.title}
+                            </Text>
+                            <Flex justifyContent="space-between">
+                                <Text>Streak</Text>
+                                <Text>
+                                    {
+                                        HabitHelper.getHabitMetrics(habit)
+                                            .currStreak
+                                    }
+                                </Text>
+                            </Flex>
                             <Category
                                 background={COLORS.CATEGORY[habit.category]}
                             >
@@ -371,6 +390,11 @@ const HabitList = ({}) => {
                             <Day
                                 key={idx}
                                 className={classNames("backgroundHoverable", {
+                                    disabled:
+                                        moment(date)
+                                            .add(idx, "days")
+                                            .format("YYYY-MM-DD") >
+                                        moment().format("YYYY-MM-DD"),
                                     enterValue:
                                         habit.type === HABIT.TYPE.ENTER_VALUE,
                                     highlight: getValueForDay(habit, idx),

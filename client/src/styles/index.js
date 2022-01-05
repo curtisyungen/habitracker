@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { SIZE } from "../res";
-import { COLORS, FONT_SIZE, SCREEN_SIZE } from "./theme";
+import { COLORS, FONT_SIZE, FONT_WEIGHT, SCREEN_SIZE } from "./theme";
 
 export const Button = styled("button")`
     border-radius: 0px;
@@ -114,5 +114,6 @@ export const Spacer = styled("div")`
 
 export const Text = styled("div")`
     font-size: ${(props) => props.fontSize || FONT_SIZE.M};
+    font-weight: ${(props) => props.fontWeight || FONT_WEIGHT.NORMAL};
     text-align: ${(props) => props.textAlign || "center"};
 `;
