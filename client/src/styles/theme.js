@@ -32,6 +32,10 @@ export const COLORS = {
             [THEME.DARK]: "#ffffff",
             [THEME.LIGHT]: "#000000",
         },
+        HIGHLIGHT: {
+            [THEME.DARK]: "gold",
+            [THEME.LIGHT]: "lightblue",
+        },
     },
     WHITE: "#ffffff",
 };
@@ -76,6 +80,7 @@ export const AppContainer = styled("div")`
     --background: ${(props) => COLORS.THEME.BACKGROUND[props.theme]};
     --borderColor: ${(props) => COLORS.THEME.BORDER[props.theme]};
     --color: ${(props) => COLORS.THEME.COLOR[props.theme]};
+    --highlight: ${(props) => COLORS.THEME.HIGHLIGHT[props.theme]};
 
     & .background {
         background: var(--background);
@@ -85,6 +90,10 @@ export const AppContainer = styled("div")`
     }
     & .color {
         color: var(--color);
+    }
+    & .highlight {
+        background: var(--highlight);
+        color: ${COLORS.BLACK};
     }
 
     & button,

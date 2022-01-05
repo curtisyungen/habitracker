@@ -6,8 +6,8 @@ import styled from "styled-components";
 import { MainContext } from "../App";
 import { HabitModal } from ".";
 import { HabitHelper, ICON, IconHelper } from "../helpers";
-import { Button, Flex, Grid, Text } from "../styles";
-import { COLORS, FONT_SIZE, FONT_WEIGHT } from "../styles/theme";
+import { Button, Grid, Text } from "../styles";
+import { COLORS, FONT_SIZE, FONT_WEIGHT, TRANSITION } from "../styles/theme";
 import { habitAPI } from "../utils";
 
 const MODE = {
@@ -39,9 +39,11 @@ const Category = styled("div")`
 const Day = styled("div")`
     border-style: solid;
     border-width: 1px;
+    cursor: pointer;
     height: 100%;
     min-height: 50px;
     min-width: 50px;
+    transition: ${TRANSITION.FAST};
     width: 100%;
 `;
 
@@ -74,15 +76,12 @@ const ListHeader = styled("div")`
     grid-gap: 2px;
     grid-template-columns: repeat(8, 1fr);
     font-size: ${FONT_SIZE.S};
-    height: 30px;
-    line-height: 30px;
+    height: 100%;
     min-width: 100%;
     text-align: center;
     width: 100%;
 
     & div {
-        border-style: solid;
-        border-width: 1px;
     }
 `;
 
@@ -100,9 +99,7 @@ const TitleContainer = styled("div")`
 
 const HabitList = ({}) => {
     const { state } = useContext(MainContext);
-    const [date, setDate] = useState(
-        moment().day("Sunday").format("YYYY-MM-DD")
-    );
+    const [date, setDate] = useState(HabitHelper.momentizeDate().currWeekStart);
     const [habits, setHabits] = useState(null);
     const [mode, setMode] = useState(MODE.NONE);
     const [selectedHabit, setSelectedHabit] = useState(null);
@@ -153,11 +150,9 @@ const HabitList = ({}) => {
     };
 
     const onDayClicked = (habit, day) => {
-        const year = moment(date).format("YYYY");
-        const month = moment(date).format("M");
+        const year = HabitHelper.momentizeDate(date).year;
+        const month = HabitHelper.momentizeDate(date).month;
         const _date = moment(date).add(day, "days").format("D");
-
-        console.log(year, month, _date, day);
 
         const timeline = JSON.parse(JSON.stringify(habit.timeline));
         if (!timeline[year]) {
@@ -173,20 +168,26 @@ const HabitList = ({}) => {
         } else {
             timeline[year][month][_date] = true;
         }
-        habitAPI.updateHabit(habit.id, { timeline: JSON.stringify(timeline) });
+        habitAPI
+            .updateHabit(state.currentUser.getUserId(), habit.id, {
+                timeline: JSON.stringify(timeline),
+            })
+            .then(() => {
+                loadHabits();
+            });
     };
 
     const scrollDate = (dir) => {
         switch (dir) {
             case -1:
-                setDate(moment(date).subtract(7, "days").format("YYYY-MM-DD"));
+                setDate(HabitHelper.momentizeDate(date).prevWeekStart);
                 break;
             case 1:
-                setDate(moment(date).add(7, "days").format("YYYY-MM-DD"));
+                setDate(HabitHelper.momentizeDate(date).nextWeekStart);
                 break;
             case 0:
             default:
-                setDate(moment().format("YYYY-MM-DD"));
+                setDate(HabitHelper.momentizeDate().currWeekStart);
         }
     };
 
@@ -238,33 +239,49 @@ const HabitList = ({}) => {
             </ListControls>
             <ListHeader>
                 <Text className="background borderColor">Title</Text>
-                {[0, 1, 2, 3, 4, 5, 6].map((d, idx) => (
+                {[...new Array(6)].map((d, idx) => (
                     <Text key={idx} className="background borderColor">
-                        {moment().day(d).format("ddd")}
+                        <Text>
+                            {moment(date).add(idx, "days").format("dddd")}
+                        </Text>
+                        <Text>
+                            {moment(date).add(idx, "days").format("YYYY-MM-DD")}
+                        </Text>
                     </Text>
                 ))}
             </ListHeader>
             <ListBody>
-                {habits.map((h, idx) => (
+                {habits.map((habit, idx) => (
                     <Habit key={idx}>
                         <TitleContainer
                             className="background borderColor"
                             onClick={() => {
-                                setSelectedHabit(h);
+                                setSelectedHabit(habit);
                                 setMode(MODE.EDIT);
                             }}
                         >
-                            <Text>{h.title}</Text>
-                            <Category background={COLORS.CATEGORY[h.category]}>
-                                {h.category}
+                            <Text>{habit.title}</Text>
+                            <Category
+                                background={COLORS.CATEGORY[habit.category]}
+                            >
+                                {habit.category}
                             </Category>
                         </TitleContainer>
-                        {[0, 1, 2, 3, 4, 5, 6].map((d, idx) => (
+                        {[0, 1, 2, 3, 4, 5, 6].map((day, idx) => (
                             <Day
                                 key={idx}
-                                className={classNames({ complete: true })}
+                                className={
+                                    ("backgroundHoverable",
+                                    classNames({
+                                        highlight:
+                                            HabitHelper.getDateInTimeline(
+                                                habit,
+                                                moment(date).add(idx, "days")
+                                            ),
+                                    }))
+                                }
                                 onClick={() => {
-                                    onDayClicked(h, d);
+                                    onDayClicked(habit, day);
                                 }}
                             ></Day>
                         ))}
