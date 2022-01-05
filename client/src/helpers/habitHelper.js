@@ -114,7 +114,15 @@ export default class HabitHelper {
         };
     }
 
-    static updateDateInTimeline(userId, habit, date, value, onUpdateComplete) {
+    static updateDateInTimeline(
+        userId,
+        habit,
+        date,
+        value,
+        onUpdateComplete = () => {
+            return;
+        }
+    ) {
         const year = HabitHelper.momentizeDate(date).year;
         const month = HabitHelper.momentizeDate(date).month;
         const _date = moment(date).format("D");
