@@ -88,17 +88,17 @@ export default class HabitHelper {
         if (!timeline[year]) {
             timeline[year] = {};
         }
-
+        
         if (!timeline[year][month]) {
             timeline[year][month] = {};
         }
-
+        
         if (!timeline[year][month][_date]) {
             timeline[year][month][_date] = value;
         } else {
             delete timeline[year][month][_date];
 
-            if (Object.keys(timeline[year][month].length === 0)) {
+            if (Object.keys(timeline[year][month]).length === 0) {
                 delete timeline[year][month];
 
                 if (Object.keys(timeline[year]).length === 0) {

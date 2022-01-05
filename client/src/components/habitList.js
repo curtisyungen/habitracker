@@ -45,6 +45,14 @@ const Category = styled("div")`
     width: 100%;
 `;
 
+const CompleteIcon = styled("div")`
+    font-size: ${FONT_SIZE.XXXL};
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+`;
+
 const Day = styled("div")`
     border-style: solid;
     border-width: 1px;
@@ -57,12 +65,38 @@ const Day = styled("div")`
     transition: ${TRANSITION.FAST};
     width: 100%;
 
+    &.enterValue {
+        &.highlight ${CompleteIcon} {
+            display: none;
+        }
+    }
+
+    &.highlight {
+        & ${CompleteIcon} {
+            color: black;
+            opacity: 1;
+        }
+
+        &:hover {
+            ${CompleteIcon} {
+                color: black;
+                opacity: 1;
+            }
+        }
+    }
+
     & div {
         position: absolute;
         top: 50%;
         text-align: center;
         transform: translateY(-50%);
         width: 100%;
+    }
+
+    &:hover {
+        & ${CompleteIcon} {
+            opacity: 0.5;
+        }
     }
 `;
 
@@ -204,6 +238,13 @@ const HabitList = ({}) => {
         }
     };
 
+    const getValueForDay = (habit, day) => {
+        return HabitHelper.getDateInTimeline(
+            habit,
+            moment(date).add(day, "days")
+        );
+    };
+
     const onDayClicked = (habit, day) => {
         if (habit.type === HABIT.TYPE.ENTER_VALUE) {
             setSelectedDay(day);
@@ -324,20 +365,19 @@ const HabitList = ({}) => {
                             <Day
                                 key={idx}
                                 className={classNames("backgroundHoverable", {
-                                    highlight: HabitHelper.getDateInTimeline(
-                                        habit,
-                                        moment(date).add(idx, "days")
-                                    ),
+                                    enterValue:
+                                        habit.type === HABIT.TYPE.ENTER_VALUE,
+                                    highlight: getValueForDay(habit, idx),
                                 })}
                                 onClick={() => {
                                     onDayClicked(habit, day);
                                 }}
                             >
                                 <Text fontSize={FONT_SIZE.L}>
-                                    {HabitHelper.getDateInTimeline(
-                                        habit,
-                                        moment(date).add(idx, "days")
-                                    )}
+                                    {getValueForDay(habit, idx)}
+                                    <CompleteIcon>
+                                        {IconHelper.getIcon(ICON.CHECK)}
+                                    </CompleteIcon>
                                 </Text>
                             </Day>
                         ))}

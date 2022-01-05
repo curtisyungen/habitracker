@@ -51,6 +51,7 @@ export const FONT_SIZE = {
     L: "15px",
     XL: "18px",
     XXL: "24px",
+    XXXL: "30px",
 };
 
 export const FONT_WEIGHT = {
