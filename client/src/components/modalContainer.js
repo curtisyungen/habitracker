@@ -18,6 +18,7 @@ const ModalContainer = ({ open, close, children }) => {
                     width: "100%",
                 },
             }}
+            animationDuration={0}
         >
             {children}
         </Modal>

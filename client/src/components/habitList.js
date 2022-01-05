@@ -69,7 +69,7 @@ const Day = styled("div")`
         display: none;
     }
 
-    &.enterValue .highlight ${CompleteIcon} {
+    &.enterValue.highlight ${CompleteIcon} {
         display: none;
     }
 
@@ -317,7 +317,11 @@ const HabitList = ({}) => {
                 </Button>
             </ButtonContainer>
             <ListControls>
-                <Grid gridTemplateColumns="repeat(3, 1fr)" width="300px">
+                <Grid
+                    gridTemplateColumns="repeat(3, 1fr)"
+                    margin="auto"
+                    width="300px"
+                >
                     <Button
                         onClick={(e) => {
                             e.preventDefault();
@@ -347,7 +351,7 @@ const HabitList = ({}) => {
             </ListControls>
             <ListHeader>
                 <Text className="background borderColor">Title</Text>
-                {[...new Array(6)].map((d, idx) => (
+                {[...new Array(7)].map((d, idx) => (
                     <Text key={idx} className="background borderColor">
                         <Text>
                             {moment(date).add(idx, "days").format("dddd")}

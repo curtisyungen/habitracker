@@ -30,6 +30,7 @@ export const Grid = styled("div")`
     grid-gap: ${(props) => props.gridGap || "2px"};
     grid-template-columns: ${(props) => props.gridTemplateColumns || "unset"};
     grid-template-rows: ${(props) => props.gridTemplateRows || "unset"};
+    margin: ${props => props.margin || "0px"};
     width: ${(props) => props.width || "100%"};
 `;
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { ModalContainer } from ".";
+import { StringHelper } from "../helpers";
 import { HABIT, STATUS } from "../res";
 import { Button, Flex, Input, LabelPrepend, Select } from "../styles";
 
@@ -17,7 +18,7 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
     const [category, setCategory] = useState(HABIT.CATEGORY.OTHER);
     const [target, setTarget] = useState(null);
     const [targetType, setTargetType] = useState(null);
-    const [timeline] = useState({});
+    const [timeline, setTimeline] = useState({});
     const [status, setStatus] = useState(STATUS.ACTIVE);
 
     useEffect(() => {
@@ -29,6 +30,7 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
         setCategory(habitData.category);
         setTarget(habitData.target);
         setTargetType(habitData.targetType);
+        setTimeline(StringHelper.parseJSON(habitData.timeline));
     }, [habitData]);
 
     return (
