@@ -8,7 +8,11 @@ import { PAGES, VALIDATION } from "./res";
 ReactDOM.render(
     <Auth0Provider
         domain={VALIDATION.AUTH0_DOMAIN}
-        clientId={VALIDATION.AUTH0_CLIENT_ID}
+        clientId={
+            window.location.hostname === "localhost"
+                ? VALIDATION.AUTH0_CLIENT_ID_LOCAL
+                : VALIDATION.AUTH0_CLIENT_ID
+        }
         redirectUri={`${window.location.origin}${PAGES.LOGIN_REDIRECT}`}
     >
         <App />

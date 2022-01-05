@@ -43,6 +43,7 @@ export const STATUS = {
 };
 
 export const VALIDATION = {
-    AUTH0_CLIENT_ID: "StZpJpHpOZqb2FibCR4CBjKHif3hZ9Cw",
+    AUTH0_CLIENT_ID_LOCAL: "StZpJpHpOZqb2FibCR4CBjKHif3hZ9Cw",
+    AUTH0_CLIENT_ID: "f70JRcB2BamkCBbzo7PyAmsQ8A0dGHzy",
     AUTH0_DOMAIN: "dev-nzv9rx9y.us.auth0.com",
 };
