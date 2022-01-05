@@ -5,11 +5,12 @@ import styled from "styled-components";
 
 import { MainContext } from "../App";
 import { HabitModal, ModalContainer } from ".";
-import { HabitHelper, ICON, IconHelper } from "../helpers";
+import { ICON, IconHelper, StringHelper } from "../helpers";
 import { HABIT, SIZE } from "../res";
 import { Button, Flex, Input, Label, LabelPrepend, Text } from "../styles";
 import { COLORS, FONT_SIZE, FONT_WEIGHT, TRANSITION } from "../styles/theme";
 import { habitAPI } from "../utils";
+import { Habit } from "../classes";
 
 const Category = styled("div")`
     background: ${(props) => props.background || "transparent"};
@@ -107,7 +108,7 @@ const TitleContainer = styled("div")`
 
 const TODAY = moment().format("YYYY-MM-DD");
 
-const Habit = ({ habit, dates }) => {
+const HabitComponent = ({ habit, dates }) => {
     const { state } = useContext(MainContext);
     const [selectedDate, setSelectedDate] = useState(null);
     const [inEditMode, setInEditMode] = useState(false);
@@ -117,30 +118,18 @@ const Habit = ({ habit, dates }) => {
         if (date > TODAY) {
             return;
         }
-        if (habit.type === HABIT.TYPE.ENTER_VALUE) {
+        if (habit.getType() === HABIT.TYPE.ENTER_VALUE) {
             setInEnterValueMode(true);
             setSelectedDate(date);
             return;
         }
-        HabitHelper.updateDateInTimeline(
-            state.currentUser.getUserId(),
-            habit,
-            date,
-            true
-        );
+        habit.updateDateInTimeline(date, true);
     };
 
     const onValueEntered = (value) => {
-        HabitHelper.updateDateInTimeline(
-            state.currentUser.getUserId(),
-            habit,
-            selectedDate,
-            value,
-            () => {
-                setInEnterValueMode(false);
-                setSelectedDate(null);
-            }
-        );
+        habit.updateDateInTimeline(selectedDate, value);
+        setInEnterValueMode(false);
+        setSelectedDate(null);
     };
 
     const updateHabit = (habitData) => {
@@ -165,15 +154,15 @@ const Habit = ({ habit, dates }) => {
                         setInEditMode(true);
                     }}
                 >
-                    <Text fontWeight={FONT_WEIGHT.BOLD}>{habit.title}</Text>
+                    <Text fontWeight={FONT_WEIGHT.BOLD}>
+                        {habit.getTitle()}
+                    </Text>
                     <Flex justifyContent="space-between">
                         <Text>Streak</Text>
-                        <Text>
-                            {HabitHelper.getHabitMetrics(habit).currStreak}
-                        </Text>
+                        <Text>{habit.getMetrics().currStreak}</Text>
                     </Flex>
-                    <Category background={COLORS.CATEGORY[habit.category]}>
-                        {habit.category}
+                    <Category background={COLORS.CATEGORY[habit.getCategory()]}>
+                        {habit.getCategory()}
                     </Category>
                 </TitleContainer>
                 {dates.map((date, idx) => (
@@ -181,18 +170,16 @@ const Habit = ({ habit, dates }) => {
                         key={idx}
                         className={classNames("backgroundHoverable", {
                             disabled: date > TODAY,
-                            enterValue: habit.type === HABIT.TYPE.ENTER_VALUE,
-                            highlight: HabitHelper.getDateInTimeline(
-                                habit,
-                                date
-                            ),
+                            enterValue:
+                                habit.getType() === HABIT.TYPE.ENTER_VALUE,
+                            highlight: habit.getDateInTimeline(date),
                         })}
                         onClick={() => {
                             onDayClicked(date);
                         }}
                     >
                         <Text fontSize={FONT_SIZE.L}>
-                            {HabitHelper.getDateInTimeline(habit, date)}
+                            {habit.getDateInTimeline(date)}
                             <CompleteIcon>
                                 {IconHelper.getIcon(ICON.CHECK)}
                             </CompleteIcon>
@@ -208,9 +195,9 @@ const Habit = ({ habit, dates }) => {
                     setSelectedDate(null);
                 }}
                 date={selectedDate}
-                target={habit.target}
-                targetType={habit.targetType}
-                value={HabitHelper.getDateInTimeline(habit, selectedDate)}
+                target={habit.getTarget()}
+                targetType={habit.getTargetType()}
+                value={habit.getDateInTimeline(selectedDate)}
                 setValue={(value) => onValueEntered(value)}
             />
 
@@ -262,4 +249,4 @@ const EnterValueModal = ({
     );
 };
 
-export default Habit;
+export default HabitComponent;

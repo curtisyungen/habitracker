@@ -3,8 +3,9 @@ import moment from "moment";
 import styled from "styled-components";
 
 import { MainContext } from "../App";
-import { Habit, HabitModal } from ".";
-import { HabitHelper, ICON, IconHelper } from "../helpers";
+import { HabitComponent, HabitModal } from ".";
+import { Habit } from "../classes";
+import { DateHelper, ICON, IconHelper, StringHelper } from "../helpers";
 import { Button, Grid, Text } from "../styles";
 import { FONT_SIZE } from "../styles/theme";
 import { habitAPI } from "../utils";
@@ -41,9 +42,7 @@ const ListHeader = styled("div")`
 
 const HabitList = () => {
     const { state } = useContext(MainContext);
-    const [startDate, setStartDate] = useState(
-        HabitHelper.momentizeDate().currWeekStart
-    );
+    const [startDate, setStartDate] = useState(DateHelper.getCurrWeekStart());
     const [dates, setDates] = useState(null);
     const [habits, setHabits] = useState(null);
     const [inAddMode, setInAddMode] = useState(false);
@@ -66,17 +65,37 @@ const HabitList = () => {
             .getAllHabitsForUser(state.currentUser.getUserId())
             .then((res) => {
                 setHabits(
-                    res.data.map((i) => HabitHelper.getUnbundledHabitData(i))
+                    res.data.map(
+                        (i) =>
+                            new Habit(
+                                i.id,
+                                i.userId,
+                                i.title,
+                                i.description,
+                                i.type,
+                                i.category,
+                                i.target,
+                                i.targetType,
+                                StringHelper.parseJSON(i.timeline, {}),
+                                i.status
+                            )
+                    )
                 );
             });
     };
 
-    const createHabit = (habitData) => {
+    const createHabit = (data) => {
         habitAPI
-            .createHabit(
-                state.currentUser.getUserId(),
-                HabitHelper.getBundledHabitData(habitData)
-            )
+            .createHabit(state.currentUser.getUserId(), {
+                title: data.title,
+                description: data.description,
+                type: data.type,
+                category: data.category,
+                target: data.target,
+                targetType: data.targetType,
+                timeline: StringHelper.stringifyJSON(data.timeline),
+                status: data.status,
+            })
             .then(() => {
                 loadHabits();
                 setInAddMode(false);
@@ -87,17 +106,17 @@ const HabitList = () => {
         switch (dir) {
             case -1:
                 setStartDate(
-                    HabitHelper.momentizeDate(startDate).prevWeekStart
+                    DateHelper.getPrevWeekStart(startDate)
                 );
                 break;
             case 1:
                 setStartDate(
-                    HabitHelper.momentizeDate(startDate).nextWeekStart
+                    DateHelper.getNextWeekStart(startDate)
                 );
                 break;
             case 0:
             default:
-                setStartDate(HabitHelper.momentizeDate().currWeekStart);
+                setStartDate(DateHelper.getCurrWeekStart());
         }
     };
 
@@ -163,7 +182,7 @@ const HabitList = () => {
                 </ListHeader>
                 <ListBody>
                     {habits.map((habit, idx) => (
-                        <Habit key={idx} habit={habit} dates={dates} />
+                        <HabitComponent key={idx} habit={habit} dates={dates} />
                     ))}
                 </ListBody>
             </ListContainer>

@@ -1,8 +1,15 @@
-import Habit from "./habit";
+import HabitComponent from "./habitComponent";
 import HabitList from "./habitList";
 import HabitModal from "./habitModal";
 import Loading from "./loading";
 import ModalContainer from "./modalContainer";
 import Navbar from "./navbar";
 
-export { Habit, HabitList, HabitModal, Loading, ModalContainer, Navbar };
+export {
+    HabitComponent,
+    HabitList,
+    HabitModal,
+    Loading,
+    ModalContainer,
+    Navbar,
+};
