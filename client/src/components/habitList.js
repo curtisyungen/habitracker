@@ -153,9 +153,10 @@ const EnterValueModal = ({
     date,
     target,
     targetType,
+    value,
     setValue,
 }) => {
-    const [valueInternal, setValueInternal] = useState(null);
+    const [valueInternal, setValueInternal] = useState(value);
 
     return (
         <ModalContainer open={open} close={close}>
@@ -167,7 +168,7 @@ const EnterValueModal = ({
                     onChange={(e) => setValueInternal(e.target.value)}
                     placeholder={target}
                     type="text"
-                    value={valueInternal}
+                    value={valueInternal || ""}
                 />
             </Flex>
             <Button
@@ -267,7 +268,12 @@ const HabitList = ({}) => {
             selectedHabit,
             moment(date).add(selectedDay, "days"),
             value,
-            () => loadHabits()
+            () => {
+                setSelectedDay(null);
+                setSelectedHabit(null);
+                setShowEnterValueModal(false);
+                loadHabits();
+            }
         );
     };
 
@@ -403,6 +409,7 @@ const HabitList = ({}) => {
                         .format("YYYY-MM-DD")}
                     target={selectedHabit.target}
                     targetType={selectedHabit.targetType}
+                    value={getValueForDay(selectedHabit, selectedDay)}
                     setValue={(value) => onValueEntered(value)}
                 />
             )}
