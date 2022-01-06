@@ -6,6 +6,10 @@ router.get("/getAllHabitsForUser", (req, res) => {
     controller.getAllHabitsForUser(req, res);
 });
 
+router.get("/getHabitById", (req, res) => {
+    controller.getHabitById(req, res);
+});
+
 router.post("/createHabit", (req, res) => {
     controller.createHabit(req, res);
 });

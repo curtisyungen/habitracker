@@ -31,6 +31,7 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
         setTarget(habitData.target);
         setTargetType(habitData.targetType);
         setTimeline(StringHelper.parseJSON(habitData.timeline));
+        setStatus(habitData.status);
     }, [habitData]);
 
     return (
@@ -126,7 +127,7 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                             category,
                             target,
                             targetType,
-                            timeline,
+                            timeline: JSON.stringify(timeline),
                             status,
                         });
                     }}

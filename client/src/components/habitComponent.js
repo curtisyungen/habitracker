@@ -109,7 +109,7 @@ const TitleContainer = styled("div")`
 
 const TODAY = moment().format("YYYY-MM-DD");
 
-const HabitComponent = ({ habitData, dates }) => {
+const HabitComponent = ({ habitData, dates, reloadHabit }) => {
     const { state } = useContext(MainContext);
     const [habit, setHabit] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
@@ -179,6 +179,7 @@ const HabitComponent = ({ habitData, dates }) => {
             .then(() => {
                 setInEditMode(false);
                 setSelectedDate(null);
+                reloadHabit(habitData.id);
             });
     };
 
@@ -228,7 +229,6 @@ const HabitComponent = ({ habitData, dates }) => {
                     </Day>
                 ))}
             </HabitContainer>
-
             <EnterValueModal
                 open={inEnterValueMode}
                 close={() => {
@@ -241,7 +241,6 @@ const HabitComponent = ({ habitData, dates }) => {
                 value={habit.getDateInTimeline(selectedDate)}
                 setValue={(value) => onValueEntered(value)}
             />
-
             <HabitModal
                 open={inEditMode}
                 close={() => setInEditMode(false)}

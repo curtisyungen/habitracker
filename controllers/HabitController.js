@@ -20,6 +20,20 @@ class HabitController {
             });
     }
 
+    getHabitById(req, res) {
+        db.Habits.findOne({
+            where: {
+                id: req.query.habitId,
+            },
+        })
+            .then((habit) => {
+                res.json(habit);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }
+
     createHabit(req, res) {
         db.Habits.create({
             userId: req.body.userId,

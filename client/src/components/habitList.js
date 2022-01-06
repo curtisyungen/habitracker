@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { MainContext } from "../App";
 import { HabitComponent, HabitModal } from ".";
+import { Habit } from "../classes";
 import { DateHelper, ICON, IconHelper, StringHelper } from "../helpers";
 import { Button, Grid, Text } from "../styles";
 import { FONT_SIZE } from "../styles/theme";
@@ -64,6 +65,19 @@ const HabitList = () => {
             .then((res) => {
                 setHabits(res.data);
             });
+    };
+
+    const reloadHabit = (habitId) => {
+        habitAPI.getHabitById(habitId).then((res) => {
+            const _habits = JSON.parse(JSON.stringify(habits));
+            for (var i = 0; i < habits.length; i++) {
+                if (_habits[i].id === habitId) {
+                    _habits[i] = res.data;
+                    setHabits(_habits);
+                    break;
+                }
+            }
+        });
     };
 
     const createHabit = (data) => {
@@ -185,6 +199,7 @@ const HabitList = () => {
                                 key={idx}
                                 habitData={h}
                                 dates={dates}
+                                reloadHabit={reloadHabit}
                             />
                         ))}
                 </ListBody>
