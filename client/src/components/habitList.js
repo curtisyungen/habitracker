@@ -8,17 +8,15 @@ import { DateHelper, ICON, IconHelper, StringHelper } from "../helpers";
 import { Button, Grid, Text } from "../styles";
 import { FONT_SIZE } from "../styles/theme";
 import { habitAPI } from "../utils";
-
-const ButtonContainer = styled("div")`
-    margin: 10px 0px;
-`;
+import { STATUS } from "../res";
 
 const ListBody = styled("div")`
     margin-top: 4px;
+    max-height: calc(100vh - 220px);
+    overflow-y: scroll;
 `;
 
 const ListContainer = styled("div")`
-    overflow-y: scroll;
     position: relative;
     width: 100%;
 `;
@@ -45,6 +43,7 @@ const HabitList = () => {
     const [dates, setDates] = useState(null);
     const [habits, setHabits] = useState(null);
     const [inAddMode, setInAddMode] = useState(false);
+    const [inHiddenMode, setInHiddenMode] = useState(false);
 
     useEffect(() => {
         if (!state.currentUser) return;
@@ -106,7 +105,11 @@ const HabitList = () => {
     return (
         <>
             <ListContainer>
-                <ButtonContainer>
+                <Grid
+                    gridTemplateColumns="repeat(2, 1fr)"
+                    margin="2px 0px"
+                    width="200px"
+                >
                     <Button
                         onClick={(e) => {
                             e.preventDefault();
@@ -116,7 +119,18 @@ const HabitList = () => {
                     >
                         {IconHelper.getIcon(ICON.ADD)}
                     </Button>
-                </ButtonContainer>
+                    <Button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setInHiddenMode(!inHiddenMode);
+                        }}
+                        width="100px"
+                    >
+                        {inHiddenMode
+                            ? IconHelper.getIcon(ICON.VISIBLE)
+                            : IconHelper.getIcon(ICON.HIDDEN)}
+                    </Button>
+                </Grid>
                 <ListControls>
                     <Grid
                         gridTemplateColumns="repeat(3, 1fr)"
@@ -159,10 +173,20 @@ const HabitList = () => {
                         </Text>
                     ))}
                 </ListHeader>
-                <ListBody>
-                    {habits.map((h, idx) => (
-                        <HabitComponent key={idx} habitData={h} dates={dates} />
-                    ))}
+                <ListBody className="borderColor">
+                    {habits
+                        .filter((h) =>
+                            inHiddenMode
+                                ? h.status === STATUS.INACTIVE
+                                : h.status === STATUS.ACTIVE
+                        )
+                        .map((h, idx) => (
+                            <HabitComponent
+                                key={idx}
+                                habitData={h}
+                                dates={dates}
+                            />
+                        ))}
                 </ListBody>
             </ListContainer>
             <HabitModal

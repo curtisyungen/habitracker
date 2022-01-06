@@ -74,8 +74,9 @@ export const LabelPrepend = styled(Label)`
 
 export const PageContainer = styled("div")`
     height: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - ${SIZE.NAVBAR_HEIGHT});
     min-width: 100vw;
+    overflow-y: hidden;
     padding: 0px 100px;
     position: relative;
     width: 100%;

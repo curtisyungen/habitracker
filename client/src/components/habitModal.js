@@ -52,19 +52,21 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                         value={description}
                     />
                 </Flex>
-                <Flex>
-                    <LabelPrepend>Type</LabelPrepend>
-                    <Select
-                        onChange={(e) => setType(e.target.value)}
-                        value={type}
-                    >
-                        {Object.keys(HABIT.TYPE).map((t, idx) => (
-                            <option key={idx} value={HABIT.TYPE[t]}>
-                                {HABIT.TYPE[t]}
-                            </option>
-                        ))}
-                    </Select>
-                </Flex>
+                {!habitData && (
+                    <Flex>
+                        <LabelPrepend>Type</LabelPrepend>
+                        <Select
+                            onChange={(e) => setType(e.target.value)}
+                            value={type}
+                        >
+                            {Object.keys(HABIT.TYPE).map((t, idx) => (
+                                <option key={idx} value={HABIT.TYPE[t]}>
+                                    {HABIT.TYPE[t]}
+                                </option>
+                            ))}
+                        </Select>
+                    </Flex>
+                )}
                 <Flex>
                     <LabelPrepend>Category</LabelPrepend>
                     <Select

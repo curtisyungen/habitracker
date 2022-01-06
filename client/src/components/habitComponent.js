@@ -89,6 +89,7 @@ const HabitContainer = styled("div")`
     display: grid;
     grid-gap: 2px;
     grid-template-columns: repeat(8, 1fr);
+    height: 100px;
     margin-top: 2px;
     min-width: 100%;
     width: 100%;
@@ -103,7 +104,7 @@ const TitleContainer = styled("div")`
     position: relative;
     text-align: center;
     text-transform: capitalize;
-    width: 100px;
+    min-width: 100px;
 `;
 
 const TODAY = moment().format("YYYY-MM-DD");
