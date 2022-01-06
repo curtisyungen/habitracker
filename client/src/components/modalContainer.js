@@ -12,6 +12,7 @@ const ModalContainer = ({ open, close, children }) => {
                     outline: "none",
                 },
                 modal: {
+                    margin: "0px",
                     maxWidth: "600px",
                     minHeight: "300px",
                     minWidth: "300px",

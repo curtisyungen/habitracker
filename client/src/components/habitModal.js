@@ -17,7 +17,7 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
     const [type, setType] = useState(HABIT.TYPE.CHECK_OFF);
     const [category, setCategory] = useState(HABIT.CATEGORY.OTHER);
     const [target, setTarget] = useState(null);
-    const [targetType, setTargetType] = useState(null);
+    const [targetType, setTargetType] = useState(HABIT.TARGET_TYPE.AFTER_TIME);
     const [timeline, setTimeline] = useState({});
     const [status, setStatus] = useState(STATUS.ACTIVE);
 
@@ -85,7 +85,12 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                     <LabelPrepend>Target</LabelPrepend>
                     <Input
                         onChange={(e) => setTarget(e.target.value)}
-                        type="text"
+                        type={
+                            targetType === HABIT.TARGET_TYPE.BEFORE_TIME ||
+                            targetType === HABIT.TARGET_TYPE.AFTER_TIME
+                                ? "time"
+                                : "text"
+                        }
                         value={target}
                     />
                     <Select

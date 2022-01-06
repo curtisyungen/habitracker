@@ -56,6 +56,7 @@ const Day = styled("div")`
     text-align: center;
     transition: ${TRANSITION.FAST};
     width: 100%;
+    z-index: 1;
 
     &.disabled ${CompleteIcon} {
         display: none;
@@ -77,7 +78,7 @@ const Day = styled("div")`
         & #enterValueText {
             display: none;
         }
-        
+
         & ${CompleteIcon} {
             color: black;
             opacity: 1;
@@ -116,6 +117,17 @@ const Day = styled("div")`
     }
 `;
 
+const FloatingTitle = styled("div")`
+    display: ${(props) => (props.show ? "block" : "none")};
+    font-size: ${FONT_SIZE.XS};
+    left: 4px !important;
+    opacity: 0.75;
+    position: absolute;
+    text-align: left !important;
+    top: 2px !important;
+    transform: none !important;
+`;
+
 const HabitContainer = styled("div")`
     display: grid;
     grid-gap: 2px;
@@ -126,18 +138,21 @@ const HabitContainer = styled("div")`
     width: 100%;
 `;
 
-const MetricsContainer = styled("div")``;
+const MetricsContainer = styled("div")`
+    line-height: 1.5;
+`;
 
 const TitleContainer = styled("div")`
     border-style: solid;
     border-width: 1px;
     cursor: pointer;
     font-size: ${FONT_SIZE.S};
+    line-height: 1.2;
     padding: 5px;
     position: relative;
     text-align: center;
     text-transform: capitalize;
-    min-width: ${SIZE.HABIT_COLUMN_WIDTH};
+    width: ${SIZE.HABIT_COLUMN_WIDTH};
 `;
 
 const TODAY = moment().format("YYYY-MM-DD");
@@ -148,11 +163,21 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [inEditMode, setInEditMode] = useState(false);
     const [inEnterValueMode, setInEnterValueMode] = useState(false);
+    const [scrollX, setScrollX] = useState(0);
 
     useEffect(() => {
         if (!habitData) return;
         setHabit(new Habit({ ...habitData }));
     }, [habitData]);
+
+    useEffect(() => {
+        const element = document.getElementById("habitTitleContainer");
+        if (element) {
+            element.addEventListener("scroll", (e) => {
+                console.log(e);
+            });
+        }
+    }, [scrollX]);
 
     const onDayClicked = (date) => {
         if (date > TODAY) {
@@ -225,6 +250,7 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
             <HabitContainer>
                 <TitleContainer
                     className="background borderColor"
+                    id="habitTitleContainer"
                     onClick={() => {
                         setInEditMode(true);
                     }}
@@ -265,6 +291,9 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
                             onDayClicked(date);
                         }}
                     >
+                        <FloatingTitle show={true}>
+                            {habit.getTitle()}
+                        </FloatingTitle>
                         <Text fontSize={FONT_SIZE.L}>
                             {habit.getDateInTimeline(date)}
                             <CompleteIcon>
