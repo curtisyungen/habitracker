@@ -17,7 +17,13 @@ import {
     Text,
     TextSmall,
 } from "../styles";
-import { COLORS, FONT_SIZE, FONT_WEIGHT, TRANSITION } from "../styles/theme";
+import {
+    COLORS,
+    FONT_SIZE,
+    FONT_WEIGHT,
+    SCREEN_SIZE,
+    TRANSITION,
+} from "../styles/theme";
 import { habitAPI } from "../utils";
 
 const Category = styled("div")`
@@ -118,14 +124,22 @@ const Day = styled("div")`
 `;
 
 const FloatingTitle = styled("div")`
-    display: ${(props) => (props.show ? "block" : "none")};
+    display: none;
     font-size: ${FONT_SIZE.XS};
-    left: 4px !important;
+    left: 2px !important;
+    max-width: 100%;
     opacity: 0.75;
+    overflow: hidden;
     position: absolute;
     text-align: left !important;
+    text-overflow: ellipsis;
     top: 2px !important;
     transform: none !important;
+    white-space: nowrap;
+
+    @media (max-width: ${SCREEN_SIZE.S}) {
+        display: ${(props) => (props.show ? "block" : "none")};
+    }
 `;
 
 const HabitContainer = styled("div")`
