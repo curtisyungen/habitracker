@@ -6,7 +6,7 @@ import { MainContext } from "../App";
 import { HabitComponent, HabitModal, Loading } from ".";
 import { DateHelper, ICON, IconHelper, StringHelper } from "../helpers";
 import { SIZE, STATUS } from "../res";
-import { Button, Grid, Scrollable, Text } from "../styles";
+import { Button, Flex, Grid, Scrollable, Text } from "../styles";
 import { FONT_SIZE } from "../styles/theme";
 import { habitAPI } from "../utils";
 
@@ -122,12 +122,14 @@ const HabitList = () => {
 
     if (isLoading) {
         return (
-            <div style={{
-                left: "50%",
-                position: "absolute",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-            }}>
+            <div
+                style={{
+                    left: "50%",
+                    position: "absolute",
+                    top: "50%",
+                    transform: "translate(-50%, -50%)",
+                }}
+            >
                 <Loading iconOnly={true} />
             </div>
         );
@@ -140,32 +142,6 @@ const HabitList = () => {
     return (
         <>
             <ListContainer>
-                <Grid
-                    gridTemplateColumns="repeat(2, 1fr)"
-                    margin="2px 0px"
-                    width="200px"
-                >
-                    <Button
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setInAddMode(true);
-                        }}
-                        width="100px"
-                    >
-                        {IconHelper.getIcon(ICON.ADD)}
-                    </Button>
-                    <Button
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setInHiddenMode(!inHiddenMode);
-                        }}
-                        width="100px"
-                    >
-                        {inHiddenMode
-                            ? IconHelper.getIcon(ICON.VISIBLE)
-                            : IconHelper.getIcon(ICON.HIDDEN)}
-                    </Button>
-                </Grid>
                 <ListControls>
                     <Grid
                         gridTemplateColumns="repeat(3, 1fr)"
@@ -201,7 +177,26 @@ const HabitList = () => {
                 </ListControls>
                 <Scrollable direction="x">
                     <ListHeader>
-                        <Text className="background borderColor"></Text>
+                        <Grid gridTemplateColumns="1fr 1fr">
+                            <Button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setInHiddenMode(!inHiddenMode);
+                                }}
+                            >
+                                {inHiddenMode
+                                    ? IconHelper.getIcon(ICON.VISIBLE)
+                                    : IconHelper.getIcon(ICON.HIDDEN)}
+                            </Button>
+                            <Button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setInAddMode(true);
+                                }}
+                            >
+                                {IconHelper.getIcon(ICON.ADD)}
+                            </Button>
+                        </Grid>
                         {dates.map((d, idx) => (
                             <Text key={idx} className="background borderColor">
                                 <Text>{moment(d).format("dddd")}</Text>
