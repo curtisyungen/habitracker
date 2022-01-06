@@ -61,11 +61,23 @@ const Day = styled("div")`
         display: none;
     }
 
+    &.disabled #enterValueText {
+        display: none;
+    }
+
     &.enterValue.highlight ${CompleteIcon} {
         display: none;
     }
 
+    & #enterValueText {
+        opacity: 0;
+    }
+
     &.highlight {
+        & #enterValueText {
+            display: none;
+        }
+        
         & ${CompleteIcon} {
             color: black;
             opacity: 1;
@@ -80,6 +92,16 @@ const Day = styled("div")`
     }
 
     &:hover {
+        &.enterValue {
+            & #enterValueText {
+                opacity: 0.5;
+            }
+
+            & ${CompleteIcon} {
+                display: none;
+            }
+        }
+
         & ${CompleteIcon} {
             opacity: 0.5;
         }
@@ -266,6 +288,7 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
                             <CompleteIcon>
                                 {IconHelper.getIcon(ICON.CHECK)}
                             </CompleteIcon>
+                            <Text id="enterValueText">Enter value</Text>
                         </Text>
                     </Day>
                 ))}
