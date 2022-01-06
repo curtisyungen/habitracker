@@ -121,7 +121,16 @@ const HabitList = () => {
     };
 
     if (isLoading) {
-        return <Loading />;
+        return (
+            <div style={{
+                left: "50%",
+                position: "absolute",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+            }}>
+                <Loading iconOnly={true} />
+            </div>
+        );
     }
 
     if (!habits) {

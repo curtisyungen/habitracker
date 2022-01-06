@@ -26,6 +26,7 @@ const Category = styled("div")`
     border-style: solid;
     border-top-width: 1px;
     bottom: 0;
+    color: white;
     font-size: ${FONT_SIZE.S};
     height: 25px;
     left: 0;
