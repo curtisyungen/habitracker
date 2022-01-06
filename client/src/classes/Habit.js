@@ -1,7 +1,7 @@
 import moment from "moment";
 
 import { DateHelper, StringHelper } from "../helpers";
-import { STATUS } from "../res";
+import { HABIT, STATUS } from "../res";
 
 export default class Habit {
     constructor({
@@ -42,14 +42,35 @@ export default class Habit {
 
         let currDate = startDate;
         while (currDate < endDate) {
-            if (this.getDateInTimeline(currDate)) {
-                if (!earliestCompletion) {
-                    earliestCompletion = currDate;
+            const value = this.getDateInTimeline(currDate);
+            let meetsTarget = true;
+            if (value) {
+                if (this.type === HABIT.TYPE.ENTER_VALUE && this.target) {
+                    const target = parseFloat(this.target);
+                    switch (this.targetType) {
+                        case HABIT.TARGET_TYPE.AFTER_TIME:
+                            break;
+                        case HABIT.TARGET_TYPE.BEFORE_TIME:
+                            break;
+                        case HABIT.TARGET_TYPE.MAX_VALUE:
+                            meetsTarget = parseFloat(value) <= target;
+                            break;
+                        case HABIT.TARGET_TYPE.MIN_VALUE:
+                            meetsTarget = parseFloat(value) >= target;
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                currStreak += 1;
-                longestStreak = Math.max(longestStreak, currStreak);
-                mostRecentCompletion = currDate;
-                totalCompletions += 1;
+                if (meetsTarget) {
+                    if (!earliestCompletion) {
+                        earliestCompletion = currDate;
+                    }
+                    currStreak += 1;
+                    longestStreak = Math.max(longestStreak, currStreak);
+                    mostRecentCompletion = currDate;
+                    totalCompletions += 1;
+                }
             } else {
                 currStreak = 0;
             }
