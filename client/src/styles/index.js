@@ -30,7 +30,7 @@ export const Grid = styled("div")`
     grid-gap: ${(props) => props.gridGap || "2px"};
     grid-template-columns: ${(props) => props.gridTemplateColumns || "unset"};
     grid-template-rows: ${(props) => props.gridTemplateRows || "unset"};
-    margin: ${props => props.margin || "0px"};
+    margin: ${(props) => props.margin || "0px"};
     width: ${(props) => props.width || "100%"};
 `;
 
@@ -74,9 +74,10 @@ export const LabelPrepend = styled(Label)`
 
 export const PageContainer = styled("div")`
     height: 100%;
+    max-width: 100vw;
     min-height: calc(100vh - ${SIZE.NAVBAR_HEIGHT});
     min-width: 100vw;
-    overflow-y: hidden;
+    overflow: hidden;
     padding: 0px 100px;
     position: relative;
     width: 100%;
@@ -88,6 +89,13 @@ export const PageContainer = styled("div")`
     @media (max-width: ${SCREEN_SIZE.S}) {
         padding: 0px;
     }
+`;
+
+export const Scrollable = styled("div")`
+    overflow-x: ${(props) =>
+        props.direction.indexOf("x") > -1 ? "scroll" : "auto"};
+    overflow-y: ${(props) =>
+        props.direction.indexOf("y") > -1 ? "scroll" : "auto"};
 `;
 
 export const Select = styled("select")`
@@ -118,4 +126,8 @@ export const Text = styled("div")`
     font-size: ${(props) => props.fontSize || FONT_SIZE.M};
     font-weight: ${(props) => props.fontWeight || FONT_WEIGHT.NORMAL};
     text-align: ${(props) => props.textAlign || "center"};
+`;
+
+export const TextSmall = styled(Text)`
+    font-size: ${FONT_SIZE.S};
 `;

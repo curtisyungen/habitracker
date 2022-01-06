@@ -8,7 +8,15 @@ import { HabitModal, ModalContainer } from ".";
 import { Habit } from "../classes";
 import { DateHelper, ICON, IconHelper } from "../helpers";
 import { HABIT, SIZE } from "../res";
-import { Button, Flex, Input, Label, LabelPrepend, Text } from "../styles";
+import {
+    Button,
+    Flex,
+    Input,
+    Label,
+    LabelPrepend,
+    Text,
+    TextSmall,
+} from "../styles";
 import { COLORS, FONT_SIZE, FONT_WEIGHT, TRANSITION } from "../styles/theme";
 import { habitAPI } from "../utils";
 
@@ -42,7 +50,7 @@ const Day = styled("div")`
     cursor: pointer;
     height: 100%;
     min-height: ${SIZE.HABIT_HEIGHT};
-    min-width: ${SIZE.HABIT_HEIGHT};
+    min-width: ${SIZE.HABIT_COLUMN_WIDTH};
     position: relative;
     text-align: center;
     transition: ${TRANSITION.FAST};
@@ -89,22 +97,24 @@ const HabitContainer = styled("div")`
     display: grid;
     grid-gap: 2px;
     grid-template-columns: repeat(8, 1fr);
-    height: 100px;
+    height: ${SIZE.HABIT_HEIGHT};
     margin-top: 2px;
     min-width: 100%;
     width: 100%;
 `;
 
+const MetricsContainer = styled("div")``;
+
 const TitleContainer = styled("div")`
     border-style: solid;
     border-width: 1px;
     cursor: pointer;
-    font-size: ${FONT_SIZE.M};
+    font-size: ${FONT_SIZE.S};
     padding: 5px;
     position: relative;
     text-align: center;
     text-transform: capitalize;
-    min-width: 100px;
+    min-width: ${SIZE.HABIT_COLUMN_WIDTH};
 `;
 
 const TODAY = moment().format("YYYY-MM-DD");
@@ -199,10 +209,40 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
                     <Text fontWeight={FONT_WEIGHT.BOLD}>
                         {habit.getTitle()}
                     </Text>
-                    <Flex justifyContent="space-between">
-                        <Text>Streak</Text>
-                        <Text>{habit.getMetrics().currStreak}</Text>
-                    </Flex>
+                    {habit.getTarget() && (
+                        <Flex justifyContent="space-between">
+                            <TextSmall>
+                                {IconHelper.getIcon(ICON.TARGET)}
+                            </TextSmall>
+                            <TextSmall>{habit.getTarget()}</TextSmall>
+                        </Flex>
+                    )}
+                    <MetricsContainer>
+                        <Flex justifyContent="space-between">
+                            <TextSmall>Streak</TextSmall>
+                            <TextSmall>
+                                {habit.getMetrics().currStreak}
+                            </TextSmall>
+                        </Flex>
+                        <Flex justifyContent="space-between">
+                            <TextSmall>Longest</TextSmall>
+                            <TextSmall>
+                                {habit.getMetrics().longestStreak}
+                            </TextSmall>
+                        </Flex>
+                        <Flex justifyContent="space-between">
+                            <TextSmall>Total</TextSmall>
+                            <TextSmall>
+                                {habit.getMetrics().totalCompletions}
+                            </TextSmall>
+                        </Flex>
+                        <Flex justifyContent="space-between">
+                            <TextSmall>Latest</TextSmall>
+                            <TextSmall>
+                                {habit.getMetrics().mostRecentCompletion}
+                            </TextSmall>
+                        </Flex>
+                    </MetricsContainer>
                     <Category background={COLORS.CATEGORY[habit.getCategory()]}>
                         {habit.getCategory()}
                     </Category>

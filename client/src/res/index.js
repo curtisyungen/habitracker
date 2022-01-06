@@ -31,7 +31,8 @@ export const PAGES = {
 export const SITE_TITLE = "Habit Tracker";
 
 export const SIZE = {
-    HABIT_HEIGHT: "75px",
+    HABIT_COLUMN_WIDTH: "125px",
+    HABIT_HEIGHT: "140px",
     INPUT_HEIGHT: "35px",
     INPUT_MIN_WIDTH: "100px",
     NAVBAR_HEIGHT: "55px",

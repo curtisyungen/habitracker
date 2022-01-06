@@ -3,6 +3,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+    faBullseye,
     faCheckCircle,
     faChevronDown,
     faChevronLeft,
@@ -15,6 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
+    faBullseye,
     faCheckCircle,
     faChevronDown,
     faChevronLeft,
@@ -35,6 +37,7 @@ export const ICON = {
     LEFT: faChevronLeft,
     RIGHT: faChevronRight,
     QUESTION: faQuestion,
+    TARGET: faBullseye,
     VISIBLE: faEye,
 };
 

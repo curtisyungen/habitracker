@@ -41,7 +41,7 @@ export default class Habit {
         const endDate = moment().format("YYYY-MM-DD");
 
         let currDate = startDate;
-        while (currDate <= endDate) {
+        while (currDate < endDate) {
             if (this.getDateInTimeline(currDate)) {
                 if (!earliestCompletion) {
                     earliestCompletion = currDate;
@@ -56,6 +56,13 @@ export default class Habit {
             currDate = moment(currDate).add(1, "days").format("YYYY-MM-DD");
         }
 
+        if (this.getDateInTimeline(endDate)) {
+            currStreak += 1;
+            longestStreak = Math.max(longestStreak, currStreak);
+            mostRecentCompletion = endDate;
+            totalCompletions += 1;
+        }
+
         this.metrics = {
             currStreak,
             earliestCompletion,
@@ -67,7 +74,7 @@ export default class Habit {
 
     getId = () => {
         return this.id;
-    }
+    };
 
     getTitle = () => {
         return this.title;

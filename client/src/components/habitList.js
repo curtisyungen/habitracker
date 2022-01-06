@@ -3,17 +3,18 @@ import moment from "moment";
 import styled from "styled-components";
 
 import { MainContext } from "../App";
-import { HabitComponent, HabitModal } from ".";
-import { Habit } from "../classes";
+import { HabitComponent, HabitModal, Loading } from ".";
 import { DateHelper, ICON, IconHelper, StringHelper } from "../helpers";
-import { Button, Grid, Text } from "../styles";
+import { SIZE, STATUS } from "../res";
+import { Button, Grid, Scrollable, Text } from "../styles";
 import { FONT_SIZE } from "../styles/theme";
 import { habitAPI } from "../utils";
-import { STATUS } from "../res";
 
 const ListBody = styled("div")`
     margin-top: 4px;
     max-height: calc(100vh - 220px);
+    min-width: fit-content;
+    overflow-x: hidden;
     overflow-y: scroll;
 `;
 
@@ -36,6 +37,10 @@ const ListHeader = styled("div")`
     min-width: 100%;
     text-align: center;
     width: 100%;
+
+    & div {
+        min-width: ${SIZE.HABIT_COLUMN_WIDTH};
+    }
 `;
 
 const HabitList = () => {
@@ -45,6 +50,7 @@ const HabitList = () => {
     const [habits, setHabits] = useState(null);
     const [inAddMode, setInAddMode] = useState(false);
     const [inHiddenMode, setInHiddenMode] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (!state.currentUser) return;
@@ -60,10 +66,12 @@ const HabitList = () => {
     }, [startDate]);
 
     const loadHabits = () => {
+        setIsLoading(true);
         habitAPI
             .getAllHabitsForUser(state.currentUser.getUserId())
             .then((res) => {
                 setHabits(res.data);
+                setIsLoading(false);
             });
     };
 
@@ -111,6 +119,10 @@ const HabitList = () => {
                 setStartDate(DateHelper.getCurrWeekStart());
         }
     };
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     if (!habits) {
         return <></>;
@@ -178,31 +190,33 @@ const HabitList = () => {
                         </Button>
                     </Grid>
                 </ListControls>
-                <ListHeader>
-                    <Text className="background borderColor">Title</Text>
-                    {dates.map((d, idx) => (
-                        <Text key={idx} className="background borderColor">
-                            <Text>{moment(d).format("dddd")}</Text>
-                            <Text>{d}</Text>
-                        </Text>
-                    ))}
-                </ListHeader>
-                <ListBody className="borderColor">
-                    {habits
-                        .filter((h) =>
-                            inHiddenMode
-                                ? h.status === STATUS.INACTIVE
-                                : h.status === STATUS.ACTIVE
-                        )
-                        .map((h, idx) => (
-                            <HabitComponent
-                                key={idx}
-                                habitData={h}
-                                dates={dates}
-                                reloadHabit={reloadHabit}
-                            />
+                <Scrollable direction="x">
+                    <ListHeader>
+                        <Text className="background borderColor">Title</Text>
+                        {dates.map((d, idx) => (
+                            <Text key={idx} className="background borderColor">
+                                <Text>{moment(d).format("dddd")}</Text>
+                                <Text>{d}</Text>
+                            </Text>
                         ))}
-                </ListBody>
+                    </ListHeader>
+                    <ListBody className="borderColor">
+                        {habits
+                            .filter((h) =>
+                                inHiddenMode
+                                    ? h.status === STATUS.INACTIVE
+                                    : h.status === STATUS.ACTIVE
+                            )
+                            .map((h, idx) => (
+                                <HabitComponent
+                                    key={idx}
+                                    habitData={h}
+                                    dates={dates}
+                                    reloadHabit={reloadHabit}
+                                />
+                            ))}
+                    </ListBody>
+                </Scrollable>
             </ListContainer>
             <HabitModal
                 open={inAddMode}
