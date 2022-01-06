@@ -247,24 +247,6 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
                                 {habit.getMetrics().currStreak}
                             </TextSmall>
                         </Flex>
-                        <Flex justifyContent="space-between">
-                            <TextSmall>Longest</TextSmall>
-                            <TextSmall>
-                                {habit.getMetrics().longestStreak}
-                            </TextSmall>
-                        </Flex>
-                        <Flex justifyContent="space-between">
-                            <TextSmall>Total</TextSmall>
-                            <TextSmall>
-                                {habit.getMetrics().totalCompletions}
-                            </TextSmall>
-                        </Flex>
-                        <Flex justifyContent="space-between">
-                            <TextSmall>Latest</TextSmall>
-                            <TextSmall>
-                                {habit.getMetrics().mostRecentCompletion}
-                            </TextSmall>
-                        </Flex>
                     </MetricsContainer>
                     <Category background={COLORS.CATEGORY[habit.getCategory()]}>
                         {habit.getCategory()}

@@ -201,7 +201,7 @@ const HabitList = () => {
                 </ListControls>
                 <Scrollable direction="x">
                     <ListHeader>
-                        <Text className="background borderColor">Title</Text>
+                        <Text className="background borderColor"></Text>
                         {dates.map((d, idx) => (
                             <Text key={idx} className="background borderColor">
                                 <Text>{moment(d).format("dddd")}</Text>
