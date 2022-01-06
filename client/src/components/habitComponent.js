@@ -178,21 +178,11 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [inEditMode, setInEditMode] = useState(false);
     const [inEnterValueMode, setInEnterValueMode] = useState(false);
-    const [scrollX, setScrollX] = useState(0);
 
     useEffect(() => {
         if (!habitData) return;
         setHabit(new Habit({ ...habitData }));
     }, [habitData]);
-
-    useEffect(() => {
-        const element = document.getElementById("habitTitleContainer");
-        if (element) {
-            element.addEventListener("scroll", (e) => {
-                console.log(e);
-            });
-        }
-    }, [scrollX]);
 
     const onDayClicked = (date) => {
         if (date > TODAY) {
@@ -289,14 +279,14 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
                             </TextSmall>
                         </Flex>
                     </MetricsContainer>
-                    <Category background={COLORS.CATEGORY[habit.getCategory()]}>
+                    <Category background={COLORS.CATEGORY[habit.getCategory()]} className="borderColor">
                         {habit.getCategory()}
                     </Category>
                 </TitleContainer>
                 {dates.map((date, idx) => (
                     <Day
                         key={idx}
-                        className={classNames("backgroundHoverable", {
+                        className={classNames("backgroundHoverable borderColor", {
                             disabled: date > TODAY,
                             enterValue:
                                 habit.getType() === HABIT.TYPE.ENTER_VALUE,

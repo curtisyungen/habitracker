@@ -139,6 +139,15 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                 >
                     Save
                 </Button>
+                <Button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        close();
+                    }}
+                    style={{ marginTop: "2px" }}
+                >
+                    Cancel
+                </Button>
             </Wrapper>
         </ModalContainer>
     );

@@ -36,6 +36,7 @@ export const SIZE = {
     INPUT_HEIGHT: "35px",
     INPUT_MIN_WIDTH: "100px",
     NAVBAR_HEIGHT: "55px",
+    SCROLLBAR_WIDTH: "8px",
 };
 
 export const STATUS = {

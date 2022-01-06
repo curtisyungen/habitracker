@@ -35,6 +35,7 @@ const ListHeader = styled("div")`
     font-size: ${FONT_SIZE.S};
     height: 100%;
     min-width: 100%;
+    padding-right: ${SIZE.SCROLLBAR_WIDTH};
     text-align: center;
     width: 100%;
 

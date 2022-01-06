@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { HABIT } from "../res";
+import { HABIT, SIZE } from "../res";
 
 export const THEME = {
     DARK: "Dark",
@@ -31,7 +31,7 @@ export const COLORS = {
             [THEME.LIGHT]: "rgba(235, 235, 235, 0.85)",
         },
         BORDER: {
-            [THEME.DARK]: "#ffffff",
+            [THEME.DARK]: "#505050",
             [THEME.LIGHT]: "#000000",
         },
         COLOR: {
@@ -39,12 +39,12 @@ export const COLORS = {
             [THEME.LIGHT]: "#000000",
         },
         DISABLED: {
-            [THEME.DARK]: "#808080",
+            [THEME.DARK]: "#404040",
             [THEME.LIGHT]: "#c2c2c2",
         },
         HIGHLIGHT: {
-            [THEME.DARK]: "lightblue",
-            [THEME.LIGHT]: "lightblue",
+            [THEME.DARK]: "#83c1ff",
+            [THEME.LIGHT]: "#7ab4ff",
         },
     },
     WHITE: "#ffffff",
@@ -76,17 +76,17 @@ export const SCREEN_SIZE = {
 export const SCROLLBAR_STYLE = `
     ::-webkit-scrollbar {
         display: block;
-        height: 8px;
-        width: 8px;
+        height: ${SIZE.SCROLLBAR_WIDTH};
+        width: ${SIZE.SCROLLBAR_WIDTH};
     }
     ::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: #c2c2c2;
     }
     ::-webkit-scrollbar-thumb {
-        background: #888;
+        background: #555555;
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: #333333;
     }
 `;
 
