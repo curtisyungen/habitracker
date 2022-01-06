@@ -27,7 +27,7 @@ export const COLORS = {
             [THEME.LIGHT]: "rgba(255, 255, 255, 0.85)",
         },
         BACKGROUND_HOVER: {
-            [THEME.DARK]: "rgba(0, 0, 0, 0.55)",
+            [THEME.DARK]: "rgba(35, 35, 35, 1)",
             [THEME.LIGHT]: "rgba(235, 235, 235, 0.85)",
         },
         BORDER: {
@@ -43,7 +43,7 @@ export const COLORS = {
             [THEME.LIGHT]: "#c2c2c2",
         },
         HIGHLIGHT: {
-            [THEME.DARK]: "gold",
+            [THEME.DARK]: "lightblue",
             [THEME.LIGHT]: "lightblue",
         },
     },
@@ -73,6 +73,23 @@ export const SCREEN_SIZE = {
     XL: "1400px",
 };
 
+export const SCROLLBAR_STYLE = `
+    ::-webkit-scrollbar {
+        display: block;
+        height: 8px;
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+`;
+
 export const TRANSITION = {
     VERY_SLOW: "1s",
     SLOW: "0.5s",
@@ -82,18 +99,21 @@ export const TRANSITION = {
 };
 
 export const AppContainer = styled("div")`
-    height: 100%;
-    min-height: 100vh;
-    min-width: 100vw;
-    position: relative;
-    width: 100%;
-
     --background: ${(props) => COLORS.THEME.BACKGROUND[props.theme]};
     --backgroundDisabled: ${(props) => COLORS.THEME.DISABLED[props.theme]};
     --backgroundHover: ${(props) => COLORS.THEME.BACKGROUND_HOVER[props.theme]};
     --borderColor: ${(props) => COLORS.THEME.BORDER[props.theme]};
     --color: ${(props) => COLORS.THEME.COLOR[props.theme]};
     --highlight: ${(props) => COLORS.THEME.HIGHLIGHT[props.theme]};
+
+    background: var(--background);
+    border-color: var(--borderColor);
+    color: var(--color);
+    height: 100%;
+    min-height: 100vh;
+    min-width: 100vw;
+    position: relative;
+    width: 100%;
 
     & .background {
         background: var(--background);

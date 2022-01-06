@@ -14,6 +14,7 @@ export const MainContext = React.createContext(null);
 export const MAIN_ACTIONS = {
     LOGOUT: "logout",
     SET_CURRENT_USER: "set_current_user",
+    UPDATE_THEME: "update_theme",
 };
 
 const mainReducer = (state, action) => {

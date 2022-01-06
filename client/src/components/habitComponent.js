@@ -162,11 +162,12 @@ const TitleContainer = styled("div")`
     cursor: pointer;
     font-size: ${FONT_SIZE.S};
     line-height: 1.2;
+    min-width: ${SIZE.HABIT_COLUMN_WIDTH};
     padding: 5px;
     position: relative;
     text-align: center;
     text-transform: capitalize;
-    width: ${SIZE.HABIT_COLUMN_WIDTH};
+    width: 100%;
 `;
 
 const TODAY = moment().format("YYYY-MM-DD");

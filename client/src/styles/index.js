@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { SIZE } from "../res";
-import { COLORS, FONT_SIZE, FONT_WEIGHT, SCREEN_SIZE } from "./theme";
+import { FONT_SIZE, FONT_WEIGHT, SCREEN_SIZE, SCROLLBAR_STYLE } from "./theme";
 
 export const Button = styled("button")`
     border-radius: 0px;
@@ -96,6 +96,7 @@ export const Scrollable = styled("div")`
         props.direction.indexOf("x") > -1 ? "scroll" : "auto"};
     overflow-y: ${(props) =>
         props.direction.indexOf("y") > -1 ? "scroll" : "auto"};
+    ${SCROLLBAR_STYLE};
 `;
 
 export const Select = styled("select")`

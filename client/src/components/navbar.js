@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 
+import { MainContext, MAIN_ACTIONS } from "../App";
+import { User } from "../classes";
 import { IMAGES } from "../images";
 import { SITE_TITLE, SIZE } from "../res";
-import { FONT_SIZE } from "../styles/theme";
+import { Button } from "../styles";
+import { FONT_SIZE, SCREEN_SIZE, THEME } from "../styles/theme";
+import { userAPI } from "../utils";
+
+const ButtonContainer = styled("div")`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2px;
+    height: ${SIZE.NAVBAR_HEIGHT};
+    position: absolute;
+    right: 10px;
+
+    @media (max-width: ${SCREEN_SIZE.S}) {
+        right: 0px;
+    }
+`;
 
 const Logo = styled("img")`
     aspect-ratio: 1;
@@ -39,12 +56,62 @@ const Title = styled("div")`
 `;
 
 const Navbar = () => {
+    const { state, dispatch } = useContext(MainContext);
+
+    const updateTheme = () => {
+        const newTheme =
+            state.currentUser.getTheme() === THEME.LIGHT
+                ? THEME.DARK
+                : THEME.LIGHT;
+        userAPI
+            .updateUser(state.currentUser.getUserId(), {
+                theme: newTheme,
+            })
+            .then(() => {
+                dispatch({
+                    type: MAIN_ACTIONS.SET_CURRENT_USER,
+                    currentUser: new User(
+                        newTheme,
+                        state.currentUser.getUserId(),
+                        state.currentUser.getUserName()
+                    ),
+                });
+            });
+    };
+
     return (
         <NavbarContainer className="background borderColor">
             <LogoContainer>
                 <Logo src={IMAGES.LOGO} alt="logo" />
                 <Title>{SITE_TITLE}</Title>
             </LogoContainer>
+            <ButtonContainer>
+                <Button
+                    className="backgroundHoverable"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        updateTheme();
+                    }}
+                    style={{ borderTopWidth: "0px" }}
+                    width="100px"
+                >
+                    {state.currentUser.getTheme() === THEME.LIGHT
+                        ? THEME.DARK
+                        : THEME.LIGHT}{" "}
+                    Theme
+                </Button>
+                <Button
+                    className="backgroundHoverable"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        dispatch({ type: MAIN_ACTIONS.LOGOUT });
+                    }}
+                    style={{ borderTopWidth: "0px" }}
+                    width="100px"
+                >
+                    Logout
+                </Button>
+            </ButtonContainer>
         </NavbarContainer>
     );
 };

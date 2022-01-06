@@ -6,8 +6,8 @@ import { MainContext } from "../App";
 import { HabitComponent, HabitModal, Loading } from ".";
 import { DateHelper, ICON, IconHelper, StringHelper } from "../helpers";
 import { SIZE, STATUS } from "../res";
-import { Button, Flex, Grid, Scrollable, Text } from "../styles";
-import { FONT_SIZE } from "../styles/theme";
+import { Button, Grid, Scrollable, Text } from "../styles";
+import { FONT_SIZE, SCROLLBAR_STYLE } from "../styles/theme";
 import { habitAPI } from "../utils";
 
 const ListBody = styled("div")`
@@ -15,7 +15,7 @@ const ListBody = styled("div")`
     max-height: calc(100vh - 220px);
     min-width: fit-content;
     overflow-x: hidden;
-    overflow-y: scroll;
+    ${SCROLLBAR_STYLE};
 `;
 
 const ListContainer = styled("div")`
@@ -53,7 +53,7 @@ const HabitList = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        if (!state.currentUser) return;
+        if (!state.currentUser || habits) return;
         loadHabits();
     }, [state.currentUser]);
 

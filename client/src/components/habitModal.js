@@ -136,7 +136,6 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                             status,
                         });
                     }}
-                    width="100px"
                 >
                     Save
                 </Button>
