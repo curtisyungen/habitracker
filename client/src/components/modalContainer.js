@@ -16,6 +16,7 @@ const Body = styled("div")`
     select {
         background: ${(props) => COLORS.THEME.BACKGROUND[props.theme]};
         border-color: ${(props) => COLORS.THEME.BORDER[props.theme]};
+        border-radius: 0px;
         color: ${(props) => COLORS.THEME.COLOR[props.theme]};
 
         &:hover {

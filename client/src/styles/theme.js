@@ -153,6 +153,7 @@ export const AppContainer = styled("div")`
     select {
         background: var(--background);
         border-color: var(--borderColor);
+        border-radius: 0px;
         color: var(--color);
     }
 `;
