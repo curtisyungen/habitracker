@@ -3,6 +3,14 @@ import styled from "styled-components";
 import { SIZE } from "../res";
 import { FONT_SIZE, FONT_WEIGHT, SCREEN_SIZE, SCROLLBAR_STYLE } from "./theme";
 
+export const Absolute = styled("div")`
+    bottom: ${(props) => props.bottom || "unset"};
+    left: ${(props) => props.left || "unset"};
+    position: absolute;
+    right: ${(props) => props.right || "unset"};
+    top: ${(props) => props.top || "unset"};
+`;
+
 export const Button = styled("button")`
     border-radius: 0px;
     border-style: solid;
@@ -53,7 +61,7 @@ export const Input = styled("input")`
 
 export const Label = styled("label")`
     border: 0px;
-    border-bottom-width: 1px;
+    border-width: 1px;
     border-radius: 0px;
     border-style: solid;
     font-size: ${(props) => props.fontSize || FONT_SIZE.M};

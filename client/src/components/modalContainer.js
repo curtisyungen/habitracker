@@ -8,6 +8,9 @@ import { COLORS, THEME } from "../styles/theme";
 import "react-responsive-modal/styles.css";
 
 const Body = styled("div")`
+    height: 100%;
+    position: relative;
+
     & button,
     input,
     select {
@@ -37,10 +40,8 @@ const ModalContainer = ({ open, close, children }) => {
             borderStyle: "solid",
             borderWidth: "1px",
             color: COLORS.THEME.COLOR[theme],
-            height: "100%",
-            margin: "0px",
+            height: "350px",
             maxWidth: "600px",
-            minHeight: "300px",
             minWidth: "300px",
             width: "100%",
         };

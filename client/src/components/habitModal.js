@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { ModalContainer } from ".";
 import { StringHelper } from "../helpers";
 import { HABIT, STATUS } from "../res";
-import { Button, Flex, Input, LabelPrepend, Select } from "../styles";
+import { Absolute, Button, Flex, Input, LabelPrepend, Select } from "../styles";
 
 const Wrapper = styled("div")`
     position: relative;
@@ -121,6 +121,8 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                         </Select>
                     </Flex>
                 )}
+            </Wrapper>
+            <Absolute bottom="0" left="0" right="0">
                 <Button
                     onClick={(e) => {
                         e.preventDefault();
@@ -148,7 +150,7 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                 >
                     Cancel
                 </Button>
-            </Wrapper>
+            </Absolute>
         </ModalContainer>
     );
 };

@@ -9,6 +9,7 @@ import { Habit } from "../classes";
 import { DateHelper, ICON, IconHelper } from "../helpers";
 import { HABIT, SIZE } from "../res";
 import {
+    Absolute,
     Button,
     Flex,
     Input,
@@ -279,24 +280,30 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
                             </TextSmall>
                         </Flex>
                     </MetricsContainer>
-                    <Category background={COLORS.CATEGORY[habit.getCategory()]} className="borderColor">
+                    <Category
+                        background={COLORS.CATEGORY[habit.getCategory()]}
+                        className="borderColor"
+                    >
                         {habit.getCategory()}
                     </Category>
                 </TitleContainer>
                 {dates.map((date, idx) => (
                     <Day
                         key={idx}
-                        className={classNames("backgroundHoverable borderColor", {
-                            disabled: date > TODAY,
-                            enterValue:
-                                habit.getType() === HABIT.TYPE.ENTER_VALUE,
-                            highlight: habit.getDateInTimeline(date),
-                        })}
+                        className={classNames(
+                            "backgroundHoverable borderColor",
+                            {
+                                disabled: date > TODAY,
+                                enterValue:
+                                    habit.getType() === HABIT.TYPE.ENTER_VALUE,
+                                highlight: habit.getDateInTimeline(date),
+                            }
+                        )}
                         onClick={() => {
                             onDayClicked(date);
                         }}
                     >
-                        <FloatingTitle show={true}>
+                        <FloatingTitle show={date <= TODAY}>
                             {habit.getTitle()}
                         </FloatingTitle>
                         <Text fontSize={FONT_SIZE.L}>
@@ -344,27 +351,28 @@ const EnterValueModal = ({
 
     return (
         <ModalContainer open={open} close={close}>
-            <h4>Enter value</h4>
-            <Label>{date}</Label>
+            <Label style={{ borderWidth: "1px" }}>{date}</Label>
             <Flex>
-                <LabelPrepend>{targetType}</LabelPrepend>
+                {targetType && <LabelPrepend>{targetType}</LabelPrepend>}
                 <Input
                     onChange={(e) => setValueInternal(e.target.value)}
-                    placeholder={target}
+                    placeholder={target || "Enter value"}
                     type="text"
                     value={valueInternal || ""}
                 />
             </Flex>
-            <Button
-                onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setValue(valueInternal);
-                    setValueInternal(null);
-                }}
-            >
-                Submit
-            </Button>
+            <Absolute bottom="0" left="0" right="0">
+                <Button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setValue(valueInternal);
+                        setValueInternal(null);
+                    }}
+                >
+                    Submit
+                </Button>
+            </Absolute>
         </ModalContainer>
     );
 };
