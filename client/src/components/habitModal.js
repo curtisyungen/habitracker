@@ -4,15 +4,7 @@ import styled from "styled-components";
 import { ModalContainer } from ".";
 import { StringHelper } from "../helpers";
 import { HABIT, STATUS } from "../res";
-import {
-    Absolute,
-    Button,
-    Flex,
-    Input,
-    LabelPrepend,
-    Select,
-    Text,
-} from "../styles";
+import { Button, Flex, Grid, Input, LabelPrepend, Select, Text } from "../styles";
 
 const Wrapper = styled("div")`
     position: relative;
@@ -154,33 +146,34 @@ const HabitModal = ({ open, close, habitData, setHabitData, metrics }) => {
                     </Flex>
                 </Wrapper>
             )}
-            <Button
-                onClick={(e) => {
-                    e.preventDefault();
-                    setHabitData({
-                        id,
-                        title,
-                        description,
-                        type,
-                        category,
-                        target,
-                        targetType,
-                        timeline: JSON.stringify(timeline),
-                        status,
-                    });
-                }}
-            >
-                Save
-            </Button>
-            <Button
-                onClick={(e) => {
-                    e.preventDefault();
-                    close();
-                }}
-                style={{ marginTop: "2px" }}
-            >
-                Cancel
-            </Button>
+            <Grid gridTemplateColumns="repeat(2, 1fr)">
+                <Button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setHabitData({
+                            id,
+                            title,
+                            description,
+                            type,
+                            category,
+                            target,
+                            targetType,
+                            timeline: JSON.stringify(timeline),
+                            status,
+                        });
+                    }}
+                >
+                    Save
+                </Button>
+                <Button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        close();
+                    }}
+                >
+                    Cancel
+                </Button>
+            </Grid>
         </ModalContainer>
     );
 };

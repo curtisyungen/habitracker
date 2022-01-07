@@ -3,14 +3,6 @@ import styled from "styled-components";
 import { SIZE } from "../res";
 import { FONT_SIZE, FONT_WEIGHT, SCREEN_SIZE, SCROLLBAR_STYLE } from "./theme";
 
-export const Absolute = styled("div")`
-    bottom: ${(props) => props.bottom || "unset"};
-    left: ${(props) => props.left || "unset"};
-    position: absolute;
-    right: ${(props) => props.right || "unset"};
-    top: ${(props) => props.top || "unset"};
-`;
-
 export const Button = styled("button")`
     border-radius: 0px;
     border-style: solid;
@@ -57,6 +49,10 @@ export const Input = styled("input")`
     :focus {
         outline: none;
     }
+
+    @media (max-width: ${SCREEN_SIZE.S}) {
+        min-width: 80px;
+    }
 `;
 
 export const Label = styled("label")`
@@ -70,6 +66,10 @@ export const Label = styled("label")`
     min-width: ${SIZE.INPUT_MIN_WIDTH};
     text-align: ${(props) => props.textAlign || "center"};
     width: ${(props) => props.width || SIZE.INPUT_MIN_WIDTH};
+
+    @media (max-width: ${SCREEN_SIZE.S}) {
+        min-width: 80px;
+    }
 `;
 
 export const LabelAppend = styled(Label)`
@@ -123,6 +123,10 @@ export const Select = styled("select")`
     &:active,
     :focus {
         outline: none;
+    }
+
+    @media (max-width: ${SCREEN_SIZE.S}) {
+        min-width: 80px;
     }
 `;
 

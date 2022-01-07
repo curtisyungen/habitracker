@@ -14,7 +14,6 @@ export const MainContext = React.createContext(null);
 export const MAIN_ACTIONS = {
     LOGOUT: "logout",
     SET_CURRENT_USER: "set_current_user",
-    UPDATE_THEME: "update_theme",
 };
 
 const mainReducer = (state, action) => {
@@ -36,7 +35,7 @@ const initialState = {
 
 const App = () => {
     const [state, dispatch] = useReducer(mainReducer, { ...initialState });
-    const { error, isAuthenticated, isLoading, user } = useAuth0();
+    const { error, isAuthenticated, isLoading, logout, user } = useAuth0();
     const routeResult = useRoutes(Routes);
 
     useEffect(() => {
@@ -56,6 +55,16 @@ const App = () => {
             });
         }
     }, [isAuthenticated]);
+
+    useEffect(() => {
+        if (state.logout) {
+            dispatch({
+                type: MAIN_ACTIONS.SET_CURRENT_USER,
+                currentUser: null,
+            });
+            logout();
+        }
+    }, [state.logout]);
 
     if (error) return <Error message={error.message} />;
     if (isLoading) return <Loading />;

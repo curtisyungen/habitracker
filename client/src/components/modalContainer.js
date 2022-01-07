@@ -41,6 +41,8 @@ const ModalContainer = ({ open, close, children }) => {
             borderWidth: "1px",
             color: COLORS.THEME.COLOR[theme],
             height: "fit-content",
+            marginLeft: "0px",
+            marginRight: "0px",
             maxWidth: "600px",
             minHeight: "350px",
             minWidth: "300px",

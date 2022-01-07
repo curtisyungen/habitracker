@@ -9,7 +9,6 @@ import { Habit } from "../classes";
 import { DateHelper, ICON, IconHelper } from "../helpers";
 import { HABIT, SIZE } from "../res";
 import {
-    Absolute,
     Button,
     Flex,
     Input,
@@ -362,18 +361,16 @@ const EnterValueModal = ({
                     value={valueInternal || ""}
                 />
             </Flex>
-            <Absolute bottom="0" left="0" right="0">
-                <Button
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setValue(valueInternal);
-                        setValueInternal(null);
-                    }}
-                >
-                    Submit
-                </Button>
-            </Absolute>
+            <Button
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setValue(valueInternal);
+                    setValueInternal(null);
+                }}
+            >
+                Submit
+            </Button>
         </ModalContainer>
     );
 };
