@@ -228,6 +228,7 @@ const HabitList = () => {
                 close={() => setInAddMode(false)}
                 habitData={null}
                 setHabitData={createHabit}
+                metrics={null}
             />
         </>
     );

@@ -333,6 +333,7 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
                 close={() => setInEditMode(false)}
                 habitData={habitData}
                 setHabitData={updateHabit}
+                metrics={habit.getMetrics()}
             />
         </>
     );

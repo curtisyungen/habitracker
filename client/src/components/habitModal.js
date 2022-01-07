@@ -4,13 +4,21 @@ import styled from "styled-components";
 import { ModalContainer } from ".";
 import { StringHelper } from "../helpers";
 import { HABIT, STATUS } from "../res";
-import { Absolute, Button, Flex, Input, LabelPrepend, Select } from "../styles";
+import {
+    Absolute,
+    Button,
+    Flex,
+    Input,
+    LabelPrepend,
+    Select,
+    Text,
+} from "../styles";
 
 const Wrapper = styled("div")`
     position: relative;
 `;
 
-const HabitModal = ({ open, close, habitData, setHabitData }) => {
+const HabitModal = ({ open, close, habitData, setHabitData, metrics }) => {
     const [id, setId] = useState(Math.random() * 1000000);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -122,35 +130,57 @@ const HabitModal = ({ open, close, habitData, setHabitData }) => {
                     </Flex>
                 )}
             </Wrapper>
-            <Absolute bottom="0" left="0" right="0">
-                <Button
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setHabitData({
-                            id,
-                            title,
-                            description,
-                            type,
-                            category,
-                            target,
-                            targetType,
-                            timeline: JSON.stringify(timeline),
-                            status,
-                        });
-                    }}
-                >
-                    Save
-                </Button>
-                <Button
-                    onClick={(e) => {
-                        e.preventDefault();
-                        close();
-                    }}
-                    style={{ marginTop: "2px" }}
-                >
-                    Cancel
-                </Button>
-            </Absolute>
+            {metrics && (
+                <Wrapper style={{ margin: "0px 0px 10px 0px" }}>
+                    <Flex justifyContent="space-between">
+                        <Text>Current streak</Text>
+                        <Text>{metrics.currStreak}</Text>
+                    </Flex>
+                    <Flex justifyContent="space-between">
+                        <Text>Longest streak</Text>
+                        <Text>{metrics.longestStreak}</Text>
+                    </Flex>
+                    <Flex justifyContent="space-between">
+                        <Text>Earliest completion</Text>
+                        <Text>{metrics.earliestCompletion}</Text>
+                    </Flex>
+                    <Flex justifyContent="space-between">
+                        <Text>Most recent completion</Text>
+                        <Text>{metrics.mostRecentCompletion}</Text>
+                    </Flex>
+                    <Flex justifyContent="space-between">
+                        <Text>Total completions</Text>
+                        <Text>{metrics.totalCompletions}</Text>
+                    </Flex>
+                </Wrapper>
+            )}
+            <Button
+                onClick={(e) => {
+                    e.preventDefault();
+                    setHabitData({
+                        id,
+                        title,
+                        description,
+                        type,
+                        category,
+                        target,
+                        targetType,
+                        timeline: JSON.stringify(timeline),
+                        status,
+                    });
+                }}
+            >
+                Save
+            </Button>
+            <Button
+                onClick={(e) => {
+                    e.preventDefault();
+                    close();
+                }}
+                style={{ marginTop: "2px" }}
+            >
+                Cancel
+            </Button>
         </ModalContainer>
     );
 };
