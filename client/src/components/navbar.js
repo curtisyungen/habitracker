@@ -87,12 +87,16 @@ const Navbar = () => {
             </LogoContainer>
             <ButtonContainer>
                 <Button
-                    className="backgroundHoverable"
+                    className="backgroundHoverable borderColor"
                     onClick={(e) => {
                         e.preventDefault();
                         updateTheme();
                     }}
-                    style={{ borderTopWidth: "0px" }}
+                    style={{
+                        borderLeftWidth: "0px",
+                        borderRightWidth: "0px",
+                        borderTopWidth: "0px",
+                    }}
                     width="100px"
                 >
                     {state.currentUser.getTheme() === THEME.LIGHT
@@ -101,12 +105,16 @@ const Navbar = () => {
                     Theme
                 </Button>
                 <Button
-                    className="backgroundHoverable"
+                    className="backgroundHoverable borderColor"
                     onClick={(e) => {
                         e.preventDefault();
                         dispatch({ type: MAIN_ACTIONS.LOGOUT });
                     }}
-                    style={{ borderTopWidth: "0px" }}
+                    style={{
+                        borderLeftWidth: "0px",
+                        borderRightWidth: "0px",
+                        borderTopWidth: "0px",
+                    }}
                     width="100px"
                 >
                     Logout
