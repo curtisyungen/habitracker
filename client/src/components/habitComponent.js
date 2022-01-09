@@ -231,9 +231,13 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
 
         setHabit((habit) => new Habit({ ...habit, timeline: newTimeline }));
 
-        habitAPI.updateHabit(state.currentUser.getUserId(), habit.getId(), {
-            timeline: JSON.stringify(newTimeline),
-        });
+        habitAPI
+            .updateHabit(state.currentUser.getUserId(), habit.getId(), {
+                timeline: JSON.stringify(newTimeline),
+            })
+            .then(() => {
+                reloadHabit(habit.getId());
+            });
     };
 
     const updateHabit = (habitData) => {
@@ -348,6 +352,11 @@ const EnterValueModal = ({
     setValue,
 }) => {
     const [valueInternal, setValueInternal] = useState(value);
+
+    useEffect(() => {
+        if (!open) return;
+        setValueInternal(value);
+    }, [open]);
 
     return (
         <ModalContainer open={open} close={close}>
