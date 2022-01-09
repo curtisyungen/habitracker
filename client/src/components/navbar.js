@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
+import { navigate } from "hookrouter";
 import styled from "styled-components";
 
 import { MainContext, MAIN_ACTIONS } from "../App";
 import { User } from "../classes";
 import { IMAGES } from "../images";
-import { SITE_TITLE, SIZE } from "../res";
+import { PAGES, SITE_TITLE, SIZE } from "../res";
 import { Button } from "../styles";
 import { FONT_SIZE, SCREEN_SIZE, THEME } from "../styles/theme";
 import { userAPI } from "../utils";
@@ -30,6 +31,7 @@ const Logo = styled("img")`
 `;
 
 const LogoContainer = styled("div")`
+    cursor: pointer;
     display: flex;
     margin-left: 5px;
     position: absolute;
@@ -81,7 +83,18 @@ const Navbar = () => {
 
     return (
         <NavbarContainer className="background borderColor">
-            <LogoContainer>
+            <LogoContainer
+                onClick={() => {
+                    if (
+                        window.location.pathname === PAGES.HOME ||
+                        window.location.pathname === "/"
+                    ) {
+                        window.location.reload();
+                        return;
+                    }
+                    navigate(PAGES.HOME);
+                }}
+            >
                 <Logo src={IMAGES.LOGO} alt="logo" />
                 <Title>{SITE_TITLE}</Title>
             </LogoContainer>
