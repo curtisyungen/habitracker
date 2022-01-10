@@ -215,7 +215,10 @@ const HabitComponent = ({ habitData, dates, reloadHabit }) => {
             newTimeline[year][month] = {};
         }
 
-        if (!newTimeline[year][month][day]) {
+        if (
+            !newTimeline[year][month][day] ||
+            (value && newTimeline[year][month][day] !== value)
+        ) {
             newTimeline[year][month][day] = value;
         } else {
             delete newTimeline[year][month][day];
