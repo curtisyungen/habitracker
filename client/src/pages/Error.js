@@ -23,18 +23,18 @@ const Logo = styled("img")`
     width: 75px;
 `;
 
-const Error = ({ message = "Page not found." }) => {
+const Error = ({error }) => {
     useEffect(() => {
-        if (message === "Invalid state") {
-            navigate(PAGES.HOME);
+        if (error.message === "Invalid state") {
+            navigate("/");
         }
-    }, [message]);
+    }, [error]);
 
     return (
         <PageContainer>
             <Container>
                 <Logo
-                    onClick={() => navigate(PAGES.HOME)}
+                    onClick={() => navigate("/")}
                     src={IMAGES.LOGO}
                     alt="Logo"
                 />
@@ -42,7 +42,7 @@ const Error = ({ message = "Page not found." }) => {
                 <Button
                     onClick={(e) => {
                         e.preventDefault();
-                        navigate(PAGES.HOME);
+                        navigate("/");
                     }}
                     width="100px"
                 >
