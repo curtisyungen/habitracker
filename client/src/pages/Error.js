@@ -16,38 +16,29 @@ const Container = styled("div")`
     width: 100%;
 `;
 
-const Logo = styled("img")`
-    cursor: pointer;
-    height: 75px;
-    margin: 10px;
-    width: 75px;
+const Logo = styled("a")`
+    & img {
+        height: 75px;
+        margin: 10px;
+        width: 75px;
+    }
 `;
 
-const Error = ({error }) => {
+const Error = ({ message = "Page not found" }) => {
     useEffect(() => {
-        if (error.message === "Invalid state") {
+        if (message === "Invalid state") {
             navigate("/");
         }
-    }, [error]);
+    }, [message]);
 
     return (
         <PageContainer>
             <Container>
-                <Logo
-                    onClick={() => navigate("/")}
-                    src={IMAGES.LOGO}
-                    alt="Logo"
-                />
+                <Logo href="/">
+                    <img src={IMAGES.LOGO} alt="Logo" />
+                </Logo>
                 <p>{message}</p>
-                <Button
-                    onClick={(e) => {
-                        e.preventDefault();
-                        navigate("/");
-                    }}
-                    width="100px"
-                >
-                    Go Home
-                </Button>
+                <a href="/">Go Home</a>
             </Container>
         </PageContainer>
     );

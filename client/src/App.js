@@ -66,7 +66,7 @@ const App = () => {
         }
     }, [state.logout]);
 
-    if (error) return <Error error={error} />;
+    if (error) return <Error message={error.message} />;
     if (isLoading) return <Loading />;
 
     if (!isAuthenticated) {
